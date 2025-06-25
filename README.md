@@ -28,7 +28,7 @@
 4. **Run the app:**
 
    ```sh
-   # Start both frontend & backend
+   # Start both frontend & backend (in ROOT folder)
    npm start
    ```
 
