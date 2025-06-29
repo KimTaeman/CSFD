@@ -1,0 +1,6 @@
+{
+  "ignore": [".git", "node_modules", "dist"],
+  "watch": ["src"],
+  "exec": "tsc --noEmit && node --no-warnings=ExperimentalWarning --loader ./esm.js ./src/server.ts",
+  "ext": "ts,tsx,js,json"
+}

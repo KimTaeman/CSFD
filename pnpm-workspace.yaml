@@ -1,0 +1,11 @@
+packages:
+  - frontend
+  - backend
+
+onlyBuiltDependencies:
+  - '@prisma/client'
+  - '@prisma/engines'
+  - '@tailwindcss/oxide'
+  - esbuild
+  - node
+  - prisma
