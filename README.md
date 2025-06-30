@@ -33,7 +33,7 @@
 4. **Run the app:**
 
    ```sh
-   # Start both frontend & backend
+   # Start both frontend & backend (from root)
    pnpm start
    ```
 
