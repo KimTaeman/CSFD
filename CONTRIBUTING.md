@@ -25,7 +25,7 @@
    _Note_: Always run `git pull origin dev --rebase` before pushing to keep your branch up to date.
 
 5. **Push to GitHub**: `git push origin feature/xxx`
-6**Create a Pull Request** to `dev` branch and request a review
+6. **Create a Pull Request** to `dev` branch and request a review
 
 ## Code Guidelines
 
