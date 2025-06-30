@@ -1,17 +1,30 @@
 name: autofix.ci
+
 on:
   pull_request:
   push:
+
 permissions: {}
+
 jobs:
   prettier:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
-      - run: |
-          npm install
-          npm run format
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies and run formatter
+        run: |
+          pnpm install
+          pnpm run format
+
       - uses: autofix-ci/action@v1
         with:
           commit-message: 'style: apply Prettier format'
