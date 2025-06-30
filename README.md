@@ -13,7 +13,6 @@
    ```sh
    git clone git@github.com:KimTaeman/CSFD.git
    cd CSFD
-   npm install
    ```
    
 2. **Enable Corepack for package manager consistency:**
