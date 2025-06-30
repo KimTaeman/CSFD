@@ -1,16 +1,16 @@
-import {StrictMode, Suspense} from "react";
-import {createRoot} from "react-dom/client";
-import "./index.css";
-import {ErrorBoundary} from "react-error-boundary";
-import {BrowserRouter, useRoutes} from "react-router";
-import routes from "~react-pages";
-import LoadingLayout from "@/components/layout/loading.tsx";
-import ErrorLayout from "@/components/layout/error.tsx";
+import { StrictMode, Suspense } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import { ErrorBoundary } from 'react-error-boundary';
+import { BrowserRouter, useRoutes } from 'react-router';
+import routes from '~react-pages';
+import LoadingLayout from '@/components/layout/loading.tsx';
+import ErrorLayout from '@/components/layout/error.tsx';
 
-const container = document.getElementById("root");
+const container = document.getElementById('root');
 
 if (!container) {
-  throw new Error("Root container not found");
+  throw new Error('Root container not found');
 }
 
 const root = (container as any).__reactRoot ?? createRoot(container);
@@ -18,18 +18,14 @@ const root = (container as any).__reactRoot ?? createRoot(container);
 
 export const App = () => {
   const PageContent = useRoutes(routes);
-  return (
-    <Suspense fallback={<LoadingLayout/>}>
-      {PageContent}
-    </Suspense>
-  );
+  return <Suspense fallback={<LoadingLayout />}>{PageContent}</Suspense>;
 };
 
 root.render(
   <StrictMode>
     <ErrorBoundary FallbackComponent={ErrorLayout}>
       <BrowserRouter>
-        <App/>
+        <App />
       </BrowserRouter>
     </ErrorBoundary>
   </StrictMode>,
