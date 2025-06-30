@@ -4,11 +4,11 @@ import { router } from './routes/index.route';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import { PrismaClient } from '@prisma/client/edge'
-import { withAccelerate } from '@prisma/extension-accelerate'
+import { PrismaClient } from '@prisma/client/edge';
+import { withAccelerate } from '@prisma/extension-accelerate';
 
 const app = express();
-export const prisma = new PrismaClient().$extends(withAccelerate())
+export const prisma = new PrismaClient().$extends(withAccelerate());
 
 app.use(compression());
 app.use(cookieParser());
