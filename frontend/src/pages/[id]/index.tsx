@@ -6,7 +6,7 @@ function Page() {
 
   return (
     <div>
-      This is en example of file based routing params: {id}
+      This is an example of file based routing params: {id}
     </div>
   );
 }
