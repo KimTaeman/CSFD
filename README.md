@@ -15,12 +15,17 @@
    cd CSFD
    npm install
    ```
+   
+2. **Enable Corepack for package manager consistency:**
+   ```sh
+   corepack enable
+   corepack use pnpm@latest
+   ```
 
-2. **Install dependencies:**
+3. **Install dependencies:**
 
    ```sh
-   cd frontend && npm install
-   cd ../backend && npm install
+   pnpm install
    ```
 
 3. **Configure `.env` files** for API keys and database credentials.
@@ -29,7 +34,7 @@
 
    ```sh
    # Start both frontend & backend
-   npm start
+   pnpm start
    ```
 
 ## Contributing

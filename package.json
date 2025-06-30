@@ -6,15 +6,37 @@
     "backend"
   ],
   "scripts": {
-    "start": "npm-run-all --parallel start:frontend start:backend",
-    "start:frontend": "npm run dev --workspace=frontend",
-    "start:backend": "npm run dev --workspace=backend",
-    "build": "npm run build --workspace=frontend && npm run build --workspace=backend",
-    "test": "npm test --workspace=frontend && npm test --workspace=backend",
-    "lint": "npm run lint --workspace=frontend && npm run lint --workspace=backend",
-    "format": "npm run format --workspace=frontend && npm run format --workspace=backend"
+    "start": "turbo start",
+    "dev": "turbo dev",
+    "dev:frontend": "pnpm --filter frontend run dev",
+    "dev:backend": "pnpm --filter backend run dev",
+    "build": "turbo build",
+    "test": "pnpm --filter frontend... run test && pnpm --filter backend... run test",
+    "lint": "pnpm --filter frontend... run lint && pnpm --filter backend... run lint",
+    "format": "pnpm --filter frontend... run format && pnpm --filter backend... run format"
   },
   "devDependencies": {
-    "npm-run-all": "^4.1.5"
-  }
+    "turbo": "^2.5.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "nanoid@<3.3.8": ">=3.3.8",
+      "react": "^19.0.0",
+      "react-dom": "^19.0.0",
+      "@types/react": "^19.0.0",
+      "@types/react-dom": "^19.0.0",
+      "@radix-ui/react-dialog": "^1.1",
+      "vite": "npm:rolldown-vite@latest",
+      "cmdk": "^1.0"
+    },
+    "ignoredBuiltDependencies": [],
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "@swc/core",
+      "esbuild",
+      "prisma"
+    ]
+  },
+  "packageManager": "pnpm@10.12.4+sha512.5ea8b0deed94ed68691c9bad4c955492705c5eeb8a87ef86bc62c74a26b037b08ff9570f108b2e4dbd1dd1a9186fea925e527f141c648e85af45631074680184"
 }
