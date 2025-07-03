@@ -14,11 +14,81 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  password  String?
+
+model Student {
+  id          Int       @id @default(autoincrement())
+  // Authentication
+  microsoftId String?   @unique  
+  email       String    @unique
+  
+  // Profile Info
+  studentId   String?    @unique
+  displayName String
+  nickname String?
+  profilePic  String?
+  house       String?
+  
+  // Role-specific fields // CS26 only
+  instagram   String?  
+  discord String?
+  line String? 
+  nationality String?   
+  
+  // Role management
+  role        ROLE   @default(CS26)   // CS25 or CS26 based on student ID
+  isSenior    Boolean   // Computed from role or studentId
+
+  // Game Mechanics
+  lives       Int?      @default(3)  
+  
+  // Relationships
+  mentor      Mentor?   @relation("junior_mentor") // juniors and their mentors (cs26)
+  mentees     Mentor[]  @relation("senior_mentees") // seniors and their mentees (cs25)
+  givenHints  Hint[]    @relation("senior_hints")
+  receivedHints Hint[]  @relation("junior_hints")
+
+  // Timestamps
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Hint {
+  id         Int      @id @default(autoincrement())
+  content    String   // Hint text
+  revealDate DateTime // When hint becomes available
+  order      Int      // Hint sequence (1, 2, 3)
+  // if current date < revealDate, then hint is not available
+  
+  // Relationships
+  senior     Student   @relation("senior_hints", fields: [seniorId], references: [id])
+  seniorId   Int
+  junior     Student?  @relation("junior_hints", fields: [juniorId], references: [id])
+  juniorId   Int?
+  
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Mentor {
+  id        Int      @id @default(autoincrement())
+  // Pairing
+  senior    Student     @relation(fields: [seniorId], references: [id], name: "senior_mentees")
+  seniorId  Int
+  junior    Student     @relation(fields: [juniorId], references: [id], name: "junior_mentor")
+  juniorId  Int @unique
+  
+  // Status
+  isFound   Boolean  @default(false)
+  foundAt   DateTime?
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  
+  @@unique([seniorId, juniorId])
 }
+
+enum ROLE {
+  CS25  // Seniors
+  CS26  // Juniors
+}
+
