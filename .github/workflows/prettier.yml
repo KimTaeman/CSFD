@@ -25,7 +25,7 @@ jobs:
 
       - name: Install dependencies and run formatter
         run: |
-          pnpm install
+          pnpm install --no-frozen-lockfile
           pnpm run format
 
       - uses: autofix-ci/action@v1
