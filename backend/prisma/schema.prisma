@@ -29,8 +29,9 @@ model Student {
   house       String?
   
   // Role-specific fields // CS26 only
-  // password    String?   
-  instagram   String?   
+  instagram   String?  
+  discord String?
+  line String? 
   nationality String?   
   
   // Role management
@@ -56,6 +57,7 @@ model Hint {
   content    String   // Hint text
   revealDate DateTime // When hint becomes available
   order      Int      // Hint sequence (1, 2, 3)
+  // if current date < revealDate, then hint is not available
   
   // Relationships
   senior     Student   @relation("senior_hints", fields: [seniorId], references: [id])
