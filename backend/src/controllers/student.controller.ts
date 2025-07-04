@@ -40,22 +40,17 @@ export const getAllStudents = async (
   }
 };
 
-export const getAllSeniors = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const getAllSeniors = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const seniors = await Models.getAllSeniors();
     if (!seniors || seniors.length === 0) {
       throw new NotFoundError();
     }
     res.status(200).json({ success: true, data: seniors });
-  }catch (error) {
+  } catch (error) {
     next(error);
   }
-  
-}
+};
 
 export const getAllJuniors = async (
   req: Request,
@@ -64,7 +59,7 @@ export const getAllJuniors = async (
 ): Promise<void> => {
   try {
     const juniors = await Models.getAllJuniors();
-    
+
     if (!juniors || juniors.length === 0) {
       throw new NotFoundError();
     }
