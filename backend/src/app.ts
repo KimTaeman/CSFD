@@ -4,7 +4,7 @@ import { router } from './routes/index.route';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import { PrismaClient } from '@prisma/client/edge';
+import { PrismaClient } from './generated/prisma';
 import { withAccelerate } from '@prisma/extension-accelerate';
 
 const app = express();
