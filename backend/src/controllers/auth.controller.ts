@@ -143,12 +143,12 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
   }
 };
 
-export const logout = (req: Request, res: Response) => {
+export const logout = (req: Request, res: Response, next: NextFunction) => {
   req.session.destroy((err) => {
     if (err) {
       const error: AppError = new Error('Could not log out, please try again.');
       error.status = 500;
-      throw error;
+      return next(error);
     }
     res.clearCookie('connect.sid');
     res.status(200).json({ message: 'Logout successful' });
