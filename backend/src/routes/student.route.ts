@@ -6,9 +6,10 @@ const router = Router();
 // POST
 
 // GET
-router.get('/juniors', Controller.getAllJuniors);
-router.get('/:id', Controller.getStudentById);
 router.get('/', Controller.getAllStudents);
+router.get('/juniors', Controller.getAllJuniors);
+router.get('/seniors', Controller.getAllSeniors);
+router.get('/:id', Controller.getStudentById);
 
 // PUT
 
