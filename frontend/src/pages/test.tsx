@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Sidebar from '@/components/sidebar';
-
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-  const openSidebar = () => setIsSidebarOpen(true);
   const closeSidebar = () => setIsSidebarOpen(false);
 
   return (
