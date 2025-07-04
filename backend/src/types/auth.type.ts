@@ -12,7 +12,7 @@ export interface StudentInfo {
   email: string;
   nickname: string | null;
   role: string;
-  lives: number;
+  lives: number | null;
   mentees: Array<{
     junior: {
       id: string;
