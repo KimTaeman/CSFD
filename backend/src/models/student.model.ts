@@ -14,7 +14,7 @@ const getAllStudents = async () => {
 
 const getAllSeniors = async () => {
   return prisma.student.findMany({
-    where: { isSenior: true }
+    where: { isSenior: true },
   });
 };
 
