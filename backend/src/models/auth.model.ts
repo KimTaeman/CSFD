@@ -23,7 +23,7 @@ export const updateStudentWithMicrosoftId = (email: string, microsoftId: string)
 };
 
 export const createNewStudent = (account: AccountInfo) => {
-  const defaultRole = ROLE.CS26;
+  const defaultRole = ROLE.CS25 ?? ROLE.CS26;
   const isSenior = defaultRole === ROLE.CS25;
 
   return prisma.student.create({
