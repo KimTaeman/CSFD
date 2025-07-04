@@ -1,13 +1,14 @@
 import { Router } from 'express';
-import * as studentController from '../controllers/student.controller';
+import * as Controller from '@/controllers';
 
 const router = Router();
 
 // POST
 
 // GET
-router.get('/:id', studentController.getStudentById);
-router.get('/', studentController.getAllStudents);
+router.get('/juniors', Controller.getAllJuniors);
+router.get('/:id', Controller.getStudentById);
+router.get('/', Controller.getAllStudents);
 
 // PUT
 
