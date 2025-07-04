@@ -8,7 +8,7 @@ function Page() {
 
       <nav>
         <NavLink
-          to="/test"
+          to="/ProfilePage"
           className="rounded bg-white/80 px-6 py-3 font-bold text-black hover:bg-white/60"
         >
           Go to Test Page
