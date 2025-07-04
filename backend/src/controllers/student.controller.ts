@@ -50,7 +50,7 @@ export const getAllSeniors = async (req: Request, res: Response) =>
 export const getAllJuniors = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     const juniors = await Models.getAllJuniors();
