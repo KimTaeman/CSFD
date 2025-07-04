@@ -3,11 +3,12 @@ import msalClient from '@/config/msalConfig';
 import { ResponseMode } from '@azure/msal-node';
 import * as authModel from '@/models/auth.model';
 import { AppError } from '@/middlewares/errorHandler';
+import config from '@/config/config';
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   const authCodeUrlParameters = {
     scopes: ['user.read', 'openid', 'profile', 'email'],
-    redirectUri: process.env.BACKEND_REDIRECT_URI || '',
+    redirectUri: config.redirectUri,
     responseMode: ResponseMode.FORM_POST,
   };
   try {
@@ -22,7 +23,7 @@ export const callback = async (req: Request, res: Response, next: NextFunction) 
   const tokenRequest = {
     code: req.body.code,
     scopes: ['user.read', 'openid', 'profile', 'email'],
-    redirectUri: process.env.BACKEND_REDIRECT_URI || '',
+    redirectUri: config.redirectUri,
   };
 
   try {
@@ -61,7 +62,7 @@ export const callback = async (req: Request, res: Response, next: NextFunction) 
     };
 
     req.session.save(() => {
-      res.redirect(process.env.CLIENT_REDIRECT_URL || '/');
+      res.redirect(config.clientRedirectURL);
     });
   } catch (error) {
     next(error);
