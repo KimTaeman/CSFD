@@ -4,17 +4,28 @@ import { router } from './routes';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import { PrismaClient } from './generated/prisma';
-import { withAccelerate } from '@prisma/extension-accelerate';
+import session from 'express-session';
+import config from './config/config';
 
 const app = express();
-export const prisma = new PrismaClient().$extends(withAccelerate());
 
 app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(
+  session({
+    secret: config.secret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: config.nodeEnv === 'production',
+    },
+  }),
+);
 
 // Routes
 app.use('/', router);
