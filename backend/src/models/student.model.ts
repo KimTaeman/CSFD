@@ -16,10 +16,8 @@ const getAllSeniors = async () => {
   return prisma.mentor.findMany({});
 };
 
-const getAllJuniors = async () => {
+const getAllJniors = async () => {
   return prisma.student.findMany({ where: { isSenior: false } });
 };
 
-const updateHint = async () => {};
-
-export { getStudentById, getAllStudents, getAllSeniors, getAllJuniors };
+export { getStudentById, getAllStudents, getAllSeniors, getAllJniors };
