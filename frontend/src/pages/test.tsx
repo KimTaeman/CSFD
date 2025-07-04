@@ -18,12 +18,7 @@ function Page() {
       {/* Sidebar component */}
 
       <div className="ml-10">
-        <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar}>
-          <div className="p-4">
-            <p className="mb-4 text-sm text-white/32">Menu</p>
-            <p className="mb-4 text-sm text-white/32">Profile</p>
-          </div>
-        </Sidebar>
+        <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar}/>
       </div>
     </div>
   );
