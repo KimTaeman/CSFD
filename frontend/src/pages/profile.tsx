@@ -1,5 +1,5 @@
-import { useState } from "react";
-import Sidebar from "@/components/sidebar";
+import { useState } from 'react';
+import Sidebar from '@/components/sidebar';
 
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
