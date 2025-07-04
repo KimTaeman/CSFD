@@ -1,1 +1,1 @@
-export * from '@/models/student.model'
+export * from '@/models/student.model';
