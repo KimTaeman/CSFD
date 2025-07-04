@@ -11,8 +11,6 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  console.error(err);
-  
   if (err instanceof  ErrorException) {
     // console.log(err);
     res.status(err.status).json({

@@ -13,7 +13,9 @@ const getAllStudents = async () => {
 };
 
 const getAllSeniors = async () => {
-  return prisma.mentor.findMany({});
+  return prisma.student.findMany({
+    where: { isSenior: true }
+  });
 };
 
 const getAllJuniors = async () => {
