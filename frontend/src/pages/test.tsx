@@ -18,7 +18,7 @@ function Page() {
       {/* Sidebar component */}
 
       <div className="ml-10">
-        <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar}/>
+        <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
       </div>
     </div>
   );
