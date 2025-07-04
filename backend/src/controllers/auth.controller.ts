@@ -1,11 +1,13 @@
+import { Request, Response } from 'express';
 import msalClient from '@/config/msalConfig';
+import { ResponseMode } from '@azure/msal-node';
 import * as authModel from '@/models/auth.model';
 
-export const login = async (req, res) => {
+export const login = async (req: Request, res: Response) => {
   const authCodeUrlParameters = {
     scopes: ['user.read', 'openid', 'profile', 'email'],
-    redirectUri: process.env.BACKEND_REDIRECT_URI,
-    responseMode: 'form_post',
+    redirectUri: process.env.BACKEND_REDIRECT_URI || '',
+    responseMode: ResponseMode.FORM_POST,
   };
   try {
     const authUrl = await msalClient.getAuthCodeUrl(authCodeUrlParameters);
@@ -16,17 +18,21 @@ export const login = async (req, res) => {
   }
 };
 
-export const callback = async (req, res) => {
+export const callback = async (req: Request, res: Response) => {
   const tokenRequest = {
     code: req.body.code,
     scopes: ['user.read', 'openid', 'profile', 'email'],
-    redirectUri: process.env.BACKEND_REDIRECT_URI,
+    redirectUri: process.env.BACKEND_REDIRECT_URI || '',
   };
 
   try {
     const response = await msalClient.acquireTokenByCode(tokenRequest);
     console.log(response);
     const { account } = response;
+
+    if (!account) {
+      return res.status(400).send('No account information found');
+    }
 
     let student = await authModel.findStudentByMicrosoftId(account.homeAccountId);
 
@@ -54,7 +60,7 @@ export const callback = async (req, res) => {
     };
 
     req.session.save(() => {
-      res.redirect(process.env.CLIENT_REDIRECT_URL);
+      res.redirect(process.env.CLIENT_REDIRECT_URL || '/');
     });
   } catch (error) {
     console.error('Error in auth callback:', error);
@@ -62,8 +68,13 @@ export const callback = async (req, res) => {
   }
 };
 
-export const completeRegistration = async (req, res) => {
+export const completeRegistration = async (req: Request, res: Response) => {
   const { nickname, instagram, discord, line } = req.body;
+
+  if (!req.session.user?.id) {
+    return res.status(401).json({ message: 'Not authenticated' });
+  }
+
   const userId = req.session.user.id;
   if (!nickname) {
     return res.status(400).json({ message: 'Nickname is required.' });
@@ -84,7 +95,7 @@ export const completeRegistration = async (req, res) => {
   }
 };
 
-export const getInfo = async (req, res) => {
+export const getInfo = async (req: Request, res: Response) => {
   if (!req.session.user?.id) {
     return res.status(401).json({ message: 'Not authenticated' });
   }
@@ -125,7 +136,7 @@ export const getInfo = async (req, res) => {
   }
 };
 
-export const logout = (req, res) => {
+export const logout = (req: Request, res: Response) => {
   req.session.destroy((err) => {
     if (err) {
       return res.status(500).json({ message: 'Could not log out, please try again.' });
