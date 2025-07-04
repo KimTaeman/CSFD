@@ -1,4 +1,4 @@
-import { prisma } from '@/app';
+import prisma from '@/config/prismaClient';
 
 const getStudentById = async (id: number) => {
   return prisma.student.findUnique({
