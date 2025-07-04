@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import * as studentModel from '../models/student.model';
+import * as Models from '@/models';
 import { AppError } from '@/middlewares/errorHandler';
 
 // Placeholders - Replace with actual logic
@@ -18,7 +18,7 @@ export const getStudentById = async (
   }
 
   try {
-    const student = await studentModel.getStudentById(Number(id));
+    const student = await Models.getStudentById(Number(id));
 
     if (!student) {
       const error: AppError = new Error('Student not found');
@@ -48,5 +48,12 @@ export const getStudentById = async (
 
 // export const getAllSeniors = async (req: Request, res: Response) =>
 //   res.status(200).json({ seniors: [] });
-// export const getAllJuniors = async (req: Request, res: Response) =>
-//   res.status(200).json({ juniors: [] });
+
+export const getAllJuniors = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const juniors = await Models.getAllJuniors();
+    return res.status(200).json({ juniors });
+  } catch (error) {
+    next(error);
+  }
+};
