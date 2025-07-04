@@ -44,7 +44,7 @@ export const getAllStudents = async (
   }
 };
 
-// export const getAllSeniors = async (req: Request, res: Response) =>
-//   res.status(200).json({ seniors: [] });
-// export const getAllJuniors = async (req: Request, res: Response) =>
-//   res.status(200).json({ juniors: [] });
+export const getAllSeniors = async (req: Request, res: Response) =>
+  res.status(200).json({ seniors: [] });
+export const getAllJuniors = async (req: Request, res: Response) =>
+  res.status(200).json({ juniors: [] });
