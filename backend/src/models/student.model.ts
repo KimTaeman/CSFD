@@ -13,11 +13,15 @@ const getAllStudents = async () => {
 };
 
 const getAllSeniors = async () => {
-  return prisma.mentor.findMany({});
+  return prisma.student.findMany({
+    where: { isSenior: true },
+  });
 };
 
-const getAllJniors = async () => {
-  return prisma.student.findMany({ where: { isSenior: false } });
+const getAllJuniors = async () => {
+  return prisma.student.findMany({
+    where: { isSenior: false },
+  });
 };
 
-export { getStudentById, getAllStudents, getAllSeniors, getAllJniors };
+export { getStudentById, getAllStudents, getAllSeniors, getAllJuniors };
