@@ -1,4 +1,11 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
+@import "tailwindcss-animated";
+
+@theme {
+  --font-inter: 'Inter', sans-serif;
+  --font-irish-grover: 'Irish Grover', sans-serif;
+}
 
 @layer utilities {
   /*used for white backdrop glow*/

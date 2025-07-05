@@ -1,6 +1,6 @@
 const HouseDetail = () => {
   return (
-    <div className="hover:shadow-3xl w-[985px] rounded-3xl border border-white/50 bg-white/40 font-['Inter'] font-medium text-black shadow-2xl backdrop-blur-lg transition-all duration-300 ease-in-out hover:border-white/70 hover:bg-white/60">
+    <div className="hover:shadow-3xl w-full max-w-5xl rounded-3xl border border-white/50 bg-white/40 font-inter font-medium text-black shadow-2xl backdrop-blur-lg transition-all duration-300 ease-in-out hover:border-white/70 hover:bg-white/60">
       <div className="flex flex-col items-start justify-start p-5">
         <p className="text-left leading-relaxed break-words hyphens-auto">
           You are a natural connector. You understand both people and systems—and you know how to
