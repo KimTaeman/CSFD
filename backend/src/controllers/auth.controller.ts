@@ -117,19 +117,25 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
       nickname: student.nickname,
       role: student.role,
       isSenior: isSenior,
-      mentees: student.mentees.map((mentee) => ({
-        id: mentee.junior.id,
-        displayName: mentee.junior.displayName,
-        nickname: mentee.junior.nickname,
-        lives: student.lives || 3,
-      })),
+      mentees: isSenior
+        ? student.mentees.map((mentee) => ({
+            id: mentee.junior.id,
+            displayName: mentee.junior.displayName,
+            nickname: mentee.junior.nickname,
+            lives: student.lives,
+            instagram: mentee.junior.instagram,
+            discord: mentee.junior.discord,
+            line: mentee.junior.line,
+          }))
+        : null,
       hints: isSenior ? student.givenHints : student.receivedHints,
-      house: student.house || null,
-      instagram: student.instagram || null,
-      discord: student.discord || null,
-      line: student.line || null,
+      house: student.house,
+      instagram: student.instagram,
+      discord: student.discord,
+      line: student.line,
     };
 
+    console.log('student', student.mentees);
     res.status(200).json(responseData);
   } catch (error) {
     next(error);

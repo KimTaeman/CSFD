@@ -18,6 +18,9 @@ export interface StudentInfo {
       id: string;
       displayName: string;
       nickname: string | null;
+      instagram: string | null;
+      discord: string | null;
+      line: string | null;
     };
   }>;
   mentor?: {
@@ -25,6 +28,9 @@ export interface StudentInfo {
       id: string;
       displayName: string;
       nickname: string | null;
+      instagram: string | null;
+      discord: string | null;
+      line: string | null;
     };
   } | null;
   givenHints: Array<{
