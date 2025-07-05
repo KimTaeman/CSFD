@@ -34,7 +34,7 @@ export const callback = async (req: Request, res: Response, next: NextFunction) 
     const { account } = response;
 
     if (!account) {
-      throw new NotFoundError();
+      throw new NotFoundError('Account information not found in tenant.');
     }
 
     let student = await authModel.findStudentByMicrosoftId(account.homeAccountId);
@@ -105,7 +105,7 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
     const student = await authModel.getStudentInfo(req.session.user.id);
 
     if (!student) {
-      throw new NotFoundError();
+      throw new NotFoundError('Account information not found.');
     }
 
     const isSenior = student.role === 'CS25';
