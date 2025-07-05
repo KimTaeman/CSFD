@@ -1,7 +1,27 @@
 import { Request, Response, NextFunction } from 'express';
-
-// TODO: [HINT-001] Update user's hint setting.
+import * as Models from '@/models';
+import { NotFoundError } from '@/errors/not-found-error';
 
 export const updateHint = async (req: Request, res: Response, next: NextFunction) => {
-  res.status(501).json({ message: 'Not Implemented' });
+  const hints = req.body;
+
+  if (!hints) {
+    throw new NotFoundError();
+  }
+
+  try {
+    const updatedHints = await Models.updateHint(hints);
+
+    if (!updatedHints) {
+      throw new NotFoundError();
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Updated',
+      updatedHints,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
