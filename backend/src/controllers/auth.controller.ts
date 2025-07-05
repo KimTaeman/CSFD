@@ -4,6 +4,9 @@ import { ResponseMode } from '@azure/msal-node';
 import * as authModel from '@/models/auth.model';
 import { AppError } from '@/middlewares/errorHandler';
 import config from '@/config/config';
+import { NotFoundError } from '@/errors/not-found-error';
+import { UnauthorizedError } from '@/errors/not-authorized-error';
+import { BadRequestError } from '@/errors/bad-request-error';
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   const authCodeUrlParameters = {
@@ -31,9 +34,7 @@ export const callback = async (req: Request, res: Response, next: NextFunction) 
     const { account } = response;
 
     if (!account) {
-      const error: AppError = new Error('No account information found');
-      error.status = 400;
-      throw error;
+      throw new NotFoundError();
     }
 
     let student = await authModel.findStudentByMicrosoftId(account.homeAccountId);
@@ -73,16 +74,12 @@ export const completeRegistration = async (req: Request, res: Response, next: Ne
   const { nickname, instagram, discord, line } = req.body;
 
   if (!req.session.user?.id) {
-    const error: AppError = new Error('Not authenticated');
-    error.status = 401;
-    throw error;
+    throw new UnauthorizedError('Not authenticated.');
   }
 
   const userId = req.session.user.id;
   if (!nickname) {
-    const error: AppError = new Error('Nickname is required.');
-    error.status = 400;
-    throw error;
+    throw new BadRequestError('Nickname is required.');
   }
   try {
     const updatedUser = await authModel.completeRegistration(
@@ -101,18 +98,14 @@ export const completeRegistration = async (req: Request, res: Response, next: Ne
 
 export const getInfo = async (req: Request, res: Response, next: NextFunction) => {
   if (!req.session.user?.id) {
-    const error: AppError = new Error('Not authenticated');
-    error.status = 401;
-    throw error;
+    throw new UnauthorizedError('Not authenticated.');
   }
 
   try {
     const student = await authModel.getStudentInfo(req.session.user.id);
 
     if (!student) {
-      const error: AppError = new Error('Student not found');
-      error.status = 404;
-      throw error;
+      throw new NotFoundError();
     }
 
     const isSenior = student.role === 'CS25';
