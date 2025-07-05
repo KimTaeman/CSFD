@@ -23,8 +23,7 @@ const Page = () => {
       return;
     }
 
-    fetch(`http://localhost:3000/houses/${house}`)
-      .then((response: any) => setHouseInfo(response));
+    fetch(`http://localhost:3000/houses/${house}`).then((response: any) => setHouseInfo(response));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [house]);
