@@ -1,4 +1,4 @@
-import { prisma } from '@/app';
+import prisma from '@/config/prismaClient';
 import { Hint } from '@/types/hint.type';
 
 const updateHint = async (hints: Array<Hint>) => {
