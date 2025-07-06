@@ -1,12 +1,18 @@
-import { useState } from 'react';
 import Picture from '@/components/picture';
 import isotarImage from '@/assets/img-placeholder.png';
 import Sidebar from '@/components/sidebar';
 import ProfileForm from '@/components/ProfileForm';
+import { useProfileState } from '@/hooks/useProfileState';
 
 function Page() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const closeSidebar = () => setIsSidebarOpen(false);
+  const {
+    isSidebarOpen,
+    isEditing,
+    closeSidebar,
+    handleEditClick,
+    handleConfirm,
+    handleCancel
+  } = useProfileState();
 
   return (
     <div className="flex min-h-screen w-full bg-[url('frontend/src/assets/bg-1.svg')] bg-cover bg-center bg-no-repeat text-white">
@@ -23,7 +29,12 @@ function Page() {
         </div>
 
         {/* Form Section */}
-        <ProfileForm />
+        <ProfileForm
+          isEditing={isEditing}
+          onEditClick={handleEditClick}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
       </main>
     </div>
   );
