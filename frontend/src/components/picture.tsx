@@ -15,6 +15,7 @@ function Picture({ src, alt, className }: { src: string; alt?: string; className
           alt={alt || 'Image'}
           className="h-full w-full object-contain"
           loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
