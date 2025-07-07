@@ -7,7 +7,7 @@ function Page() {
   const { isSidebarOpen, isEditing, closeSidebar, handleEditClick, handleConfirm, handleCancel } =
     useProfileState();
   return (
-    <div className="flex min-h-screen w-full bg-[url('frontend/src/assets/bg-2.png')] bg-cover bg-center bg-no-repeat text-white">
+    <div className="flex min-h-screen w-full bg-[url('frontend/src/assets/bg-2.svg')] bg-cover bg-center bg-no-repeat text-white">
       {/* Sidebar */}
       <div className=" p-4 pl-10 pr-110 ">
         {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
