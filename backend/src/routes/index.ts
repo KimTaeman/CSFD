@@ -6,8 +6,8 @@ import hintRouter from './hint.route';
 const router = Router();
 
 // Welcome Route
-router.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to the API!' });
+router.get('/', async (req, res) => {
+  res.status(200).json({ message: 'Welcome the API!' });
 });
 
 // API Routes
