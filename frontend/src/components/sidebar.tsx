@@ -87,9 +87,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
                   onClick={() => handleMenuClick(item.name)}
                   className={({ isActive }) =>
                     `flex min-h-[58px] items-center gap-4 rounded-xl px-6 py-2 text-left transition-all duration-200 focus:ring-2 focus:ring-white/50 focus:outline-none ${
-                      isActive
-                        ? 'selected-glow text-white'
-                        : 'text-white/60 hover:bg-white/10'
+                      isActive ? 'selected-glow text-white' : 'text-white/60 hover:bg-white/10'
                     }`
                   }
                   role="menuitem"
@@ -111,7 +109,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
         <div className="mt-auto p-6">
           <button
             onClick={handleLogout}
-            className="mb-1 flex min-h-[42px] w-full items-center justify-between rounded-xl px-6 py-3 font-medium text-white transition-all duration-200 hover:brightness-110 focus:ring-2 focus:ring-purple-400 focus:outline-none active:scale-95 active:brightness-90 bg-[rgba(140,58,170,1)]"
+            className="mb-1 flex min-h-[42px] w-full items-center justify-between rounded-xl bg-[rgba(140,58,170,1)] px-6 py-3 font-medium text-white transition-all duration-200 hover:brightness-110 focus:ring-2 focus:ring-purple-400 focus:outline-none active:scale-95 active:brightness-90"
           >
             <span className="shadow-white-glow font-[Inter] text-sm">Logout</span>
             <img src={LogoutIcon} alt="" className="h-5 w-5" role="presentation" />
