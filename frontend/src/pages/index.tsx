@@ -9,7 +9,7 @@ function Page() {
       <nav>
         <NavLink
           to="/profile/profile-page"
-          className="rounded bg-white/80 px-6 py-3 font-bold text-black hover:bg-white/60 mr-10"
+          className="mr-10 rounded bg-white/80 px-6 py-3 font-bold text-black hover:bg-white/60"
         >
           Go to Profile Page
         </NavLink>
@@ -20,7 +20,6 @@ function Page() {
           Go to Hint Page
         </NavLink>
       </nav>
-
     </div>
   );
 }

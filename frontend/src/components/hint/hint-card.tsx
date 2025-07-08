@@ -8,9 +8,7 @@ interface CardProps {
 function HintCard({ title, description, stage, type = 'freshman' }: CardProps) {
   const getCardStyles = () => {
     if (type === 'freshman') {
-      return stage === 'shown' 
-        ? 'bg-white bg-opacity-100' 
-        : 'bg-white bg-opacity-50';
+      return stage === 'shown' ? 'bg-white bg-opacity-100' : 'bg-white bg-opacity-50';
     }
     return 'bg-white bg-opacity-100'; // Default for other types
   };
