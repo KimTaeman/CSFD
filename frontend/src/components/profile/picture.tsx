@@ -1,7 +1,9 @@
 function Picture({ src, alt, className }: { src: string; alt?: string; className?: string }) {
   return (
     <div className={`space-y-0.1 lg:space-y-3 ${className}`}>
-      <p className="pl-2 lg:pl-4 pt-2 lg:pt-0 font-[Poppins] text-sm lg:text-base text-white">Photo</p>
+      <p className="pt-2 pl-2 font-[Poppins] text-sm text-white lg:pt-0 lg:pl-4 lg:text-base">
+        Photo
+      </p>
       <div
         className={`aspect-[3/4] w-full max-w-[40000px] overflow-hidden rounded-2xl ${className || ''}`}
       >
