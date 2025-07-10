@@ -3,10 +3,50 @@ import { useProfileState } from '@/hooks/useProfileState';
 import HintCard from '@/components/hint/hint-card';
 import Guess from '@/components/hint/guess';
 import HamburgerIcon from '@/assets/hamburger.svg';
+import FailImage from '@/assets/fail.png';
+import SuccessImage from '@/assets/success.png';
+import SparkleImage from '@/assets/sparkle.png';
+import { useState, useCallback } from 'react';
+
+type GuessState = 'n/a' | 'success' | 'fail';
 
 function Page() {
   const { isSidebarOpen, isEditing, closeSidebar, openSidebar, handleEditClick, handleConfirm, handleCancel } =
     useProfileState();
+
+  // Guess state management
+  const [guessState, setGuessState] = useState<GuessState>('n/a');
+  const [attempts, setAttempts] = useState(0);
+  const [correctAnswer] = useState(100); // Default correct answer
+  const maxAttempts = 3;
+
+  const handleGuessSubmit = useCallback((guess: string) => {
+    const numericGuess = parseInt(guess, 10);
+    const newAttempts = attempts + 1;
+    
+    console.log(`Guess attempt ${newAttempts}: ${numericGuess}`);
+    
+    if (numericGuess === correctAnswer) {
+      setGuessState('success');
+      console.log('State changed to: success');
+      return;
+    }
+    
+    setAttempts(newAttempts);
+    
+    if (newAttempts >= maxAttempts) {
+      setGuessState('fail');
+      console.log('State changed to: fail');
+    } else {
+      console.log(`State remains: n/a (${newAttempts}/${maxAttempts} attempts used)`);
+    }
+  }, [attempts, correctAnswer, maxAttempts]);
+
+  const resetGuess = useCallback(() => {
+    setGuessState('n/a');
+    setAttempts(0);
+    console.log('Guess state reset to: n/a');
+  }, []);
 
   return (
     <>
@@ -48,9 +88,45 @@ function Page() {
           
           {/* Guess Component - Below Third Card */}
           <div className="absolute top-[70%] left-[2%] w-200">
-            <Guess />
+            <Guess 
+              onGuessSubmit={handleGuessSubmit}
+              guessState={guessState}
+              attempts={attempts}
+              maxAttempts={maxAttempts}
+              onReset={resetGuess}
+            />
           </div>
         </main>
+
+        {/* Desktop Overlay for Success/Fail */}
+        {(guessState === 'success' || guessState === 'fail') && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+            {guessState === 'success' ? (
+              <div className="relative flex items-center justify-center">
+                <img 
+                  src={SparkleImage} 
+                  alt="Sparkle effect" 
+                  className="absolute w-[1200px] h-[1200px] object-contain z-10"
+                  onError={() => console.log('Sparkle image failed to load')}
+                  onLoad={() => console.log('Sparkle image loaded successfully')}
+                />
+                <img 
+                  src={SuccessImage} 
+                  alt="Success" 
+                  className="relative w-[700px] h-[700px] object-contain z-20"
+                  onError={() => console.log('Success image failed to load')}
+                  onLoad={() => console.log('Success image loaded successfully')}
+                />
+              </div>
+            ) : (
+              <img 
+                src={FailImage} 
+                alt="Fail" 
+                className="max-w-[50%] max-h-[50%] object-contain"
+              />
+            )}
+          </div>
+        )}
       </div>
 
       {/* Mobile content */}
@@ -95,9 +171,41 @@ function Page() {
 
           {/* Guess Component */}
           <div className="-mt-6">
-            <Guess />
+            <Guess 
+              onGuessSubmit={handleGuessSubmit}
+              guessState={guessState}
+              attempts={attempts}
+              maxAttempts={maxAttempts}
+              onReset={resetGuess}
+            />
           </div>
         </main>
+
+        {/* Mobile Overlay for Success/Fail */}
+        {(guessState === 'success' || guessState === 'fail') && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
+            {guessState === 'success' ? (
+              <div className="relative flex items-center justify-center">
+                <img 
+                  src={SparkleImage} 
+                  alt="Sparkle effect" 
+                  className="absolute w-[1000px] h-[1000px] object-contain z-10"
+                />
+                <img 
+                  src={SuccessImage} 
+                  alt="Success" 
+                  className="relative w-[600px] h-[600px] object-contain z-20"
+                />
+              </div>
+            ) : (
+              <img 
+                src={FailImage} 
+                alt="Fail" 
+                className="max-w-[60%] max-h-[60%] object-contain"
+              />
+            )}
+          </div>
+        )}
       </div>
     </>
   );
