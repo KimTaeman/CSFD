@@ -67,17 +67,17 @@ function ProfileForm({
 
   const inputClassName = useMemo(
     () => (editing: boolean) =>
-      `w-full px-4 py-2 text-xl rounded-xl border-none outline-none h-12 font-[Poppins] transition-colors ${
+      `w-full px-4 lg:px-6 py-1 lg:py-2 text-xs lg:text-lg rounded-xl border-none outline-none h-7 lg:h-12 font-[Poppins] transition-colors ${
         editing ? 'bg-white text-black' : 'bg-gray-200 text-gray-700 cursor-not-allowed'
       }`,
     [],
   );
 
   return (
-    <div className="col-span-8 space-y-5 pr-30 pl-60">
+    <div className="space-y-2 px-6 lg:col-span-8 lg:space-y-5 lg:px-0 lg:pr-30 lg:pl-60">
       {formFields.map((field) => (
-        <div key={field.key} className="space-y-1.5">
-          <label htmlFor={field.key} className="block font-[Poppins] text-lg">
+        <div key={field.key} className="space-y-0.5 lg:space-y-1.5">
+          <label htmlFor={field.key} className="block font-[Poppins] text-xs lg:text-base">
             {field.label}
           </label>
           <input
@@ -93,9 +93,9 @@ function ProfileForm({
         </div>
       ))}
 
-      <div className="mt-12">
-        <p className="mb-4 font-[Poppins] text-lg">Social media (optional)</p>
-        <div className="space-y-4">
+      <div className="mt-6 lg:mt-12">
+        <p className="mb-2 font-[Poppins] text-xs lg:mb-4 lg:text-base">Social media (optional)</p>
+        <div className="space-y-2 lg:space-y-4">
           {socialMediaFields.map((field) => (
             <div key={field.key} className="relative">
               <img
@@ -110,7 +110,7 @@ function ProfileForm({
                 onChange={(e) => handleInputChange(field.key, e.target.value)}
                 onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
                 disabled={!isEditing}
-                className={`h-12 w-full rounded-xl border-none py-4 pr-4 pl-18 font-[Poppins] text-xl outline-none ${inputClassName(isEditing)}`}
+                className={`h-10 w-full rounded-xl border-none py-1 pr-4 pl-14 font-[Poppins] text-sm outline-none lg:h-12 lg:py-4 lg:pl-20 lg:text-lg ${inputClassName(isEditing)}`}
                 placeholder={field.label}
               />
             </div>
@@ -118,25 +118,25 @@ function ProfileForm({
         </div>
       </div>
 
-      <div className="mt-8 flex justify-center">
+      <div className="mt-4 flex justify-center lg:mt-8">
         {!isEditing ? (
           <button
             onClick={onEditClick}
-            className="rounded-xl border border-white bg-transparent px-16 py-2 font-[Poppins] text-lg text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none"
+            className="rounded-xl border border-white bg-transparent px-8 py-2 font-[Poppins] text-sm text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-16 lg:text-base"
           >
-            Edit Profile
+            Edit
           </button>
         ) : (
           <div className="flex gap-4">
             <button
               onClick={onConfirm}
-              className="rounded-xl border border-white bg-transparent px-12 py-2 font-[Poppins] text-lg text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none"
+              className="rounded-xl border border-white bg-transparent px-6 py-2 font-[Poppins] text-sm text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-12 lg:text-base"
             >
               Confirm
             </button>
             <button
               onClick={onCancel}
-              className="rounded-xl border border-white bg-transparent px-12 py-2 font-[Poppins] text-lg text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none"
+              className="rounded-xl border border-white bg-transparent px-6 py-2 font-[Poppins] text-sm text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-12 lg:text-base"
             >
               Cancel
             </button>

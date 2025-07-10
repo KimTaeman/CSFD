@@ -23,3 +23,17 @@
     );
   }
 }
+
+/* dark background to prevent white flash ._. */
+#root {
+  background-color: #000000;
+  min-height: 100vh;
+}
+
+body {
+  background-color: #000000;
+}
+
+html {
+  background-color: #000000;
+}
