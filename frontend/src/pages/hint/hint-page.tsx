@@ -11,8 +11,15 @@ import { useState, useCallback } from 'react';
 type GuessState = 'n/a' | 'success' | 'fail';
 
 function Page() {
-  const { isSidebarOpen, isEditing, closeSidebar, openSidebar, handleEditClick, handleConfirm, handleCancel } =
-    useProfileState();
+  const {
+    isSidebarOpen,
+    isEditing,
+    closeSidebar,
+    openSidebar,
+    handleEditClick,
+    handleConfirm,
+    handleCancel,
+  } = useProfileState();
 
   // Guess state management
   const [guessState, setGuessState] = useState<GuessState>('n/a');
@@ -51,41 +58,29 @@ function Page() {
   return (
     <>
       {/* Desktop-only content */}
-      <div className="hidden lg:flex min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-center bg-no-repeat text-white">
+      <div className="hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-center bg-no-repeat text-white lg:flex">
         {/* Sidebar */}
-        <div className="p-4 pl-10 pr-110">
+        <div className="p-4 pr-110 pl-10">
           {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
         </div>
-        
+
         {/* Main Content */}
-        <main className="flex-1 relative p-8">
+        <main className="relative flex-1 p-8">
           {/* First Hint Card - Top Left */}
-          <div className="absolute top-[11%] left-[2%] w-80 ">
-            <HintCard
-              title=""
-              description=""
-              stage="shown"
-            />
+          <div className="absolute top-[11%] left-[2%] w-80">
+            <HintCard title="" description="" stage="shown" />
           </div>
-          
+
           {/* Second Hint Card - Top Right */}
           <div className="absolute top-[11%] left-[34%] w-80 pl-40">
-            <HintCard
-              title=""
-              description=""
-              stage="shown"
-            />
+            <HintCard title="" description="" stage="shown" />
           </div>
-          
+
           {/* Third Hint Card - Bottom Left */}
-          <div className="absolute top-[38%] left-[2%] w-80 ">
-            <HintCard
-              title=""
-              description=""
-              stage="shown"
-            />
+          <div className="absolute top-[38%] left-[2%] w-80">
+            <HintCard title="" description="" stage="shown" />
           </div>
-          
+
           {/* Guess Component - Below Third Card */}
           <div className="absolute top-[70%] left-[2%] w-200">
             <Guess 
@@ -149,24 +144,12 @@ function Page() {
         {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
 
         {/* Mobile Main Content */}
-        <main className="relative z-10 flex flex-col px-4 pb-6 space-y-4 min-h-screen">
+        <main className="relative z-10 flex min-h-screen flex-col space-y-4 px-4 pb-6">
           {/* Hint Cards in single column */}
-          <div className="space-y-7 mt-9 mb-16 flex flex-col items-center ">
-            <HintCard
-              title=""
-              description=""
-              stage="shown"
-            />
-            <HintCard
-              title=""
-              description=""
-              stage="shown"
-            />
-            <HintCard
-              title=""
-              description=""
-              stage="shown"
-            />
+          <div className="mt-9 mb-16 flex flex-col items-center space-y-7">
+            <HintCard title="" description="" stage="shown" />
+            <HintCard title="" description="" stage="shown" />
+            <HintCard title="" description="" stage="shown" />
           </div>
 
           {/* Guess Component */}

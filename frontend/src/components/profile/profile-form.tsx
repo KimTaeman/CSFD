@@ -74,7 +74,7 @@ function ProfileForm({
   );
 
   return (
-    <div className="lg:col-span-8 space-y-2 lg:space-y-5 lg:pr-30 lg:pl-60 px-6 lg:px-0">
+    <div className="space-y-2 px-6 lg:col-span-8 lg:space-y-5 lg:px-0 lg:pr-30 lg:pl-60">
       {formFields.map((field) => (
         <div key={field.key} className="space-y-0.5 lg:space-y-1.5">
           <label htmlFor={field.key} className="block font-[Poppins] text-xs lg:text-base">
@@ -94,7 +94,7 @@ function ProfileForm({
       ))}
 
       <div className="mt-6 lg:mt-12">
-        <p className="mb-2 lg:mb-4 font-[Poppins] text-xs lg:text-base">Social media (optional)</p>
+        <p className="mb-2 font-[Poppins] text-xs lg:mb-4 lg:text-base">Social media (optional)</p>
         <div className="space-y-2 lg:space-y-4">
           {socialMediaFields.map((field) => (
             <div key={field.key} className="relative">
@@ -110,7 +110,7 @@ function ProfileForm({
                 onChange={(e) => handleInputChange(field.key, e.target.value)}
                 onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
                 disabled={!isEditing}
-                className={`h-10 lg:h-12 w-full rounded-xl border-none py-1 lg:py-4 pr-4 pl-14 lg:pl-20 font-[Poppins] text-sm lg:text-lg outline-none ${inputClassName(isEditing)}`}
+                className={`h-10 w-full rounded-xl border-none py-1 pr-4 pl-14 font-[Poppins] text-sm outline-none lg:h-12 lg:py-4 lg:pl-20 lg:text-lg ${inputClassName(isEditing)}`}
                 placeholder={field.label}
               />
             </div>
@@ -118,11 +118,11 @@ function ProfileForm({
         </div>
       </div>
 
-      <div className="mt-4 lg:mt-8 flex justify-center">
+      <div className="mt-4 flex justify-center lg:mt-8">
         {!isEditing ? (
           <button
             onClick={onEditClick}
-            className="rounded-xl border border-white bg-transparent px-8 lg:px-16 py-2 font-[Poppins] text-sm lg:text-base text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none"
+            className="rounded-xl border border-white bg-transparent px-8 py-2 font-[Poppins] text-sm text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-16 lg:text-base"
           >
             Edit
           </button>
@@ -130,13 +130,13 @@ function ProfileForm({
           <div className="flex gap-4">
             <button
               onClick={onConfirm}
-              className="rounded-xl border border-white bg-transparent px-6 lg:px-12 py-2 font-[Poppins] text-sm lg:text-base text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none"
+              className="rounded-xl border border-white bg-transparent px-6 py-2 font-[Poppins] text-sm text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-12 lg:text-base"
             >
               Confirm
             </button>
             <button
               onClick={onCancel}
-              className="rounded-xl border border-white bg-transparent px-6 lg:px-12 py-2 font-[Poppins] text-sm lg:text-base text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none"
+              className="rounded-xl border border-white bg-transparent px-6 py-2 font-[Poppins] text-sm text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-12 lg:text-base"
             >
               Cancel
             </button>
