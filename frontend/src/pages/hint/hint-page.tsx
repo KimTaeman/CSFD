@@ -21,6 +21,9 @@ function Page() {
     handleCancel,
   } = useProfileState();
 
+  // User role state to control senior/junior view
+  const [isSenior, setIsSenior] = useState(false);
+
   // Guess state management
   const [guessState, setGuessState] = useState<GuessState>('n/a');
   const [attempts, setAttempts] = useState(0);
@@ -41,13 +44,10 @@ function Page() {
     
     setAttempts(newAttempts);
     
-    if (newAttempts >= maxAttempts) {
-      setGuessState('fail');
-      console.log('State changed to: fail');
-    } else {
-      console.log(`State remains: n/a (${newAttempts}/${maxAttempts} attempts used)`);
-    }
-  }, [attempts, correctAnswer, maxAttempts]);
+    // Show fail image on every wrong attempt
+    setGuessState('fail');
+    console.log('State changed to: fail');
+  }, [attempts, correctAnswer]);
 
   const resetGuess = useCallback(() => {
     setGuessState('n/a');
@@ -55,6 +55,27 @@ function Page() {
     console.log('Guess state reset to: n/a');
   }, []);
 
+  // Toggle function kept for potential future use
+  const toggleUserRole = useCallback(() => {
+    setIsSenior(prev => !prev);
+  }, []);
+
+  // Callbacks for senior hint editing
+  const handleEditHints = useCallback(() => {
+    console.log("Edit hints mode activated");
+    // Additional logic for entering edit mode
+  }, []);
+  
+  const handleConfirmEdit = useCallback(() => {
+    console.log("Hint edits confirmed");
+    // Additional logic for saving hint changes
+  }, []);
+  
+  const handleCancelEdit = useCallback(() => {
+    console.log("Hint edits cancelled");
+    // Additional logic for cancelling hint changes
+  }, []);
+  
   return (
     <>
       {/* Desktop-only content */}
@@ -68,58 +89,93 @@ function Page() {
         <main className="relative flex-1 p-8">
           {/* First Hint Card - Top Left */}
           <div className="absolute top-[11%] left-[2%] w-80">
-            <HintCard title="" description="" stage="shown" />
+            <HintCard 
+              title="" 
+              description="" 
+              stage="shown" 
+              type={isSenior ? 'senior' : 'freshman'} 
+            />
           </div>
 
           {/* Second Hint Card - Top Right */}
           <div className="absolute top-[11%] left-[34%] w-80 pl-40">
-            <HintCard title="" description="" stage="shown" />
+            <HintCard 
+              title="" 
+              description="" 
+              stage="shown" 
+              type={isSenior ? 'senior' : 'freshman'} 
+            />
           </div>
 
           {/* Third Hint Card - Bottom Left */}
           <div className="absolute top-[38%] left-[2%] w-80">
-            <HintCard title="" description="" stage="shown" />
+            <HintCard 
+              title="" 
+              description="" 
+              stage="shown" 
+              type={isSenior ? 'senior' : 'freshman'} 
+            />
           </div>
 
           {/* Guess Component - Below Third Card */}
-          <div className="absolute top-[70%] left-[2%] w-200">
+          <div
+            className={`absolute left-[2%] w-200 ${
+              isSenior
+                ? 'top-[56%] lg:top-[66%]' 
+                : 'top-[70%] lg:top-[70%]'
+            }`}
+          >
+            {/* Add prompt text above Guess */}
+            <div className="mb-7 text-2xl  text-white select-none">
+              Guess your P'code 💚💚💚
+            </div>
             <Guess 
               onGuessSubmit={handleGuessSubmit}
               guessState={guessState}
               attempts={attempts}
               maxAttempts={maxAttempts}
               onReset={resetGuess}
+              isSenior={isSenior}
+              onEditHints={handleEditHints}
+              onConfirm={handleConfirmEdit}
+              onCancel={handleCancelEdit}
+              
             />
           </div>
         </main>
 
         {/* Desktop Overlay for Success/Fail */}
         {(guessState === 'success' || guessState === 'fail') && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            {guessState === 'success' ? (
-              <div className="relative flex items-center justify-center">
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+            onClick={resetGuess} // Dismiss on click anywhere
+          >
+            <div className="ml-[270px] flex h-full w-full items-center justify-center">
+              {guessState === 'success' ? (
+                <div className="relative flex items-center justify-center">
+                  <img 
+                    src={SparkleImage} 
+                    alt="Sparkle effect" 
+                    className="absolute w-[1500px] h-[2500px] mb-[14%] object-contain z-10"
+                    onError={() => console.log('Sparkle image failed to load')}
+                    onLoad={() => console.log('Sparkle image loaded successfully')}
+                  />
+                  <img 
+                    src={SuccessImage} 
+                    alt="Success" 
+                    className="relative w-[70%] h-[70%] mb-[14%] object-contain z-20"
+                    onError={() => console.log('Success image failed to load')}
+                    onLoad={() => console.log('Success image loaded successfully')}
+                  />
+                </div>
+              ) : (
                 <img 
-                  src={SparkleImage} 
-                  alt="Sparkle effect" 
-                  className="absolute w-[1200px] h-[1200px] object-contain z-10"
-                  onError={() => console.log('Sparkle image failed to load')}
-                  onLoad={() => console.log('Sparkle image loaded successfully')}
+                  src={FailImage} 
+                  alt="Fail" 
+                  className="max-w-[81%] max-h-[81%] mb-[13%] object-contain"
                 />
-                <img 
-                  src={SuccessImage} 
-                  alt="Success" 
-                  className="relative w-[700px] h-[700px] object-contain z-20"
-                  onError={() => console.log('Success image failed to load')}
-                  onLoad={() => console.log('Success image loaded successfully')}
-                />
-              </div>
-            ) : (
-              <img 
-                src={FailImage} 
-                alt="Fail" 
-                className="max-w-[50%] max-h-[50%] object-contain"
-              />
-            )}
+              )}
+            </div>
           </div>
         )}
       </div>
@@ -147,44 +203,70 @@ function Page() {
         <main className="relative z-10 flex min-h-screen flex-col space-y-4 px-4 pb-6">
           {/* Hint Cards in single column */}
           <div className="mt-9 mb-16 flex flex-col items-center space-y-7">
-            <HintCard title="" description="" stage="shown" />
-            <HintCard title="" description="" stage="shown" />
-            <HintCard title="" description="" stage="shown" />
+            <HintCard 
+              title="" 
+              description="" 
+              stage="shown" 
+              type={isSenior ? 'senior' : 'freshman'} 
+            />
+            <HintCard 
+              title="" 
+              description="" 
+              stage="shown" 
+              type={isSenior ? 'senior' : 'freshman'} 
+            />
+            <HintCard 
+              title="" 
+              description="" 
+              stage="shown" 
+              type={isSenior ? 'senior' : 'freshman'} 
+            />
           </div>
 
           {/* Guess Component */}
-          <div className="-mt-6">
+          <div className={isSenior ? "-mt-32" : "-mt-6"}>
+            {/* Add prompt text above Guess */}
+            <div className="mb-7 font-[Poppins] text-lg text-white select-none">
+              Guess your P'code 💚💚💚
+            </div>
             <Guess 
               onGuessSubmit={handleGuessSubmit}
               guessState={guessState}
               attempts={attempts}
               maxAttempts={maxAttempts}
               onReset={resetGuess}
+              isSenior={isSenior}
+              onEditHints={handleEditHints}
+              onConfirm={handleConfirmEdit}
+              onCancel={handleCancelEdit}
             />
           </div>
         </main>
 
         {/* Mobile Overlay for Success/Fail */}
         {(guessState === 'success' || guessState === 'fail') && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+            onClick={resetGuess} // Dismiss on click anywhere
+          >
             {guessState === 'success' ? (
               <div className="relative flex items-center justify-center">
                 <img 
                   src={SparkleImage} 
                   alt="Sparkle effect" 
-                  className="absolute w-[1000px] h-[1000px] object-contain z-10"
+                  className="absolute w-[90%] h-[90%] object-contain z-10"
                 />
                 <img 
                   src={SuccessImage} 
                   alt="Success" 
-                  className="relative w-[600px] h-[600px] object-contain z-20"
+                  className="relative w-[90%] h-[90%] object-contain z-20"
                 />
               </div>
             ) : (
               <img 
                 src={FailImage} 
                 alt="Fail" 
-                className="max-w-[60%] max-h-[60%] object-contain"
+                className="w-[100%] h-[100%] object-contain"
               />
             )}
           </div>
