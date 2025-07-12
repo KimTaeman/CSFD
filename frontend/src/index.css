@@ -43,6 +43,14 @@
       margin-left: 3%; 
     }
   }
+  .ipadpro-ml {
+    margin-left: 3%;
+  }
+  @media (min-width: 1024px) and (max-width: 1535px) {
+    .ipadpro-xl-ml {
+      padding-left: 15%;
+    }
+  }
 }
 /* for the hint page ._. */
 html,
