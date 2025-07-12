@@ -68,7 +68,7 @@ function ProfileForm({
   const inputClassName = useMemo(
     () => (editing: boolean) =>
       `w-full px-2 lg:px-6 py-2 lg:py-2 text-base lg:text-lg rounded-xl border-none outline-none h-10 lg:h-12 font-[Poppins] transition-colors ${
-        editing ? 'bg-white text-black' : 'bg-gray-200 text-gray-700 cursor-not-allowed'
+        editing ? 'bg-white text-black' : 'bg-gray-300 text-gray-700 cursor-not-allowed'
       }`,
     [],
   );
