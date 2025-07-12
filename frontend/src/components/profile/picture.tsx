@@ -32,7 +32,7 @@ function Picture({
         Photo
       </p>
       <div
-        className={`aspect-[3/4] w-full overflow-hidden rounded-2xl ${className || ''}`}
+        className={`relative aspect-[3/4] w-full overflow-hidden rounded-2xl ${className || ''}`}
       >
         <img
           src={src}
