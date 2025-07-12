@@ -57,9 +57,9 @@ function Page() {
   return (
     <>
       {/* Desktop-only content */}
-      <div className="hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat text-white xl:flex">
+      <div className="force-mobile-hide hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat text-white xl:flex">
         {/* Sidebar */}
-        <div className="p-4 pr-110 pl-10">
+        <div className="sidebar-pr-80 p-4 pr-110 pl-10">
           {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
         </div>
 
@@ -73,7 +73,7 @@ function Page() {
           )}
 
           {/* First set of Hint Cards */}
-          <div className="absolute top-[11%] left-[2%] w-80">
+          <div className="absolute top-[6%] left-[2%] w-80 pt-13">
             <HintCard
               title=""
               description=""
@@ -81,7 +81,7 @@ function Page() {
               type={isSenior ? 'senior' : 'freshman'}
             />
           </div>
-          <div className="absolute top-[11%] left-[34%] w-80 pl-40">
+          <div className="absolute top-[6%] left-[2%] w-80 pt-13 pl-158">
             <HintCard
               title=""
               description=""
@@ -89,7 +89,7 @@ function Page() {
               type={isSenior ? 'senior' : 'freshman'}
             />
           </div>
-          <div className="absolute top-[38%] left-[2%] w-80">
+          <div className="absolute top-[6%] left-[2%] w-80 pt-83">
             <HintCard
               title=""
               description=""
@@ -100,7 +100,7 @@ function Page() {
 
           {/* Guess/Edit for first ncode */}
           <div
-            className={`absolute left-[2%] w-200 ${isSenior ? 'top-[56%] lg:top-[66%]' : 'top-[70%] lg:top-[70%]'}`}
+            className={`absolute left-[2%] w-200 ${isSenior ? 'top-[56%] lg:top-[6%] lg:pt-158' : 'top-[70%] lg:top-[6%] lg:pt-170'}`}
           >
             {!isSenior && (
               <div className="mb-7 text-2xl text-white select-none">Guess your P'code 💚💚💚</div>
@@ -121,19 +121,19 @@ function Page() {
           {/* Second set for double ncode senior */}
           {isSenior && isDoubleSenior && (
             <>
-              <div className="absolute top-[73%] left-[3%] z-10 font-[Poppins] text-xl text-white">
+              <div className="absolute top-[11%] left-[3%] z-10 pt-165 font-[Poppins] text-xl text-white">
                 Junior: {juniorName2}
               </div>
-              <div className="absolute top-[78%] left-[2%] w-80">
+              <div className="absolute top-[11%] left-[2%] w-80 pt-179">
                 <HintCard title="" description="" stage="shown" type="senior" />
               </div>
-              <div className="absolute top-[78%] left-[34%] w-80 pl-40">
+              <div className="absolute top-[11%] left-[2%] w-80 pt-179 pl-158">
                 <HintCard title="" description="" stage="shown" type="senior" />
               </div>
-              <div className="absolute top-[105%] left-[2%] w-80">
+              <div className="absolute top-[11%] left-[2%] w-80 pt-71 pt-248">
                 <HintCard title="" description="" stage="shown" type="senior" />
               </div>
-              <div className="absolute top-[123%] left-[2%] w-200 lg:top-[133%]">
+              <div className="absolute top-[123%] left-[2%] w-200 lg:top-[11%] lg:pt-322">
                 <Guess
                   onGuessSubmit={handleGuessSubmit}
                   guessState={guessState}
@@ -161,7 +161,7 @@ function Page() {
       </div>
 
       {/* Mobile content */}
-      <div className="relative min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat text-white xl:hidden">
+      <div className="force-mobile relative min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat text-white xl:hidden">
         <div className="absolute inset-0 z-0 bg-black/6"></div>
         <div className="relative z-10 flex justify-start p-4">
           <button
@@ -174,8 +174,14 @@ function Page() {
         </div>
         {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
         <main className="relative z-10 flex min-h-screen flex-col space-y-4 px-4 pb-6 lg:pl-[38%]">
+          {/* Junior label for first set (MOBILE) */}
+          {isSenior && (
+            <div className="ipadpro-xl-ml-hint mt-3 mb-2 ml-5 font-[Poppins] text-lg text-white">
+              Junior: {juniorName1}
+            </div>
+          )}
           {/* First set of HintCards */}
-          <div className="mt-9 mb-24 flex flex-col items-center space-y-7 lg:ml-8 lg:items-start">
+          <div className="mt-5 mb-24 flex flex-col items-center space-y-7 lg:ml-8 lg:items-start">
             <HintCard
               title=""
               description=""
@@ -215,7 +221,11 @@ function Page() {
           </div>
           {isSenior && isDoubleSenior && (
             <>
-              <div className="mt-9 mb-24 flex flex-col items-center space-y-7 lg:ml-8 lg:items-start">
+              {/* Junior label for second set (MOBILE) */}
+              <div className="ipadpro-xl-ml-hint mt-5 mb-2 ml-5 font-[Poppins] text-lg text-white">
+                Junior: {juniorName2}
+              </div>
+              <div className="mt-5 mb-24 flex flex-col items-center space-y-7 lg:ml-8 lg:items-start">
                 <HintCard title="" description="" stage="shown" type="senior" />
                 <HintCard title="" description="" stage="shown" type="senior" />
                 <HintCard title="" description="" stage="shown" type="senior" />
