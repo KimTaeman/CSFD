@@ -173,13 +173,9 @@ function Page() {
           </button>
         </div>
         {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
-        <main className="relative z-10 flex min-h-screen flex-col space-y-4 px-4 pb-6
-          lg:pl-[38%] 
-        ">
+        <main className="relative z-10 flex min-h-screen flex-col space-y-4 px-4 pb-6 lg:pl-[38%]">
           {/* First set of HintCards */}
-          <div className="mt-9 mb-24 flex flex-col items-center space-y-7
-            lg:items-start lg:ml-8
-          ">
+          <div className="mt-9 mb-24 flex flex-col items-center space-y-7 lg:ml-8 lg:items-start">
             <HintCard
               title=""
               description=""
@@ -199,7 +195,7 @@ function Page() {
               type={isSenior ? 'senior' : 'freshman'}
             />
           </div>
-          <div className={`${isSenior ? '-mt-14' : '-mt-4'} lg:ml-8 lg:mt-[2%]`}>
+          <div className={`${isSenior ? '-mt-14' : '-mt-4'} lg:mt-[2%] lg:ml-8`}>
             {!isSenior && (
               <div className="mb-7 font-[Poppins] text-lg text-white select-none">
                 Guess your P'code 💚💚💚
@@ -219,12 +215,12 @@ function Page() {
           </div>
           {isSenior && isDoubleSenior && (
             <>
-              <div className="mt-9 mb-24 flex flex-col items-center space-y-7 lg:items-start lg:ml-8">
+              <div className="mt-9 mb-24 flex flex-col items-center space-y-7 lg:ml-8 lg:items-start">
                 <HintCard title="" description="" stage="shown" type="senior" />
                 <HintCard title="" description="" stage="shown" type="senior" />
                 <HintCard title="" description="" stage="shown" type="senior" />
               </div>
-              <div className="-mt-14 lg:ml-8 lg:mt-[2%]">
+              <div className="-mt-14 lg:mt-[2%] lg:ml-8">
                 <Guess
                   onGuessSubmit={handleGuessSubmit}
                   guessState={guessState}
