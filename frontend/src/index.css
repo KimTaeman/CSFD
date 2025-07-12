@@ -1,1 +1,39 @@
 @import 'tailwindcss';
+
+@layer utilities {
+  /*used for white backdrop glow*/
+  .shadow-white-glow {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+  }
+  /*used for selected item*/
+  .selected-glow {
+    background-image: radial-gradient(
+      80% 80% at 50% 50%,
+      rgba(204, 139, 139, 0.18) 0%,
+      rgba(255, 255, 255, 0) 105%
+    );
+    backdrop-filter: blur(3px);
+  }
+  /*used for the sidebar background*/
+  .glass-glow {
+    background-image: linear-gradient(
+      108.46deg,
+      rgba(255, 255, 255, 0.264) 0%,
+      rgba(255, 255, 255, 0.066) 100%
+    );
+  }
+}
+
+/* dark background to prevent white flash ._. */
+#root {
+  background-color: #000000;
+  min-height: 100vh;
+}
+
+body {
+  background-color: #000000;
+}
+
+html {
+  background-color: #000000;
+}
