@@ -5,7 +5,7 @@ function Picture({ src, alt, className }: { src: string; alt?: string; className
         Photo
       </p>
       <div
-        className={`aspect-[3/4] w-full max-w-[40000px] overflow-hidden rounded-2xl ${className || ''}`}
+        className={`aspect-[3/4] w-full overflow-hidden rounded-2xl ${className || ''}`}
       >
         <img
           src={src}
