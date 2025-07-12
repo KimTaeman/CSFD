@@ -20,7 +20,7 @@ function Page() {
   return (
     <>
       {/* Desktop-only content */}
-      <div className="relative hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-1.svg')] bg-cover bg-center bg-no-repeat text-white lg:flex">
+      <div className="relative hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-1.svg')] bg-cover bg-center bg-no-repeat text-white xl:flex">
         {/* Background overlay for opacity */}
         <div className="absolute inset-0 z-0 bg-black/15"></div>
 
@@ -32,7 +32,7 @@ function Page() {
         {/* Main Content */}
         <main className="relative z-10 grid flex-1 grid-cols-12 gap-8 p-17 pl-25">
           {/* Picture Upload Section */}
-          <div className="col-span-4 flex items-start justify-center pl-65">
+          <div className="col-span-4 flex items-start justify-center pl-65 ">
             <Picture src={isotarImage} alt="Profile" className="h-140 w-220 rounded-3xl" />
           </div>
 
@@ -47,12 +47,12 @@ function Page() {
       </div>
 
       {/* Mobile content */}
-      <div className="relative min-h-screen w-full bg-[url('frontend/src/assets/bg-1.svg')] bg-cover bg-[position:68%_center] bg-no-repeat text-white lg:hidden">
+      <div className="relative min-h-screen w-full bg-[url('frontend/src/assets/bg-1.svg')] bg-cover bg-[position:68%_center] bg-no-repeat text-white xl:hidden ipadpro-xl-ml lg:pt-[4%]">
         {/* Background overlay for opacity */}
-        <div className="absolute inset-0 z-0 bg-black/30"></div>
+        <div className="absolute inset-0 z-0 bg-black/15"></div>
 
         {/* Mobile Header with Hamburger */}
-        <div className="relative z-10 flex justify-start p-4">
+        <div className="relative z-10 flex justify-start p-4 lg:hidden">
           <button
             onClick={openSidebar}
             className="rounded-lg p-2 transition-colors hover:bg-white/10"
@@ -68,12 +68,11 @@ function Page() {
         {/* Mobile Main Content */}
         <main className="relative z-10 -mt-3 flex flex-col px-8 pb-6">
           {/* Picture Section */}
-          <div className="mt-8 mb-12 flex justify-center">
-            <Picture src={placeholderImage} alt="Profile" className="h-64 w-48 rounded-3xl" />
+          <div className="mt-8 mb-12 flex justify-center lg:ml-[18%]">
+            <Picture src={placeholderImage} alt="Profile" className="h-80 w-60 rounded-3xl" />
           </div>
-
           {/* Form Section */}
-          <div className="px-4">
+          <div className="px-2 lg:ml-[5%]">
             <ProfileForm
               isEditing={isEditing}
               onEditClick={handleEditClick}
