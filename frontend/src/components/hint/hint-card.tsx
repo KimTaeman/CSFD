@@ -1,8 +1,10 @@
+import EditIcon from '@/assets/edit.svg';
+
 interface CardProps {
   title: string;
   description: string;
   stage: 'hidden' | 'shown';
-  type?: 'freshman'; // For future expansion
+  type?: 'freshman' | 'senior';
 }
 
 function HintCard({ title, description, stage, type = 'freshman' }: CardProps) {
@@ -15,10 +17,17 @@ function HintCard({ title, description, stage, type = 'freshman' }: CardProps) {
 
   return (
     <div
-      className={`h-32 w-[94%] rounded-4xl p-3 lg:h-57 lg:w-128 lg:rounded-4xl lg:p-4 ${getCardStyles()}`}
+      className={`relative h-32 w-[94%] rounded-4xl p-3 lg:h-55 lg:w-128 lg:rounded-4xl lg:p-4 ${getCardStyles()}`}
     >
       <h2 className="text-sm font-bold text-black lg:text-lg">{title}</h2>
       <p className="text-xs text-black lg:text-sm">{description}</p>
+
+      {/* Edit icon for senior type */}
+      {type === 'senior' && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <img src={EditIcon} alt="Edit" className="h-12 w-12 opacity-70 lg:h-20 lg:w-20" />
+        </div>
+      )}
     </div>
   );
 }
