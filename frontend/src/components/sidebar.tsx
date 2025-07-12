@@ -45,7 +45,6 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
 
   const handleLogout = useCallback(() => {
     onLogout?.() ?? console.log('Logout clicked');
-    onClose();
   }, [onLogout, onClose]);
 
   const handleCollapse = useCallback(() => {
@@ -53,13 +52,12 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
     onClose();
   }, [onClose]);
 
-  // Always show desktop sidebar, only conditionally show mobile sidebar
   const shouldShowDesktop = true;
   const shouldShowMobile = isOpen;
 
   return (
     <>
-      {/* Desktop sidebar - always visible */}
+      {/* Desktop sidebar  */}
       <div className="hidden lg:block">
         {shouldShowDesktop && (
           <>
@@ -68,21 +66,10 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
 
             {/* Sidebar */}
             <aside
-              className="fixed top-14 bottom-14 left-14 z-50 flex w-70 flex-col rounded-4xl"
-              style={{
-                background:
-                  'linear-gradient(108.46deg, rgba(255, 255, 255, 0.264) 0%, rgba(255, 255, 255, 0.066) 100%)',
-              }}
+              className="fixed top-14 bottom-14 left-14 z-50 flex w-70 flex-col rounded-4xl glass-glow"
               role="navigation"
             >
               {/* Collapse button */}
-              <button
-                className="absolute top-18 -right-3 h-6 w-6 transition-all duration-200 hover:scale-110 focus:ring-2 focus:ring-white/50 focus:outline-none active:scale-95"
-                onClick={handleCollapse}
-              >
-                <img src={BackArrow} alt="" className="h-6 w-6" role="presentation" />
-              </button>
-
               {/* Main content */}
               <div className="flex flex-1 flex-col">
                 <div className="p-4">
@@ -115,7 +102,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
                 </div>
               </div>
 
-              {/* Logout button at bottom */}
+              {/* Logout button  */}
               <div className="mt-auto p-6">
                 <button
                   onClick={handleLogout}
@@ -130,15 +117,11 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
         )}
       </div>
 
-      {/* Mobile sidebar - conditionally visible */}
+      {/* Mobile sidebar */}
       <div className="lg:hidden">
         {shouldShowMobile && (
           <aside
-            className="fixed top-14 bottom-14 left-14 z-50 flex w-70 flex-col rounded-4xl"
-            style={{
-              background:
-                'linear-gradient(108.46deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.8) 100%)',
-            }}
+            className="fixed top-14 bottom-14 left-14 z-50 flex w-70 flex-col rounded-4xl sidebar-dark-glow"
             role="navigation"
           >
             {/* Close button */}
@@ -179,7 +162,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
               </div>
             </div>
 
-            {/* Logout button at bottom */}
+            {/* Logout button  */}
             <div className="mt-auto p-6">
               <button
                 onClick={handleLogout}
