@@ -57,7 +57,7 @@ function Page() {
   return (
     <>
       {/* Desktop-only content */}
-      <div className="hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat text-white lg:flex">
+      <div className="hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat text-white xl:flex">
         {/* Sidebar */}
         <div className="p-4 pr-110 pl-10">
           {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
@@ -161,20 +161,25 @@ function Page() {
       </div>
 
       {/* Mobile content */}
-      <div className="relative min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat text-white lg:hidden">
+      <div className="relative min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat text-white xl:hidden">
         <div className="absolute inset-0 z-0 bg-black/6"></div>
         <div className="relative z-10 flex justify-start p-4">
           <button
             onClick={openSidebar}
-            className="rounded-lg p-2 transition-colors hover:bg-white/10"
+            className="rounded-lg p-2 transition-colors hover:bg-white/10 lg:hidden"
             aria-label="Open menu"
           >
             <img src={HamburgerIcon} alt="Menu" className="h-6 w-6" />
           </button>
         </div>
         {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
-        <main className="relative z-10 flex min-h-screen flex-col space-y-4 px-4 pb-6">
-          <div className="mt-9 mb-16 flex flex-col items-center space-y-7">
+        <main className="relative z-10 flex min-h-screen flex-col space-y-4 px-4 pb-6
+          lg:pl-[38%] 
+        ">
+          {/* First set of HintCards */}
+          <div className="mt-9 mb-24 flex flex-col items-center space-y-7
+            lg:items-start lg:ml-8
+          ">
             <HintCard
               title=""
               description=""
@@ -194,7 +199,7 @@ function Page() {
               type={isSenior ? 'senior' : 'freshman'}
             />
           </div>
-          <div className={isSenior ? '-mt-32' : '-mt-6'}>
+          <div className={`${isSenior ? '-mt-14' : '-mt-4'} lg:ml-8 lg:mt-[2%]`}>
             {!isSenior && (
               <div className="mb-7 font-[Poppins] text-lg text-white select-none">
                 Guess your P'code 💚💚💚
@@ -214,12 +219,12 @@ function Page() {
           </div>
           {isSenior && isDoubleSenior && (
             <>
-              <div className="mt-9 mb-16 flex flex-col items-center space-y-7">
+              <div className="mt-9 mb-24 flex flex-col items-center space-y-7 lg:items-start lg:ml-8">
                 <HintCard title="" description="" stage="shown" type="senior" />
                 <HintCard title="" description="" stage="shown" type="senior" />
                 <HintCard title="" description="" stage="shown" type="senior" />
               </div>
-              <div className="-mt-32">
+              <div className="-mt-14 lg:ml-8 lg:mt-[2%]">
                 <Guess
                   onGuessSubmit={handleGuessSubmit}
                   guessState={guessState}
