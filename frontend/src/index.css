@@ -50,7 +50,17 @@
     .ipadpro-xl-ml {
       padding-left: 15%;
     }
+    .ipadpro-xl-ml-hint {
+      padding-left: 21px;
+    }
   }
+  /* custom sidebar padding for 1024px - 1599px */
+  @media (min-width: 1024px) and (max-width: 1599px) {
+    .sidebar-pr-80 {
+      padding-right: 19rem;
+    }
+  }
+  
 }
 /* for the hint page ._. */
 html,
@@ -84,4 +94,14 @@ body {
 
 html {
   background-color: #000000;
+}
+
+/* for 1080p with 150% */
+@media (min-width: 1024px) and (max-width: 1300px) {
+  .force-mobile {
+    display: block !important;
+  }
+  .force-mobile-hide {
+    display: none !important;
+  }
 }
