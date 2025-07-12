@@ -133,7 +133,7 @@ function Guess({
         {isSenior ? (
           <div className="mb-3 flex w-full justify-start">
             {isEditing ? (
-              <div className="flex gap-3 ml-4 ipadair-ml">
+              <div className="ipadair-ml ml-4 flex gap-3">
                 <button
                   onClick={handleConfirm}
                   className="min-w-[140px] rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500"
@@ -150,7 +150,7 @@ function Guess({
             ) : (
               <button
                 onClick={handleEditClick}
-                className="ml-4 ipadair-ml flex items-center gap-2 rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500"
+                className="ipadair-ml ml-4 flex items-center gap-2 rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500"
               >
                 <img src={EditIconW} alt="" className="h-5 w-5" />
                 Edit your hints

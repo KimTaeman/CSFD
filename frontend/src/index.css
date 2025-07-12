@@ -36,11 +36,11 @@
   }
   /*used for iPad Air margin left adjustment*/
   .ipadair-ml {
-    margin-left: 3%; 
+    margin-left: 3%;
   }
   @media (min-width: 820px) and (max-width: 1180px) {
     .ipadair-ml {
-      margin-left: 3%; 
+      margin-left: 3%;
     }
   }
 }
