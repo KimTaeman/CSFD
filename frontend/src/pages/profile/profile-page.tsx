@@ -64,7 +64,7 @@ function Page() {
               className="h-140 w-220 rounded-3xl"
               darken={hovered}
               overlayText={hovered ? 'Change' : undefined}
-              onClick={picUpload.openFileDialog} 
+              onClick={picUpload.openFileDialog}
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
             />
