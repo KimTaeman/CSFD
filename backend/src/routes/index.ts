@@ -11,8 +11,8 @@ router.get('/', async (req, res) => {
 });
 
 // API Routes
-router.use('/api/auth', authRouter);
-router.use('/api/students', studentRouter);
-router.use('/api/hints', hintRouter);
+router.use('/auth', authRouter);
+router.use('/students', studentRouter);
+router.use('/hints', hintRouter);
 
 export { router };

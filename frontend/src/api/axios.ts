@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const api = axios.create();
-
-// TODO: Set the base URL for the API
-// TODO: Fix cors issue
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true,
+});
 
 export default api;
