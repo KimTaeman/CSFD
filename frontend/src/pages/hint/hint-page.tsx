@@ -12,19 +12,15 @@ import RevealResult from '@/components/hint/RevealResult';
 type GuessState = 'n/a' | 'success' | 'fail';
 
 function Page() {
-  const {
-    isSidebarOpen,
-    closeSidebar,
-    openSidebar,
-  } = useProfileState();
+  const { isSidebarOpen, closeSidebar, openSidebar } = useProfileState();
 
   // User role state to control senior/junior view
   const [isSenior] = useState(true);
   const [isDoubleSenior] = useState(true);
 
   // Junior names for each set
-  const juniorName1 = "John Doe";
-  const juniorName2 = "Jane Smith";
+  const juniorName1 = 'John Doe';
+  const juniorName2 = 'Jane Smith';
 
   // Guess state management
   const [guessState, setGuessState] = useState<GuessState>('n/a');
@@ -32,18 +28,21 @@ function Page() {
   const [correctAnswer] = useState(100);
   const maxAttempts = 3;
 
-  const handleGuessSubmit = useCallback((guess: string) => {
-    const numericGuess = parseInt(guess, 10);
-    const newAttempts = attempts + 1;
+  const handleGuessSubmit = useCallback(
+    (guess: string) => {
+      const numericGuess = parseInt(guess, 10);
+      const newAttempts = attempts + 1;
 
-    if (numericGuess === correctAnswer) {
-      setGuessState('success');
-      return;
-    }
+      if (numericGuess === correctAnswer) {
+        setGuessState('success');
+        return;
+      }
 
-    setAttempts(newAttempts);
-    setGuessState('fail');
-  }, [attempts, correctAnswer]);
+      setAttempts(newAttempts);
+      setGuessState('fail');
+    },
+    [attempts, correctAnswer],
+  );
 
   const resetGuess = useCallback(() => {
     setGuessState('n/a');
@@ -58,7 +57,7 @@ function Page() {
   return (
     <>
       {/* Desktop-only content */}
-      <div className="hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-center bg-no-repeat bg-fixed text-white lg:flex">
+      <div className="hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat text-white lg:flex">
         {/* Sidebar */}
         <div className="p-4 pr-110 pl-10">
           {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
@@ -68,28 +67,43 @@ function Page() {
         <main className="relative flex-1 p-8">
           {/* Junior label for first set */}
           {isSenior && (
-            <div className="absolute top-[6%] left-[3%] font-[Poppins] text-white text-xl z-10">
+            <div className="absolute top-[6%] left-[3%] z-10 font-[Poppins] text-xl text-white">
               Junior: {juniorName1}
             </div>
           )}
 
           {/* First set of Hint Cards */}
           <div className="absolute top-[11%] left-[2%] w-80">
-            <HintCard title="" description="" stage="shown" type={isSenior ? 'senior' : 'freshman'} />
+            <HintCard
+              title=""
+              description=""
+              stage="shown"
+              type={isSenior ? 'senior' : 'freshman'}
+            />
           </div>
           <div className="absolute top-[11%] left-[34%] w-80 pl-40">
-            <HintCard title="" description="" stage="shown" type={isSenior ? 'senior' : 'freshman'} />
+            <HintCard
+              title=""
+              description=""
+              stage="shown"
+              type={isSenior ? 'senior' : 'freshman'}
+            />
           </div>
           <div className="absolute top-[38%] left-[2%] w-80">
-            <HintCard title="" description="" stage="shown" type={isSenior ? 'senior' : 'freshman'} />
+            <HintCard
+              title=""
+              description=""
+              stage="shown"
+              type={isSenior ? 'senior' : 'freshman'}
+            />
           </div>
 
           {/* Guess/Edit for first ncode */}
-          <div className={`absolute left-[2%] w-200 ${isSenior ? 'top-[56%] lg:top-[66%]' : 'top-[70%] lg:top-[70%]'}`}>
+          <div
+            className={`absolute left-[2%] w-200 ${isSenior ? 'top-[56%] lg:top-[66%]' : 'top-[70%] lg:top-[70%]'}`}
+          >
             {!isSenior && (
-              <div className="mb-7 text-2xl text-white select-none">
-                Guess your P'code 💚💚💚
-              </div>
+              <div className="mb-7 text-2xl text-white select-none">Guess your P'code 💚💚💚</div>
             )}
             <Guess
               onGuessSubmit={handleGuessSubmit}
@@ -107,7 +121,7 @@ function Page() {
           {/* Second set for double ncode senior */}
           {isSenior && isDoubleSenior && (
             <>
-              <div className="absolute top-[73%] left-[3%] font-[Poppins] text-white text-xl z-10">
+              <div className="absolute top-[73%] left-[3%] z-10 font-[Poppins] text-xl text-white">
                 Junior: {juniorName2}
               </div>
               <div className="absolute top-[78%] left-[2%] w-80">
@@ -119,7 +133,7 @@ function Page() {
               <div className="absolute top-[105%] left-[2%] w-80">
                 <HintCard title="" description="" stage="shown" type="senior" />
               </div>
-              <div className="absolute left-[2%] w-200 top-[123%] lg:top-[133%]">
+              <div className="absolute top-[123%] left-[2%] w-200 lg:top-[133%]">
                 <Guess
                   onGuessSubmit={handleGuessSubmit}
                   guessState={guessState}
@@ -137,11 +151,8 @@ function Page() {
         </main>
         {/* Overlay for Success/Fail - Desktop */}
         {(guessState === 'success' || guessState === 'fail') && (
-          <div
-            className="fixed inset-0 z-50 flex bg-black/50"
-            onClick={resetGuess}
-          >
-            <div className="hidden lg:block w-[270px]" />
+          <div className="fixed inset-0 z-50 flex bg-black/50" onClick={resetGuess}>
+            <div className="hidden w-[270px] lg:block" />
             <div className="flex flex-1 items-center justify-center">
               <RevealResult state={guessState === 'success' ? 'success' : 'fail'} />
             </div>
@@ -150,7 +161,7 @@ function Page() {
       </div>
 
       {/* Mobile content */}
-      <div className="relative min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-center bg-no-repeat bg-fixed text-white lg:hidden">
+      <div className="relative min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat text-white lg:hidden">
         <div className="absolute inset-0 z-0 bg-black/6"></div>
         <div className="relative z-10 flex justify-start p-4">
           <button
@@ -164,11 +175,26 @@ function Page() {
         {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
         <main className="relative z-10 flex min-h-screen flex-col space-y-4 px-4 pb-6">
           <div className="mt-9 mb-16 flex flex-col items-center space-y-7">
-            <HintCard title="" description="" stage="shown" type={isSenior ? 'senior' : 'freshman'} />
-            <HintCard title="" description="" stage="shown" type={isSenior ? 'senior' : 'freshman'} />
-            <HintCard title="" description="" stage="shown" type={isSenior ? 'senior' : 'freshman'} />
+            <HintCard
+              title=""
+              description=""
+              stage="shown"
+              type={isSenior ? 'senior' : 'freshman'}
+            />
+            <HintCard
+              title=""
+              description=""
+              stage="shown"
+              type={isSenior ? 'senior' : 'freshman'}
+            />
+            <HintCard
+              title=""
+              description=""
+              stage="shown"
+              type={isSenior ? 'senior' : 'freshman'}
+            />
           </div>
-          <div className={isSenior ? "-mt-32" : "-mt-6"}>
+          <div className={isSenior ? '-mt-32' : '-mt-6'}>
             {!isSenior && (
               <div className="mb-7 font-[Poppins] text-lg text-white select-none">
                 Guess your P'code 💚💚💚
@@ -219,20 +245,16 @@ function Page() {
                 <img
                   src={SparkleImage}
                   alt="Sparkle effect"
-                  className="absolute w-[90%] h-[90%] object-contain z-10"
+                  className="absolute z-10 h-[90%] w-[90%] object-contain"
                 />
                 <img
                   src={SuccessImage}
                   alt="Success"
-                  className="relative w-[90%] h-[90%] object-contain z-20"
+                  className="relative z-20 h-[90%] w-[90%] object-contain"
                 />
               </div>
             ) : (
-              <img
-                src={FailImage}
-                alt="Fail"
-                className="w-[100%] h-[100%] object-contain"
-              />
+              <img src={FailImage} alt="Fail" className="h-[100%] w-[100%] object-contain" />
             )}
           </div>
         )}

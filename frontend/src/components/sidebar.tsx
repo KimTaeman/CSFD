@@ -66,7 +66,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
 
             {/* Sidebar */}
             <aside
-              className="fixed top-14 bottom-14 left-14 z-50 flex w-70 flex-col rounded-4xl glass-glow"
+              className="glass-glow fixed top-14 bottom-14 left-14 z-50 flex w-70 flex-col rounded-4xl"
               role="navigation"
             >
               {/* Collapse button */}
@@ -121,7 +121,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
       <div className="lg:hidden">
         {shouldShowMobile && (
           <aside
-            className="fixed top-14 bottom-14 left-14 z-50 flex w-70 flex-col rounded-4xl sidebar-dark-glow"
+            className="sidebar-dark-glow fixed top-14 bottom-14 left-14 z-50 flex w-70 flex-col rounded-4xl"
             role="navigation"
           >
             {/* Close button */}
