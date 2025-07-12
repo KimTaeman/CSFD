@@ -82,7 +82,7 @@ function Guess({
       {/* Desktop layout */}
       <div className="hidden lg:flex items-center gap-4 w-full">
         {isSenior ? (
-          <div className="w-full flex justify-start mt-[-32px] mb-4">
+          <div className="w-full flex justify-start mb-4 -mt-13">
             {isEditing ? (
               <div className="flex gap-4">
                 <button
@@ -133,7 +133,7 @@ function Guess({
       {/* Mobile layout */}
       <div className="lg:hidden flex flex-col gap-3 w-full">
         {isSenior ? (
-          <div className="w-full flex justify-start mt-[-20px] mb-3">
+          <div className="w-full flex justify-start mb-3">
             {isEditing ? (
               <div className="flex gap-3">
                 <button
