@@ -32,7 +32,7 @@ function Page() {
         {/* Main Content */}
         <main className="relative z-10 grid flex-1 grid-cols-12 gap-8 p-17 pl-25">
           {/* Picture Upload Section */}
-          <div className="col-span-4 flex items-start justify-center pl-65 ">
+          <div className="col-span-4 flex items-start justify-center pl-65">
             <Picture src={isotarImage} alt="Profile" className="h-140 w-220 rounded-3xl" />
           </div>
 
@@ -47,7 +47,7 @@ function Page() {
       </div>
 
       {/* Mobile content */}
-      <div className="relative min-h-screen w-full bg-[url('frontend/src/assets/bg-1.svg')] bg-cover bg-[position:68%_center] bg-no-repeat text-white xl:hidden ipadpro-xl-ml lg:pt-[4%]">
+      <div className="ipadpro-xl-ml relative min-h-screen w-full bg-[url('frontend/src/assets/bg-1.svg')] bg-cover bg-[position:68%_center] bg-no-repeat text-white lg:pt-[4%] xl:hidden">
         {/* Background overlay for opacity */}
         <div className="absolute inset-0 z-0 bg-black/15"></div>
 
