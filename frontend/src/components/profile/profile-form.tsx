@@ -67,8 +67,8 @@ function ProfileForm({
 
   const inputClassName = useMemo(
     () => (editing: boolean) =>
-      `w-full px-4 lg:px-6 py-1 lg:py-2 text-xs lg:text-lg rounded-xl border-none outline-none h-7 lg:h-12 font-[Poppins] transition-colors ${
-        editing ? 'bg-white text-black' : 'bg-gray-200 text-gray-700 cursor-not-allowed'
+      `w-full px-2 lg:px-6 py-2 lg:py-2 text-base lg:text-lg rounded-xl border-none outline-none h-10 lg:h-12 font-[Poppins] transition-colors ${
+        editing ? 'bg-white text-black' : 'bg-gray-300 text-gray-700 cursor-not-allowed'
       }`,
     [],
   );
@@ -110,7 +110,7 @@ function ProfileForm({
                 onChange={(e) => handleInputChange(field.key, e.target.value)}
                 onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
                 disabled={!isEditing}
-                className={`h-10 w-full rounded-xl border-none py-1 pr-4 pl-14 font-[Poppins] text-sm outline-none lg:h-12 lg:py-4 lg:pl-20 lg:text-lg ${inputClassName(isEditing)}`}
+                className={`h-12 w-full rounded-xl border-none py-2 pr-2 pl-10 font-[Poppins] text-base outline-none lg:h-12 lg:py-4 lg:pl-20 lg:text-lg ${inputClassName(isEditing)}`}
                 placeholder={field.label}
               />
             </div>
