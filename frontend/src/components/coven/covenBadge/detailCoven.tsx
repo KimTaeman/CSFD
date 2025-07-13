@@ -1,4 +1,3 @@
-
 const DetailCoven = () => {
   return (
     <div className="font-inter w-full max-w-5xl transform rounded-3xl bg-black/10 backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02]">
@@ -6,13 +5,13 @@ const DetailCoven = () => {
         {/* Detail Paragraphs */}
         <div>
           <p className="font-inter text-left text-lg leading-relaxed font-medium break-words hyphens-auto text-white">
-            In Computer Science, we’re taught to follow logic—clear inputs, structured flows, predictable outcomes. 
-            But deep within every system lies a layer that can’t be debugged or compiled. 
-            A signal beyond the algorithm. That’s where the magic lives.
+            In Computer Science, we’re taught to follow logic—clear inputs, structured flows,
+            predictable outcomes. But deep within every system lies a layer that can’t be debugged
+            or compiled. A signal beyond the algorithm. That’s where the magic lives.
           </p>
           <p className="font-inter text-left text-lg leading-relaxed font-medium break-words hyphens-auto text-white">
-            Some of us don’t just write code—we summon possibilities. We don’t just read data—we foresee patterns. 
-            We don’t just store variables—we distill power into them.
+            Some of us don’t just write code—we summon possibilities. We don’t just read data—we
+            foresee patterns. We don’t just store variables—we distill power into them.
           </p>
           <p className="font-inter text-left text-lg leading-relaxed font-medium break-words hyphens-auto text-white">
             You are not just a student of logic—you’re a weaver of unseen protocols.

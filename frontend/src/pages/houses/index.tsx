@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import RandomButton from "@/components/house/RandomButton";
+import RandomButton from '@/components/house/RandomButton';
 import NickName from '@/components/house/NicknamePopup';
 import LoginSucess from '@/components/layout/loginSucceed';
 
@@ -15,7 +15,7 @@ const Page = () => {
     setNickname(userNickname);
     setShowWelcome(false);
     setShowLoginSuccess(true);
-    
+
     // Hide login success after 3 seconds
     setTimeout(() => {
       setShowLoginSuccess(false);
@@ -28,7 +28,7 @@ const Page = () => {
       const response = await fetch('/api/user/house');
       const data = await response.json();
       const userHouse = data.house; // e.g., 'ethera', 'zirelia', etc.
-      
+
       // Navigate to the user's house
       navigate(`/houses/ethera`);
     } catch (error) {
@@ -58,18 +58,18 @@ const Page = () => {
 
   // Show main page with magic pot
   return (
-    <div className="star-bg min-h-svh bg-position-[50%_0] bg-contain bg-[#15022f] bg-no-repeat bg-[url('/src/assets/bg-1.png')] relative">
+    <div className="star-bg relative min-h-svh bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-contain bg-position-[50%_0] bg-no-repeat">
       {/* Login Success Notification */}
       {showLoginSuccess && (
-        <div className="fixed top-8 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 ease-in-out">
+        <div className="fixed top-8 left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300 ease-in-out">
           <LoginSucess />
         </div>
       )}
-      
+
       <div className="pot-light-particle-colored">
-        <div className="flex flex-col items-center justify-center space-y-9 py-10 px-4">
-          <img 
-            className="mt-25 w-full max-w-[420px]" 
+        <div className="flex flex-col items-center justify-center space-y-9 px-4 py-10">
+          <img
+            className="mt-25 w-full max-w-[420px]"
             src="/src/assets/magic-pot.png"
             alt="Magic Pot"
           />

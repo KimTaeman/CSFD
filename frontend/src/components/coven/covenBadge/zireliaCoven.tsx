@@ -1,9 +1,9 @@
-import React from "react";
-import type { CovenProps } from "@/types/coven.types";
+import React from 'react';
+import type { CovenProps } from '@/types/coven.types';
 
 const ZireliaCoven: React.FC<CovenProps> = ({ onClick, className = '' }) => {
   return (
-    <div 
+    <div
       className={`w-full max-w-85 transform rounded-3xl border border-white/30 bg-black/10 backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02] ${onClick ? 'cursor-pointer' : ''} ${className}`}
       onClick={onClick}
     >
