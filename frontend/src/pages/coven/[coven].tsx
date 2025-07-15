@@ -39,7 +39,9 @@ const Page = () => {
         {/* Main content area */}
         <div className="flex flex-[7] flex-col space-y-6 p-4 md:p-8">
           <div className="flex items-center justify-center">
-            <CombinedCoven covenType={coven as 'alchemireCoven' | 'etheraCoven' | 'isotarCoven' | 'zireliaCoven'} />
+            <CombinedCoven
+              covenType={coven as 'alchemireCoven' | 'etheraCoven' | 'isotarCoven' | 'zireliaCoven'}
+            />
           </div>
 
           {/* Cards grid */}

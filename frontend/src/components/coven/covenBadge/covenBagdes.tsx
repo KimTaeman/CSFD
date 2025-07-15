@@ -13,26 +13,26 @@ const covenData: Record<string, CovenData> = {
     name: 'Alchemire',
     role: 'Potion Brewer',
     image: '/src/assets/alchemire.png',
-    imagePosition: 'right'
+    imagePosition: 'right',
   },
   etheraCoven: {
     name: 'Ethera',
     role: 'Summoner',
     image: '/src/assets/ethera.png',
-    imagePosition: 'left'
+    imagePosition: 'left',
   },
   isotarCoven: {
     name: 'Isotar',
     role: 'Visionary',
     image: '/src/assets/isotar.png',
-    imagePosition: 'right'
+    imagePosition: 'right',
   },
   zireliaCoven: {
     name: 'Zirelia',
     role: 'Sorcerer',
     image: '/src/assets/zirelia.png',
-    imagePosition: 'left'
-  }
+    imagePosition: 'left',
+  },
 };
 
 type CovenType = 'alchemireCoven' | 'etheraCoven' | 'isotarCoven' | 'zireliaCoven';
@@ -43,7 +43,7 @@ interface CombinedCovenProps extends CovenProps {
 
 const CombinedCoven: React.FC<CombinedCovenProps> = ({ covenType, onClick, className = '' }) => {
   const coven = covenData[covenType];
-  
+
   if (!coven) {
     return null;
   }
@@ -62,7 +62,7 @@ const CombinedCoven: React.FC<CombinedCovenProps> = ({ covenType, onClick, class
   );
 
   return (
-    <div 
+    <div
       className={`w-full max-w-85 transform rounded-3xl border border-white/30 bg-black/10 backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02] ${onClick ? 'cursor-pointer' : ''} ${className}`}
       onClick={onClick}
     >

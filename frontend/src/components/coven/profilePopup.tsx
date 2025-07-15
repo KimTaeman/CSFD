@@ -23,7 +23,11 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
         </button>
         <div className="flex flex-col items-start px-8 py-4 sm:flex-row">
           <div className="mr-0 mb-4 flex flex-shrink-0 justify-center sm:mr-10 sm:mb-0">
-            <img className="h-32 w-32 rounded-xl object-cover" src={user.profilePic} alt={user.displayName} />
+            <img
+              className="h-32 w-32 rounded-xl object-cover"
+              src={user.profilePic}
+              alt={user.displayName}
+            />
           </div>
           <div className="flex min-w-0 flex-1 flex-col items-start justify-start space-y-6 sm:flex-row sm:space-y-0 sm:space-x-6">
             <div className="flex min-w-0 flex-col items-start justify-start space-y-2">
@@ -46,16 +50,22 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
               </p>
               <div className="flex flex-row items-center space-x-2">
                 <img className="h-4 w-4 flex-shrink-0" src="/src/assets/instagram-logo.png" />
-                <p className="font-inter text-[0.7rem] whitespace-nowrap text-white/80">{user.instagram}</p>
+                <p className="font-inter text-[0.7rem] whitespace-nowrap text-white/80">
+                  {user.instagram}
+                </p>
               </div>
               <div className="flex flex-row items-center space-x-2">
                 <img className="h-4 w-4 flex-shrink-0" src="/src/assets/discord.png" />
-                <p className="font-inter text-[0.7rem] whitespace-nowrap text-white/80">{user.discord}</p>
+                <p className="font-inter text-[0.7rem] whitespace-nowrap text-white/80">
+                  {user.discord}
+                </p>
               </div>
               {user.line && (
                 <div className="flex flex-row items-center space-x-2">
                   <img className="h-4 w-4 flex-shrink-0" src="/src/assets/line.png" />
-                  <p className="font-inter text-[0.7rem] whitespace-nowrap text-white/80">{user.line}</p>
+                  <p className="font-inter text-[0.7rem] whitespace-nowrap text-white/80">
+                    {user.line}
+                  </p>
                 </div>
               )}
             </div>
