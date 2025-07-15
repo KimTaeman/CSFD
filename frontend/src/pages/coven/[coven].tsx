@@ -1,9 +1,6 @@
 import { useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-import AlchemireCoven from '@/components/coven/covenBadge/alchemireCoven';
-import EtheraCoven from '@/components/coven/covenBadge/etheraCoven';
-import IsotarCoven from '@/components/coven/covenBadge/isotarCoven';
-import ZireliaCoven from '@/components/coven/covenBadge/zireliaCoven';
+import CombinedCoven from '@/components/coven/covenBadge/covenBagdes';
 import ProfileModal from '@/components/coven/profileModal';
 import ProfilePopup from '@/components/coven/profilePopup';
 import { mockUsers, type User } from '@/types/coven.types';
@@ -14,12 +11,6 @@ const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
-  const components: Record<string, React.ComponentType> = {
-    alchemireCoven: AlchemireCoven,
-    etheraCoven: EtheraCoven,
-    isotarCoven: IsotarCoven,
-    zireliaCoven: ZireliaCoven,
-  };
   const validCovens = ['alchemireCoven', 'etheraCoven', 'isotarCoven', 'zireliaCoven'];
 
   useEffect(() => {
@@ -28,8 +19,6 @@ const Page = () => {
       return;
     }
   }, [coven, navigate]);
-
-  const Component = components[coven];
 
   const handleOpenModal = (user: User): void => {
     setSelectedUser(user);
@@ -49,12 +38,11 @@ const Page = () => {
 
         {/* Main content area */}
         <div className="flex flex-[7] flex-col space-y-6 p-4 md:p-8">
-          {/* Alpha component - centered at top */}
           <div className="flex items-center justify-center">
-            <Component />
+            <CombinedCoven covenType={coven as 'alchemireCoven' | 'etheraCoven' | 'isotarCoven' | 'zireliaCoven'} />
           </div>
 
-          {/* Eden cards grid */}
+          {/* Cards grid */}
           <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
             {mockUsers.map((user, index) => (
               <ProfileModal
