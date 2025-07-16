@@ -58,7 +58,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar  */}
-      <div className="hidden lg:block">
+      <div className="hidden lg:block ">
         {shouldShowDesktop && (
           <>
             {/* Backdrop */}

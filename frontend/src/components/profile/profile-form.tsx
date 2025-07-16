@@ -74,7 +74,7 @@ function ProfileForm({
   );
 
   return (
-    <div className="space-y-2 px-6 lg:col-span-8 lg:space-y-5 lg:px-0 lg:pr-30 lg:pl-60">
+    <div className="space-y-2 px-6 lg:col-span-8 lg:space-y-5 lg:px-0 lg:-mr-25 lg:pl-70">
       {formFields.map((field) => (
         <div key={field.key} className="space-y-0.5 lg:space-y-1.5">
           <label htmlFor={field.key} className="block font-[Poppins] text-xs lg:text-base">

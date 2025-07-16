@@ -45,7 +45,7 @@ function Page() {
   return (
     <>
       {/* Desktop-only content */}
-      <div className="force-mobile-hide relative hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-1.svg')] bg-cover bg-center bg-no-repeat text-white xl:flex pl-[10%]">
+      <div className="force-mobile-hide relative hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-1.svg')] bg-cover bg-center bg-no-repeat text-white xl:flex pl-[12%]">
         {/* Background overlay for opacity */}
         <div className="absolute inset-0 z-0 bg-black/15"></div>
 
