@@ -14,8 +14,9 @@ function Page() {
   const { isSidebarOpen, closeSidebar, openSidebar } = useProfileState();
 
   // User role state to control senior/junior view
+  // Get these from your database or context
   const [isSenior] = useState(true);
-  const [isDoubleSenior] = useState(false);
+  const [isDoubleSenior] = useState(true);
 
   // Junior names for each set
   const juniorName1 = 'John Doe';
@@ -165,7 +166,7 @@ function Page() {
 
           {/* Guess/Edit for first ncode */}
           <div
-            className={`absolute left-[2%] w-200 z-20 ${isSenior ? 'top-[56%] lg:top-[6%] lg:pt-158' : 'top-[70%] lg:top-[6%] lg:pt-170'}`}
+            className={`absolute left-[2%] z-20 w-200 ${isSenior ? 'top-[56%] lg:top-[6%] lg:pt-158' : 'top-[70%] lg:top-[6%] lg:pt-170'}`}
           >
             {!isSenior && (
               <div className="mb-7 text-2xl text-white select-none">Guess your P'code 💚💚💚</div>
