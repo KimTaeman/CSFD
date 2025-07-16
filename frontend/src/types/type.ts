@@ -9,8 +9,15 @@ export interface User {
 export interface StudentInfo {
   id: number;
   displayName: string;
+  nickname: string;
+  house: string;
+  nationality: string;
+  studentId: string;
+  profilePic: string;
+  instagram: string;
+  discord: string;
+  line?: string;
   email: string;
-  nickname: string | null;
   role: string;
   lives: number | null;
   isSenior: boolean | null;
@@ -46,8 +53,4 @@ export interface StudentInfo {
     content: string;
     revealDate: Date;
   }>;
-  house: string | null;
-  instagram: string | null;
-  discord: string | null;
-  line: string | null;
 }

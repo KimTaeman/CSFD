@@ -12,8 +12,8 @@ export const useFetch = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await api.get(`/students`);
-      return res.data;
+      const { data } = await api.get(`/students`);
+      return data.students;
     } catch (e) {
       console.error(e);
     }

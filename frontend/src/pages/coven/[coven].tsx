@@ -8,15 +8,18 @@ import IsotarCoven from '@/components/coven/covenBadge/isotarCoven';
 import ZireliaCoven from '@/components/coven/covenBadge/zireliaCoven';
 import ProfileModal from '@/components/coven/profileModal';
 import ProfilePopup from '@/components/coven/profilePopup';
-import { mockUsers, type User } from '@/types/coven.types';
 import { useProfileState } from '@/hooks/useProfileState';
+import type { StudentInfo } from '@/types/type';
+import { useDataContext } from '@/hooks/useDataContext';
 
 const Page = () => {
   const { isSidebarOpen, closeSidebar, openSidebar } = useProfileState();
   const { coven = '' } = useParams();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<StudentInfo | null>(null);
+
+  const { students } = useDataContext();
 
   const components: Record<string, React.ComponentType> = {
     alchemireCoven: AlchemireCoven,
@@ -35,7 +38,7 @@ const Page = () => {
 
   const Component = components[coven];
 
-  const handleOpenModal = (user: User): void => {
+  const handleOpenModal = (user: StudentInfo): void => {
     setSelectedUser(user);
     setIsModalOpen(true);
   };
@@ -44,6 +47,10 @@ const Page = () => {
     setIsModalOpen(false);
     setSelectedUser(null);
   };
+
+  if (!students) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -67,13 +74,15 @@ const Page = () => {
 
             {/* Eden cards grid */}
             <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
-              {mockUsers.map((user, index) => (
-                <ProfileModal
-                  key={user.studentId}
-                  user={user}
-                  onClick={() => handleOpenModal(user)}
-                />
-              ))}
+              {students
+                .filter((user) => user.house.toLowerCase() + 'Coven' === coven)
+                .map((user) => (
+                  <ProfileModal
+                    key={user.studentId}
+                    user={user}
+                    onClick={() => handleOpenModal(user)}
+                  />
+                ))}
             </div>
           </div>
         </main>
@@ -106,13 +115,15 @@ const Page = () => {
 
             {/* Eden cards grid */}
             <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
-              {mockUsers.map((user, index) => (
-                <ProfileModal
-                  key={user.studentId}
-                  user={user}
-                  onClick={() => handleOpenModal(user)}
-                />
-              ))}
+              {students
+                .filter((user) => user.house.toLowerCase() + 'Coven' === coven)
+                .map((user) => (
+                  <ProfileModal
+                    key={user.studentId}
+                    user={user}
+                    onClick={() => handleOpenModal(user)}
+                  />
+                ))}
             </div>
           </div>
         </main>

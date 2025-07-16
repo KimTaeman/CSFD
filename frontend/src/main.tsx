@@ -6,6 +6,7 @@ import { BrowserRouter, useRoutes } from 'react-router';
 import routes from '~react-pages';
 import LoadingLayout from '@/components/layout/loading.tsx';
 import ErrorLayout from '@/components/layout/error.tsx';
+import { DataContextProvider } from './context/DataContext';
 
 const container = document.getElementById('root');
 
@@ -24,9 +25,12 @@ export const App = () => {
 root.render(
   <StrictMode>
     <ErrorBoundary FallbackComponent={ErrorLayout}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      // TODO: fix provider location
+      <DataContextProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </DataContextProvider>
     </ErrorBoundary>
   </StrictMode>,
 );

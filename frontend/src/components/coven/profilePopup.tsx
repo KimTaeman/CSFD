@@ -1,10 +1,10 @@
 import React from 'react';
-import type { User } from '@/types/coven.types';
+import type { StudentInfo } from '@/types/type';
 
 type ProfilePopupProps = {
   isOpen: boolean;
   onClose: () => void;
-  user: User | null;
+  user: StudentInfo | null;
 };
 
 const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) => {
