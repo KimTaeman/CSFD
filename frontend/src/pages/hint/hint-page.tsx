@@ -7,8 +7,7 @@ import SuccessImage from '@/assets/success.png';
 import SparkleImage from '@/assets/sparkle.png';
 import { useState, useCallback, useEffect } from 'react';
 import RevealResult from '@/components/hint/RevealResult';
-
-type GuessState = 'n/a' | 'success' | 'fail';
+import type { GuessState } from '@/types/hint.types';
 
 function getInitialHints(key: string) {
   const saved = localStorage.getItem(key);
