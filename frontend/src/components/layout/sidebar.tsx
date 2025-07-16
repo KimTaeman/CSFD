@@ -6,7 +6,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function SidebarLayout({ children }: LayoutProps) {
   const { isSidebarOpen, closeSidebar, openSidebar } = useProfileState();
 
   return (

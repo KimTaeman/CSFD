@@ -6,7 +6,7 @@ import { BrowserRouter, useRoutes } from 'react-router';
 import routes from '~react-pages';
 import LoadingLayout from '@/components/layout/loading.tsx';
 import ErrorLayout from '@/components/layout/error.tsx';
-import Layout from '@/components/layout/Layout';
+import SidebarLayout from '@/components/layout/sidebar';
 
 const container = document.getElementById('root');
 
@@ -21,9 +21,9 @@ export const App = () => {
   const PageContent = useRoutes(routes);
   return (
     <Suspense fallback={<LoadingLayout />}>
-      <Layout>
+      <SidebarLayout>
         {PageContent}
-      </Layout>
+      </SidebarLayout>
     </Suspense>
   );
 };

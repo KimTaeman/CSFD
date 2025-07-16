@@ -1,4 +1,3 @@
-import Sidebar from '@/components/sidebar';
 import { useProfileState } from '@/hooks/useProfileState';
 import HintCard from '@/components/hint/hint-card';
 import Guess from '@/components/hint/guess';
@@ -91,12 +90,7 @@ function Page() {
   return (
     <>
       {/* Desktop-only content */}
-      <div className="force-mobile-hide hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat text-white xl:flex">
-        {/* Sidebar */}
-        <div className="sidebar-pr-80 p-4 pr-110 pl-10">
-          {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
-        </div>
-
+      <div className="force-mobile-hide hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat text-white xl:flex pl-[24%]">
         {/* Main Content */}
         <main className="relative flex-1 p-8">
           {/* Junior label for first set */}
@@ -212,7 +206,6 @@ function Page() {
             <img src={HamburgerIcon} alt="Menu" className="h-6 w-6" />
           </button>
         </div>
-        {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
         <main className="relative z-10 flex min-h-screen flex-col space-y-4 px-4 pb-6 lg:pl-[38%]">
           {/* Junior label for first set (MOBILE) */}
           {isSenior && (
