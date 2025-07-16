@@ -4,12 +4,13 @@ import CombinedCoven from '@/components/coven/covenBadge/covenBagdes';
 import DetailCoven from '@/components/coven/covenBadge/detailCoven';
 
 const Page = () => {
+
   const navigate = useNavigate();
 
   const handleCovenClick = (covenName: string): void => {
     navigate(`/coven/${covenName}`);
   };
-
+  
   return (
     <div className="min-h-screen bg-[#15022f] bg-[url('/src/assets/bg-2.png')] bg-position-[50%_0] bg-no-repeat lg:bg-contain">
       <div className="flex">

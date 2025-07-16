@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
+
 import CombinedCoven from '@/components/coven/covenBadge/covenBagdes';
 import ProfileModal from '@/components/coven/profileModal';
 import ProfilePopup from '@/components/coven/profilePopup';
@@ -10,7 +11,6 @@ const Page = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-
   const validCovens = ['alchemireCoven', 'etheraCoven', 'isotarCoven', 'zireliaCoven'];
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Page = () => {
       return;
     }
   }, [coven, navigate]);
-
+  
   const handleOpenModal = (user: User): void => {
     setSelectedUser(user);
     setIsModalOpen(true);

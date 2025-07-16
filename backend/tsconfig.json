@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "typeRoots": ["./types", "./node_modules/@types"],
     "skipLibCheck": true,
     "strict": true,
     "noEmit": false,
@@ -16,13 +17,14 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["jest"]
   },
   "ts-node": {
     "esm": true,
     "transpileOnly": true,
     "experimentalSpecifierResolution": "node"
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "./types/**/*"],
   "exclude": ["node_modules"]
 }
