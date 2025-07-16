@@ -14,9 +14,8 @@ function Page() {
   const { isSidebarOpen, closeSidebar, openSidebar } = useProfileState();
 
   // User role state to control senior/junior view
-  // Get these from your database or context
   const [isSenior] = useState(true);
-  const [isDoubleSenior] = useState(true);
+  const [isDoubleSenior] = useState(false);
 
   // Junior names for each set
   const juniorName1 = 'John Doe';
@@ -25,7 +24,7 @@ function Page() {
   // Guess state management
   const [guessState, setGuessState] = useState<GuessState>('n/a');
   const [attempts, setAttempts] = useState(0);
-  const [correctAnswer] = useState(100);
+  const [correctAnswer] = useState(100); // Example correct answer, change with actual answer
   const maxAttempts = 3;
 
   const handleGuessSubmit = useCallback(
