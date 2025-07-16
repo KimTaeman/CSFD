@@ -9,7 +9,6 @@
   --font-irish-grover: 'Irish Grover', sans-serif;
   --font-ribeye: 'Ribeye', san-serif;
   --font-poppins: 'Poppins', sans-serif;
-
 }
 
 @layer utilities {
@@ -34,7 +33,7 @@
       rgba(255, 255, 255, 0.066) 100%
     );
   }
-  
+
   .overlay-bg {
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(2px);
@@ -73,7 +72,6 @@
       padding-right: 19rem;
     }
   }
-  
 }
 /* for the hint page ._. */
 html,
