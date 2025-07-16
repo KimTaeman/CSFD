@@ -92,8 +92,8 @@ function HintCard({
           </div>
         )}
       </div>
-      {/* Edit icon for senior type, only show if editable and not editing */}
-      {type === 'senior' && !isEditing && editable && (
+      {/* Edit icon for senior type, only show if value is empty */}
+      {type === 'senior' && !value && (
         <button
           className="absolute inset-0 flex items-center justify-center z-30"
           style={{ background: 'transparent' }}
