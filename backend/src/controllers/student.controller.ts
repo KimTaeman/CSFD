@@ -34,7 +34,7 @@ export const getAllStudents = async (
     if (!students) {
       throw new NotFoundError();
     }
-    res.status(200).json({ success: true, message: 'fetched student', students });
+    res.status(200).json({ success: true, message: 'fetched students', students });
   } catch (error) {
     next(error);
   }
