@@ -4,19 +4,15 @@ import CombinedCoven from '@/components/coven/covenBadge/covenBagdes';
 import DetailCoven from '@/components/coven/covenBadge/detailCoven';
 
 const Page = () => {
-
   const navigate = useNavigate();
 
   const handleCovenClick = (covenName: string): void => {
     navigate(`/coven/${covenName}`);
   };
-  
-  return (
-    <div className="min-h-screen bg-[#15022f] bg-[url('/src/assets/bg-2.png')] bg-position-[50%_0] bg-no-repeat lg:bg-contain">
-      <div className="flex">
-        {/* Sidebar space - hidden on md and below */}
-        <div className="hidden w-80 flex-shrink-0 lg:block"></div>
 
+  return (
+    <div className="min-h-screen bg-[url('/src/assets/bg-2.png')] bg-position-[50%_0] bg-no-repeat lg:bg-contain">
+      <div className="flex">
         {/* Main content */}
         <div className="flex-1 p-4 md:p-8">
           <div className="mx-auto max-w-4xl">
