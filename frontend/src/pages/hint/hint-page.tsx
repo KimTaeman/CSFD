@@ -5,16 +5,20 @@ import HamburgerIcon from '@/assets/hamburger.svg';
 import FailImage from '@/assets/fail.png';
 import SuccessImage from '@/assets/success.png';
 import SparkleImage from '@/assets/sparkle.png';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import RevealResult from '@/components/hint/RevealResult';
 
 type GuessState = 'n/a' | 'success' | 'fail';
 
+function getInitialHints(key: string) {
+  const saved = localStorage.getItem(key);
+  return saved ? JSON.parse(saved) : ["", "", ""];
+}
+
 function Page() {
-  const { isSidebarOpen, closeSidebar, openSidebar } = useProfileState();
+  const { openSidebar } = useProfileState();
 
   // User role state to control senior/junior view
-  // Get these from your database or context
   const [isSenior] = useState(true);
   const [isDoubleSenior] = useState(true);
 
@@ -49,13 +53,16 @@ function Page() {
     setAttempts(0);
   }, []);
 
+  const HINTS1_KEY = 'csfd_hints_set1';
+  const HINTS2_KEY = 'csfd_hints_set2';
+
   // Hints state for first set (3 hints)
-  const [hintsSet1, setHintsSet1] = useState(["", "", ""]);
+  const [hintsSet1, setHintsSet1] = useState(() => getInitialHints(HINTS1_KEY));
   const [editingSet1, setEditingSet1] = useState(false);
   const [draftHintsSet1, setDraftHintsSet1] = useState(hintsSet1);
 
   // Hints state for second set (3 hints)
-  const [hintsSet2, setHintsSet2] = useState(["", "", ""]);
+  const [hintsSet2, setHintsSet2] = useState(() => getInitialHints(HINTS2_KEY));
   const [editingSet2, setEditingSet2] = useState(false);
   const [draftHintsSet2, setDraftHintsSet2] = useState(hintsSet2);
 
@@ -67,8 +74,8 @@ function Page() {
 
   const handleHintChangeSet1 = useCallback(
     (idx: number, value: string) => {
-      setDraftHintsSet1((prev) => {
-        const copy = [...prev];
+      setDraftHintsSet1((prev: string[]) => {
+        const copy: string[] = [...prev];
         copy[idx] = value;
         return copy;
       });
@@ -94,7 +101,7 @@ function Page() {
 
   const handleHintChangeSet2 = useCallback(
     (idx: number, value: string) => {
-      setDraftHintsSet2((prev) => {
+      setDraftHintsSet2((prev: string[]) => {
         const copy = [...prev];
         copy[idx] = value;
         return copy;
@@ -113,11 +120,23 @@ function Page() {
     setEditingSet2(false);
   }, [hintsSet2]);
 
-  // Callbacks for senior hint editing (placeholders for future logic :))
-  const handleEditHints = useCallback(() => {}, []);
-  const handleConfirmEdit = useCallback(() => {}, []);
-  const handleCancelEdit = useCallback(() => {}, []);
-  const [isEditingSet2, setIsEditingSet2] = useState(false);
+  // Save to localStorage when hints change
+  useEffect(() => {
+    localStorage.setItem(HINTS1_KEY, JSON.stringify(hintsSet1));
+  }, [hintsSet1]);
+  useEffect(() => {
+    localStorage.setItem(HINTS2_KEY, JSON.stringify(hintsSet2));
+  }, [hintsSet2]);
+
+  // Keep draftHintsSet1 in sync with hintsSet1 when not editing
+  useEffect(() => {
+    if (!editingSet1) setDraftHintsSet1(hintsSet1);
+  }, [hintsSet1, editingSet1]);
+
+  // Keep draftHintsSet2 in sync with hintsSet2 when not editing
+  useEffect(() => {
+    if (!editingSet2) setDraftHintsSet2(hintsSet2);
+  }, [hintsSet2, editingSet2]);
 
   return (
     <>
@@ -270,24 +289,27 @@ function Page() {
           <div className="mt-5 mb-24 flex flex-col items-center space-y-7 lg:ml-8 lg:items-start">
             <HintCard
               title=""
-              description=""
+              description={editingSet1 ? draftHintsSet1[0] : hintsSet1[0]}
               stage="shown"
               type={isSenior ? 'senior' : 'freshman'}
-              editable={isSenior}
+              editable={isSenior && editingSet1}
+              onChange={(v) => handleHintChangeSet1(0, v)}
             />
             <HintCard
               title=""
-              description=""
+              description={editingSet1 ? draftHintsSet1[1] : hintsSet1[1]}
               stage="shown"
               type={isSenior ? 'senior' : 'freshman'}
-              editable={isSenior}
+              editable={isSenior && editingSet1}
+              onChange={(v) => handleHintChangeSet1(1, v)}
             />
             <HintCard
               title=""
-              description=""
+              description={editingSet1 ? draftHintsSet1[2] : hintsSet1[2]}
               stage="shown"
               type={isSenior ? 'senior' : 'freshman'}
-              editable={isSenior}
+              editable={isSenior && editingSet1}
+              onChange={(v) => handleHintChangeSet1(2, v)}
             />
           </div>
           <div className={`${isSenior ? '-mt-14' : '-mt-4'} lg:mt-[2%] lg:ml-8`}>
@@ -303,9 +325,9 @@ function Page() {
               maxAttempts={maxAttempts}
               onReset={resetGuess}
               isSenior={isSenior}
-              onEditHints={handleEditHints}
-              onConfirm={handleConfirmEdit}
-              onCancel={handleCancelEdit}
+              onEditHints={handleEditHintsSet1}
+              onConfirm={handleConfirmEditSet1}
+              onCancel={handleCancelEditSet1}
             />
           </div>
           {isSenior && isDoubleSenior && (

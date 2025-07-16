@@ -8,6 +8,7 @@
   --font-inter: 'Inter', sans-serif;
   --font-irish-grover: 'Irish Grover', sans-serif;
   --font-ribeye: 'Ribeye', san-serif;
+  --font-poppins: 'Poppins', sans-serif;
 }
 
 @layer utilities {

@@ -7,7 +7,7 @@ interface LayoutProps {
 }
 
 export default function SidebarLayout({ children }: LayoutProps) {
-  const { isSidebarOpen, closeSidebar, openSidebar } = useProfileState();
+  const { isSidebarOpen, closeSidebar } = useProfileState();
 
   return (
     <div className="flex min-h-screen">

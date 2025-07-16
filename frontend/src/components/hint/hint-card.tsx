@@ -18,18 +18,11 @@ function HintCard({
   editable = false,
   onChange,
 }: CardProps) {
-  const [value, setValue] = React.useState(description);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const MAX_LENGTH = 60;
 
-  // Keep value in sync with parent
-  React.useEffect(() => {
-    setValue(description);
-  }, [description]);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value.slice(0, MAX_LENGTH);
-    setValue(newValue);
     onChange?.(newValue);
   };
 
@@ -53,15 +46,15 @@ function HintCard({
             <div className="absolute right-2 bottom-2 z-50 flex items-center">
               <span
                 className={`bg-white px-2 py-0.5  rounded-full border border-gray-300 text-xs shadow select-none ${
-                  value.length >= MAX_LENGTH ? 'text-red-500 border-red-400' : 'text-gray-500'
+                  description.length >= MAX_LENGTH ? 'text-red-500 border-red-400' : 'text-gray-500'
                 }`}
               >
-                {value.length}/{MAX_LENGTH}
+                {description.length}/{MAX_LENGTH}
               </span>
             </div>
             <textarea
               ref={inputRef}
-              value={value}
+              value={description}
               onChange={handleInputChange}
               maxLength={MAX_LENGTH}
               className="mt-1 w-full h-full rounded-2xl bg-white px-3 py-2 text-black text-lg lg:text-2xl outline-none resize-none"
@@ -73,13 +66,13 @@ function HintCard({
         ) : (
           <div className="flex flex-1 items-center justify-center w-full h-full">
             <p className="text-lg lg:text-2xl text-black break-words whitespace-pre-line text-center w-full">
-              {value}
+              {description}
             </p>
           </div>
         )}
       </div>
       {/* Edit icon for senior type, only show if value is empty */}
-      {type === 'senior' && !value && (
+      {type === 'senior' && !description && (
         <div
           className="absolute inset-0 flex items-center justify-center z-30"
           style={{ background: 'transparent' }}
