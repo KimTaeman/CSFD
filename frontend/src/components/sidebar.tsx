@@ -20,7 +20,7 @@ interface SidebarProps {
 }
 
 function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
-  const [active, setActive] = useState('Profile');
+  const [active, setActive] = useState('Profile'); 
 
   const menuItems: MenuItem[] = useMemo(
     () => [

@@ -50,10 +50,43 @@ function Page() {
     setAttempts(0);
   }, []);
 
+  // Hints state for first set (3 hints)
+  const [hintsSet1, setHintsSet1] = useState(["", "", ""]);
+  const [editingSet1, setEditingSet1] = useState(false);
+  const [draftHintsSet1, setDraftHintsSet1] = useState(hintsSet1);
+
+  // Edit handlers for first set
+  const handleEditHintsSet1 = useCallback(() => {
+    setDraftHintsSet1(hintsSet1);
+    setEditingSet1(true);
+  }, [hintsSet1]);
+
+  const handleHintChangeSet1 = useCallback(
+    (idx: number, value: string) => {
+      setDraftHintsSet1((prev) => {
+        const copy = [...prev];
+        copy[idx] = value;
+        return copy;
+      });
+    },
+    [],
+  );
+
+  const handleConfirmEditSet1 = useCallback(() => {
+    setHintsSet1(draftHintsSet1);
+    setEditingSet1(false);
+  }, [draftHintsSet1]);
+
+  const handleCancelEditSet1 = useCallback(() => {
+    setDraftHintsSet1(hintsSet1);
+    setEditingSet1(false);
+  }, [hintsSet1]);
+
   // Callbacks for senior hint editing (placeholders for future logic :))
   const handleEditHints = useCallback(() => {}, []);
   const handleConfirmEdit = useCallback(() => {}, []);
   const handleCancelEdit = useCallback(() => {}, []);
+  const [isEditingSet2, setIsEditingSet2] = useState(false);
 
   return (
     <>
@@ -77,25 +110,31 @@ function Page() {
           <div className="absolute top-[6%] left-[2%] w-80 pt-13">
             <HintCard
               title=""
-              description=""
+              description={editingSet1 ? draftHintsSet1[0] : hintsSet1[0]}
               stage="shown"
               type={isSenior ? 'senior' : 'freshman'}
+              editable={isSenior && editingSet1}
+              onChange={(v) => handleHintChangeSet1(0, v)}
             />
           </div>
           <div className="absolute top-[6%] left-[2%] w-80 pt-13 pl-158">
             <HintCard
               title=""
-              description=""
+              description={editingSet1 ? draftHintsSet1[1] : hintsSet1[1]}
               stage="shown"
               type={isSenior ? 'senior' : 'freshman'}
+              editable={isSenior && editingSet1}
+              onChange={(v) => handleHintChangeSet1(1, v)}
             />
           </div>
           <div className="absolute top-[6%] left-[2%] w-80 pt-83">
             <HintCard
               title=""
-              description=""
+              description={editingSet1 ? draftHintsSet1[2] : hintsSet1[2]}
               stage="shown"
               type={isSenior ? 'senior' : 'freshman'}
+              editable={isSenior && editingSet1}
+              onChange={(v) => handleHintChangeSet1(2, v)}
             />
           </div>
 
@@ -113,9 +152,9 @@ function Page() {
               maxAttempts={maxAttempts}
               onReset={resetGuess}
               isSenior={isSenior}
-              onEditHints={handleEditHints}
-              onConfirm={handleConfirmEdit}
-              onCancel={handleCancelEdit}
+              onEditHints={handleEditHintsSet1}
+              onConfirm={handleConfirmEditSet1}
+              onCancel={handleCancelEditSet1}
             />
           </div>
 
@@ -126,13 +165,13 @@ function Page() {
                 Junior: {juniorName2}
               </div>
               <div className="absolute top-[11%] left-[2%] w-80 pt-179">
-                <HintCard title="" description="" stage="shown" type="senior" />
+                <HintCard title="" description="" stage="shown" type="senior" editable />
               </div>
               <div className="absolute top-[11%] left-[2%] w-80 pt-179 pl-158">
-                <HintCard title="" description="" stage="shown" type="senior" />
+                <HintCard title="" description="" stage="shown" type="senior" editable />
               </div>
               <div className="absolute top-[11%] left-[2%] w-80 pt-71 pt-248">
-                <HintCard title="" description="" stage="shown" type="senior" />
+                <HintCard title="" description="" stage="shown" type="senior" editable />
               </div>
               <div className="absolute top-[123%] left-[2%] w-200 lg:top-[11%] lg:pt-322">
                 <Guess
@@ -188,18 +227,21 @@ function Page() {
               description=""
               stage="shown"
               type={isSenior ? 'senior' : 'freshman'}
+              editable={isSenior}
             />
             <HintCard
               title=""
               description=""
               stage="shown"
               type={isSenior ? 'senior' : 'freshman'}
+              editable={isSenior}
             />
             <HintCard
               title=""
               description=""
               stage="shown"
               type={isSenior ? 'senior' : 'freshman'}
+              editable={isSenior}
             />
           </div>
           <div className={`${isSenior ? '-mt-14' : '-mt-4'} lg:mt-[2%] lg:ml-8`}>
@@ -227,9 +269,9 @@ function Page() {
                 Junior: {juniorName2}
               </div>
               <div className="mt-5 mb-24 flex flex-col items-center space-y-7 lg:ml-8 lg:items-start">
-                <HintCard title="" description="" stage="shown" type="senior" />
-                <HintCard title="" description="" stage="shown" type="senior" />
-                <HintCard title="" description="" stage="shown" type="senior" />
+                <HintCard title="" description="" stage="shown" type="senior" editable />
+                <HintCard title="" description="" stage="shown" type="senior" editable />
+                <HintCard title="" description="" stage="shown" type="senior" editable />
               </div>
               <div className="-mt-14 lg:mt-[2%] lg:ml-8">
                 <Guess
