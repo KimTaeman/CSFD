@@ -1,16 +1,17 @@
 import { useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-
 import CombinedCoven from '@/components/coven/covenBadge/covenBagdes';
 import ProfileModal from '@/components/coven/profileModal';
 import ProfilePopup from '@/components/coven/profilePopup';
 import { mockUsers, type User } from '@/types/coven.types';
+import MainLayout from '../layout';
 
 const Page = () => {
   const { coven = '' } = useParams();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+
   const validCovens = ['alchemireCoven', 'etheraCoven', 'isotarCoven', 'zireliaCoven'];
 
   useEffect(() => {
@@ -31,11 +32,8 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#15022f] bg-[url('/src/assets/bg-2.png')] bg-position-[50%_0] bg-no-repeat lg:bg-contain">
+    <MainLayout>
       <div className="flex">
-        {/* Sidebar space - hidden on md and below */}
-        <div className="hidden flex-[3] flex-shrink-0 lg:flex">{/* Sidebar content */}</div>
-
         {/* Main content area */}
         <div className="flex flex-[7] flex-col space-y-6 p-4 md:p-8">
           <div className="flex items-center justify-center">
@@ -57,7 +55,7 @@ const Page = () => {
         </div>
       </div>
       <ProfilePopup isOpen={isModalOpen} onClose={handleCloseModal} user={selectedUser} />
-    </div>
+    </MainLayout>
   );
 };
 

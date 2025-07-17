@@ -35,7 +35,7 @@ function HintCard({
 
   return (
     <div
-      className={`relative h-32 w-[94%] rounded-4xl p-3 lg:h-55 lg:w-128 lg:rounded-4xl lg:p-4 ${getCardStyles()}`}
+      className={`relative h-32 w-full rounded-4xl p-3 sm:h-32 sm:w-[94%] md:h-48 lg:h-48 lg:w-110 lg:rounded-4xl lg:p-4 ${getCardStyles()}`}
       style={{ display: 'flex', flexDirection: 'column' }}
     >
       <h2 className="text-sm font-bold text-black lg:text-lg">{title}</h2>

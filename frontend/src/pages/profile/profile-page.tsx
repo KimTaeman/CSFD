@@ -1,24 +1,14 @@
 import Picture from '@/components/profile/picture';
 import isotarImage from '@/assets/img-placeholder.png';
-import placeholderImage from '@/assets/place.png';
-import Sidebar from '@/components/sidebar';
 import ProfileForm from '@/components/profile/profile-form';
 import { useProfileState } from '@/hooks/useProfileState';
-import HamburgerIcon from '@/assets/hamburger.svg';
 import ProfilePicUpload from '@/components/profile/ProfilePicUpload';
 import { useProfilePicUpload } from '@/hooks/useProfilePicUpload';
 import { useEffect, useState } from 'react';
+import MainLayout from '../layout';
 
 function Page() {
-  const {
-    isSidebarOpen,
-    isEditing,
-    closeSidebar,
-    openSidebar,
-    handleEditClick,
-    handleConfirm,
-    handleCancel,
-  } = useProfileState();
+  const { isEditing, handleEditClick, handleConfirm, handleCancel } = useProfileState();
 
   // Profile picture state
   const [profilePic, setProfilePic] = useState<string | null>(null);
@@ -43,85 +33,31 @@ function Page() {
   }, [profilePic]);
 
   return (
-    <>
-      {/* Desktop-only content */}
-      <div className="force-mobile-hide relative hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-1.svg')] bg-cover bg-center bg-no-repeat pl-[12%] text-white xl:flex">
-        {/* Background overlay for opacity */}
-        <div className="absolute inset-0 z-0 bg-black/15"></div>
-
-        {/* Sidebar */}
-        <div className="relative z-10 pr-50 pl-10">
-          {/* Main Content */}
-          <main className="relative z-10 grid flex-1 grid-cols-12 gap-8 p-17 pl-25">
-            {/* Picture Upload Section */}
-            <div className="col-span-4 flex items-start justify-center pl-65">
-              <Picture
-                src={profilePic || isotarImage}
-                alt="Profile"
-                className="h-140 w-220 rounded-3xl"
-                darken={hovered}
-                overlayText={hovered ? 'Change' : undefined}
-                onClick={picUpload.openFileDialog}
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
-              />
-            </div>
-
-            {/* Form Section */}
-            <ProfileForm
-              isEditing={isEditing}
-              onEditClick={handleEditClick}
-              onConfirm={handleConfirm}
-              onCancel={handleCancel}
-            />
-          </main>
-        </div>
-      </div>
-
-      {/* Mobile content */}
-      <div className="ipadpro-xl-ml force-mobile relative min-h-screen w-full bg-[url('frontend/src/assets/bg-1.svg')] bg-cover bg-[position:68%_center] bg-no-repeat text-white lg:pt-[4%] xl:hidden">
-        {/* Background overlay for opacity */}
-        <div className="absolute inset-0 z-0 bg-black/15"></div>
-
-        {/* Mobile Header with Hamburger */}
-        <div className="relative z-10 flex justify-start p-4 lg:hidden">
-          <button
-            onClick={openSidebar}
-            className="rounded-lg p-2 transition-colors hover:bg-white/10"
-            aria-label="Open menu"
-          >
-            <img src={HamburgerIcon} alt="Menu" className="h-6 w-6" />
-          </button>
+    <MainLayout>
+      <div className="flex flex-1 flex-col items-center justify-center gap-y-10 p-4 xl:grid xl:grid-cols-2 xl:items-start xl:gap-x-16 xl:px-20 xl:py-5">
+        {/* Picture Upload Section */}
+        <div className="flex w-full justify-center xl:justify-end xl:pr-8">
+          <Picture
+            src={profilePic || isotarImage}
+            alt="Profile"
+            className="aspect-[5/7] w-[10rem] rounded-3xl sm:w-[25rem] lg:w-[22rem] xl:w-[25rem]"
+            darken={hovered}
+            overlayText={hovered ? 'Change' : undefined}
+            onClick={picUpload.openFileDialog}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          />
         </div>
 
-        {/* Mobile Sidebar */}
-        {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />}
-
-        {/* Mobile Main Content */}
-        <main className="relative z-10 -mt-3 flex flex-col px-8 pb-6">
-          {/* Picture Section */}
-          <div className="mt-8 mb-12 flex justify-center lg:ml-[18%]">
-            <Picture
-              src={profilePic || placeholderImage}
-              alt="Profile"
-              className="h-80 w-60 rounded-3xl"
-              darken={hovered}
-              overlayText={hovered ? 'Change' : undefined}
-              onClick={picUpload.openFileDialog}
-              onMouseEnter={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
-            />
-          </div>
-          {/* Form Section */}
-          <div className="px-2 lg:ml-[5%]">
-            <ProfileForm
-              isEditing={isEditing}
-              onEditClick={handleEditClick}
-              onConfirm={handleConfirm}
-              onCancel={handleCancel}
-            />
-          </div>
-        </main>
+        {/* Form Section */}
+        <div className="flex w-full max-w-lg justify-center xl:max-w-none xl:justify-start">
+          <ProfileForm
+            isEditing={isEditing}
+            onEditClick={handleEditClick}
+            onConfirm={handleConfirm}
+            onCancel={handleCancel}
+          />
+        </div>
       </div>
 
       {/* Hidden file input for profile pic upload */}
@@ -152,7 +88,7 @@ function Page() {
         handleCropComplete={picUpload.handleCropComplete}
         saveCroppedImage={picUpload.saveCroppedImage}
       />
-    </>
+    </MainLayout>
   );
 }
 
