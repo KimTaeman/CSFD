@@ -19,7 +19,7 @@ function HintCard({
   onChange,
 }: CardProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const MAX_LENGTH = 60;
+  const MAX_LENGTH = 120;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value.slice(0, MAX_LENGTH);
