@@ -58,10 +58,10 @@ const Page = () => {
 
   // Show main page with magic pot
   return (
-    <div className="star-bg relative min-h-svh bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-contain bg-position-[50%_0] bg-no-repeat lg:pl-[17.5%]">
+    <div className="star-bg relative min-h-svh bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-contain bg-position-[50%_0] bg-no-repeat">
       {/* Login Success Notification */}
       {showLoginSuccess && (
-        <div className="fixed top-8 left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300 ease-in-out lg:pl-[17.5%]">
+        <div className="fixed top-8 left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300 ease-in-out">
           <LoginSucess />
         </div>
       )}
