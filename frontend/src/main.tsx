@@ -20,11 +20,7 @@ const root = (container as any).__reactRoot ?? createRoot(container);
 
 export const App = () => {
   const PageContent = useRoutes(routes);
-  return (
-    <Suspense fallback={<LoadingLayout />}>
-      <MainLayout>{PageContent}</MainLayout>
-    </Suspense>
-  );
+  return <Suspense fallback={<LoadingLayout />}>{PageContent}</Suspense>;
 };
 
 root.render(
