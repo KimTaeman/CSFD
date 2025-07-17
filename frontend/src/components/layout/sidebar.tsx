@@ -1,4 +1,4 @@
-import {type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import Sidebar from '@/components/sidebar';
 import { useProfileState } from '@/hooks/useProfileState';
 
@@ -12,9 +12,7 @@ export default function SidebarLayout({ children }: LayoutProps) {
   return (
     <div className="flex min-h-screen">
       <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
-      <div className="flex-1">
-        {children}
-      </div>
+      <div className="flex-1">{children}</div>
     </div>
   );
 }
