@@ -11,7 +11,7 @@ import type { GuessState } from '@/types/hint.types';
 
 function getInitialHints(key: string) {
   const saved = localStorage.getItem(key);
-  return saved ? JSON.parse(saved) : ["", "", ""];
+  return saved ? JSON.parse(saved) : ['', '', ''];
 }
 
 function Page() {
@@ -71,16 +71,13 @@ function Page() {
     setEditingSet1(true);
   }, [hintsSet1]);
 
-  const handleHintChangeSet1 = useCallback(
-    (idx: number, value: string) => {
-      setDraftHintsSet1((prev: string[]) => {
-        const copy: string[] = [...prev];
-        copy[idx] = value;
-        return copy;
-      });
-    },
-    [],
-  );
+  const handleHintChangeSet1 = useCallback((idx: number, value: string) => {
+    setDraftHintsSet1((prev: string[]) => {
+      const copy: string[] = [...prev];
+      copy[idx] = value;
+      return copy;
+    });
+  }, []);
 
   const handleConfirmEditSet1 = useCallback(() => {
     setHintsSet1(draftHintsSet1);
@@ -98,16 +95,13 @@ function Page() {
     setEditingSet2(true);
   }, [hintsSet2]);
 
-  const handleHintChangeSet2 = useCallback(
-    (idx: number, value: string) => {
-      setDraftHintsSet2((prev: string[]) => {
-        const copy = [...prev];
-        copy[idx] = value;
-        return copy;
-      });
-    },
-    [],
-  );
+  const handleHintChangeSet2 = useCallback((idx: number, value: string) => {
+    setDraftHintsSet2((prev: string[]) => {
+      const copy = [...prev];
+      copy[idx] = value;
+      return copy;
+    });
+  }, []);
 
   const handleConfirmEditSet2 = useCallback(() => {
     setHintsSet2(draftHintsSet2);
@@ -140,7 +134,7 @@ function Page() {
   return (
     <>
       {/* Desktop-only content */}
-      <div className="force-mobile-hide hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat text-white xl:flex pl-[24%]">
+      <div className="force-mobile-hide hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-2-old.png')] bg-cover bg-fixed bg-center bg-no-repeat pl-[24%] text-white xl:flex">
         {/* Main Content */}
         <main className="relative flex-1 p-8">
           {/* Junior label for first set */}

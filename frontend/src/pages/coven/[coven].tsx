@@ -19,7 +19,7 @@ const Page = () => {
       return;
     }
   }, [coven, navigate]);
-  
+
   const handleOpenModal = (user: User): void => {
     setSelectedUser(user);
     setIsModalOpen(true);
