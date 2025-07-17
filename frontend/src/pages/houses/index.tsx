@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import RandomButton from '@/components/house/RandomButton';
 import NickName from '@/components/house/NicknamePopup';
 import LoginSucess from '@/components/layout/loginSucceed';
+import MainLayout from '@/components/layout/MainLayout';
 
 const Page = () => {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -50,7 +51,6 @@ const Page = () => {
               Your magical journey begins today."
             </h1>
           </div>
-          <NickName onSubmit={handleNicknameSubmit} />
         </div>
       </div>
     );
