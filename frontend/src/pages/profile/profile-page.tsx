@@ -45,7 +45,7 @@ function Page() {
   return (
     <>
       {/* Desktop-only content */}
-      <div className="force-mobile-hide relative hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-1.svg')] bg-cover bg-center bg-no-repeat text-white xl:flex pl-[12%]">
+      <div className="force-mobile-hide relative hidden min-h-screen w-full bg-[url('frontend/src/assets/bg-1.svg')] bg-cover bg-center bg-no-repeat pl-[12%] text-white xl:flex">
         {/* Background overlay for opacity */}
         <div className="absolute inset-0 z-0 bg-black/15"></div>
 
@@ -61,7 +61,7 @@ function Page() {
                 className="h-140 w-220 rounded-3xl"
                 darken={hovered}
                 overlayText={hovered ? 'Change' : undefined}
-                onClick={picUpload.openFileDialog} 
+                onClick={picUpload.openFileDialog}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
               />
