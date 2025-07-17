@@ -4,6 +4,7 @@ import Guess from '@/components/hint/guess';
 import RevealResult from '@/components/hint/RevealResult';
 import { useState, useCallback, useEffect } from 'react';
 import type { GuessState } from '@/types/hint.types';
+import MainLayout from '../layout';
 
 function getInitialHints(key: string) {
   const saved = localStorage.getItem(key);
@@ -126,90 +127,47 @@ function Page() {
   }, [hintsSet2, editingSet2]);
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-12">
-      <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
-        {/* Junior label for first set */}
-        {isSenior && <div className="font-[Poppins] text-xl text-white">Junior: {juniorName1}</div>}
-
-        {/* First set of Hint Cards */}
-        <div className="mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
-          <HintCard
-            title=""
-            description={editingSet1 ? draftHintsSet1[0] : hintsSet1[0]}
-            stage="shown"
-            type={isSenior ? 'senior' : 'freshman'}
-            editable={isSenior && editingSet1}
-            onChange={(v) => handleHintChangeSet1(0, v)}
-          />
-          <HintCard
-            title=""
-            description={editingSet1 ? draftHintsSet1[1] : hintsSet1[1]}
-            stage="shown"
-            type={isSenior ? 'senior' : 'freshman'}
-            editable={isSenior && editingSet1}
-            onChange={(v) => handleHintChangeSet1(1, v)}
-          />
-          <HintCard
-            title=""
-            description={editingSet1 ? draftHintsSet1[2] : hintsSet1[2]}
-            stage="shown"
-            type={isSenior ? 'senior' : 'freshman'}
-            editable={isSenior && editingSet1}
-            onChange={(v) => handleHintChangeSet1(2, v)}
-          />
-        </div>
-
-        {/* Guess/Edit for first ncode */}
-        <div className="mb-8 w-full">
-          {!isSenior && (
-            <div className="mb-7 text-2xl text-white select-none">Guess your P'code 💚💚💚</div>
-          )}
-          <Guess
-            onGuessSubmit={handleGuessSubmit}
-            guessState={guessState}
-            attempts={attempts}
-            maxAttempts={maxAttempts}
-            onReset={resetGuess}
-            isSenior={isSenior}
-            onEditHints={handleEditHintsSet1}
-            onConfirm={handleConfirmEditSet1}
-            onCancel={handleCancelEditSet1}
-          />
-        </div>
-      </div>
-
-      {/* Second set for double ncode senior */}
-
-      {isSenior && isDoubleSenior && (
+    <MainLayout>
+      <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-12">
         <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
-          <div className="mb-4 font-[Poppins] text-xl text-white">Junior: {juniorName2}</div>
+          {/* Junior label for first set */}
+          {isSenior && (
+            <div className="font-[Poppins] text-xl text-white">Junior: {juniorName1}</div>
+          )}
+
+          {/* First set of Hint Cards */}
           <div className="mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
             <HintCard
               title=""
-              description={editingSet2 ? draftHintsSet2[0] : hintsSet2[0]}
+              description={editingSet1 ? draftHintsSet1[0] : hintsSet1[0]}
               stage="shown"
-              type="senior"
-              editable={isSenior && editingSet2}
-              onChange={(v) => handleHintChangeSet2(0, v)}
+              type={isSenior ? 'senior' : 'freshman'}
+              editable={isSenior && editingSet1}
+              onChange={(v) => handleHintChangeSet1(0, v)}
             />
             <HintCard
               title=""
-              description={editingSet2 ? draftHintsSet2[1] : hintsSet2[1]}
+              description={editingSet1 ? draftHintsSet1[1] : hintsSet1[1]}
               stage="shown"
-              type="senior"
-              editable={isSenior && editingSet2}
-              onChange={(v) => handleHintChangeSet2(1, v)}
+              type={isSenior ? 'senior' : 'freshman'}
+              editable={isSenior && editingSet1}
+              onChange={(v) => handleHintChangeSet1(1, v)}
             />
             <HintCard
               title=""
-              description={editingSet2 ? draftHintsSet2[2] : hintsSet2[2]}
+              description={editingSet1 ? draftHintsSet1[2] : hintsSet1[2]}
               stage="shown"
-              type="senior"
-              editable={isSenior && editingSet2}
-              onChange={(v) => handleHintChangeSet2(2, v)}
+              type={isSenior ? 'senior' : 'freshman'}
+              editable={isSenior && editingSet1}
+              onChange={(v) => handleHintChangeSet1(2, v)}
             />
           </div>
+
+          {/* Guess/Edit for first ncode */}
           <div className="mb-8 w-full">
+            {!isSenior && (
+              <div className="mb-7 text-2xl text-white select-none">Guess your P'code 💚💚💚</div>
+            )}
             <Guess
               onGuessSubmit={handleGuessSubmit}
               guessState={guessState}
@@ -217,24 +175,71 @@ function Page() {
               maxAttempts={maxAttempts}
               onReset={resetGuess}
               isSenior={isSenior}
-              onEditHints={handleEditHintsSet2}
-              onConfirm={handleConfirmEditSet2}
-              onCancel={handleCancelEditSet2}
+              onEditHints={handleEditHintsSet1}
+              onConfirm={handleConfirmEditSet1}
+              onCancel={handleCancelEditSet1}
             />
           </div>
         </div>
-      )}
 
-      {/* Overlay for Success/Fail */}
-      {(guessState === 'success' || guessState === 'fail') && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-          onClick={resetGuess}
-        >
-          <RevealResult state={guessState === 'success' ? 'success' : 'fail'} />
-        </div>
-      )}
-    </main>
+        {/* Second set for double ncode senior */}
+
+        {isSenior && isDoubleSenior && (
+          <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
+            <div className="mb-4 font-[Poppins] text-xl text-white">Junior: {juniorName2}</div>
+            <div className="mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
+              <HintCard
+                title=""
+                description={editingSet2 ? draftHintsSet2[0] : hintsSet2[0]}
+                stage="shown"
+                type="senior"
+                editable={isSenior && editingSet2}
+                onChange={(v) => handleHintChangeSet2(0, v)}
+              />
+              <HintCard
+                title=""
+                description={editingSet2 ? draftHintsSet2[1] : hintsSet2[1]}
+                stage="shown"
+                type="senior"
+                editable={isSenior && editingSet2}
+                onChange={(v) => handleHintChangeSet2(1, v)}
+              />
+              <HintCard
+                title=""
+                description={editingSet2 ? draftHintsSet2[2] : hintsSet2[2]}
+                stage="shown"
+                type="senior"
+                editable={isSenior && editingSet2}
+                onChange={(v) => handleHintChangeSet2(2, v)}
+              />
+            </div>
+            <div className="mb-8 w-full">
+              <Guess
+                onGuessSubmit={handleGuessSubmit}
+                guessState={guessState}
+                attempts={attempts}
+                maxAttempts={maxAttempts}
+                onReset={resetGuess}
+                isSenior={isSenior}
+                onEditHints={handleEditHintsSet2}
+                onConfirm={handleConfirmEditSet2}
+                onCancel={handleCancelEditSet2}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Overlay for Success/Fail */}
+        {(guessState === 'success' || guessState === 'fail') && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+            onClick={resetGuess}
+          >
+            <RevealResult state={guessState === 'success' ? 'success' : 'fail'} />
+          </div>
+        )}
+      </main>
+    </MainLayout>
   );
 }
 

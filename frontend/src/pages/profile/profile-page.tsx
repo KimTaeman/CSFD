@@ -5,6 +5,7 @@ import { useProfileState } from '@/hooks/useProfileState';
 import ProfilePicUpload from '@/components/profile/ProfilePicUpload';
 import { useProfilePicUpload } from '@/hooks/useProfilePicUpload';
 import { useEffect, useState } from 'react';
+import MainLayout from '../layout';
 
 function Page() {
   const { isEditing, handleEditClick, handleConfirm, handleCancel } = useProfileState();
@@ -32,7 +33,7 @@ function Page() {
   }, [profilePic]);
 
   return (
-    <>
+    <MainLayout>
       <div className="flex flex-1 flex-col items-center justify-center gap-y-10 p-4 xl:grid xl:grid-cols-2 xl:items-start xl:gap-x-16 xl:px-20 xl:py-5">
         {/* Picture Upload Section */}
         <div className="flex w-full justify-center xl:justify-end xl:pr-8">
@@ -87,7 +88,7 @@ function Page() {
         handleCropComplete={picUpload.handleCropComplete}
         saveCroppedImage={picUpload.saveCroppedImage}
       />
-    </>
+    </MainLayout>
   );
 }
 
