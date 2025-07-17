@@ -65,7 +65,7 @@ const Page = () => {
   }
 
   return (
-    <div className="star-bg bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-contain">
+    <div className="star-bg bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-contain lg:pl-[17.5%]">
       <div className="light-particle-colored dust-mote">
         <div className="flex flex-col items-center justify-center space-y-9 px-4 py-35">
           <img
