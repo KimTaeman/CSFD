@@ -21,9 +21,7 @@ export const App = () => {
   const PageContent = useRoutes(routes);
   return (
     <Suspense fallback={<LoadingLayout />}>
-      <SidebarLayout>
-        {PageContent}
-      </SidebarLayout>
+      <SidebarLayout>{PageContent}</SidebarLayout>
     </Suspense>
   );
 };
