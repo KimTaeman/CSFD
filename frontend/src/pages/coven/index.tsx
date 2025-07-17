@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router';
 import CombinedCoven from '@/components/coven/covenBadge/covenBagdes';
 import DetailCoven from '@/components/coven/covenBadge/detailCoven';
