@@ -114,12 +114,12 @@ function Guess({
               value={inputValue}
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
-              disabled={guessState !== 'n/a'}
+              disabled={guessState !== 'n/a' || attempts >= maxAttempts}
               className="min-h-14 flex-1 rounded-2xl border-none bg-white px-4 py-3 text-2xl text-black placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:bg-gray-300"
             />
             <button
               onClick={handleSubmit}
-              disabled={guessState !== 'n/a'}
+              disabled={guessState !== 'n/a' || attempts >= maxAttempts}
               className="ml-1 rounded-2xl bg-orange-400 px-6 py-3 text-2xl whitespace-nowrap text-white transition-colors hover:bg-orange-500 disabled:cursor-not-allowed disabled:bg-gray-400"
             >
               send
