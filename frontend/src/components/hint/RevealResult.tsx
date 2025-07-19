@@ -11,7 +11,7 @@ const RevealResult: React.FC<RevealResultProps> = ({ state }) => {
       {/* Radial gradient background | radial-hint-bg is in index.css */}
       <div className="radial-hint-bg pointer-events-none absolute inset-0 z-0 -mt-[7%] h-full w-full" />
       {/* Sparkle image for success */}
-      {state === 'fail' && (
+      {state === 'success' && (
         <img
           src={SparkleImage}
           alt=""
@@ -19,7 +19,7 @@ const RevealResult: React.FC<RevealResultProps> = ({ state }) => {
         />
       )}
       <div className="relative z-10 -mt-[7%] flex w-full flex-col items-center font-['Irish_Grover'] text-xl leading-tight md:text-3xl lg:text-[360%]">
-        {state === 'fail' ? (
+        {state === 'success' ? (
           <>
             <p className="text-center text-[#FFC31E]">The spell has worked!</p>
             <p className="-mt-[0.5%] text-center text-[#FFC31E]">
