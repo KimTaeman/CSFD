@@ -34,13 +34,13 @@ function Page() {
 
   return (
     <MainLayout>
-      <div className="flex flex-1 flex-col items-center justify-center gap-y-10 p-4 xl:grid xl:grid-cols-2 xl:items-start xl:gap-x-16 xl:px-20 xl:py-5">
+      <div className="flex flex-1 flex-col items-center justify-center gap-y-14 p-4 xl:grid xl:grid-cols-2 xl:items-start xl:gap-x-16 xl:px-20 xl:py-5">
         {/* Picture Upload Section */}
         <div className="flex w-full justify-center xl:justify-end xl:pr-8">
           <Picture
             src={profilePic || isotarImage}
             alt="Profile"
-            className="aspect-[5/7] w-[10rem] rounded-3xl sm:w-[25rem] lg:w-[22rem] xl:w-[25rem]"
+            className="aspect-[5/7] w-[186px] rounded-3xl sm:w-[25rem] lg:w-[22rem] xl:w-[25rem]"
             darken={hovered}
             overlayText={hovered ? 'Change' : undefined}
             onClick={picUpload.openFileDialog}
