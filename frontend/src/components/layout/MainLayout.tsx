@@ -2,7 +2,7 @@ import Sidebar from '@/components/sidebar';
 import HamburgerIcon from '@/assets/hamburger.svg';
 import { useProfileState } from '@/hooks/useProfileState';
 import React from 'react';
-import { useLocation } from 'react-router-dom'; 
+import { useLocation } from 'react-router-dom';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -35,7 +35,7 @@ const MainLayout = ({ children, showSidebar = true }: MainLayoutProps) => {
         )}
         {/* Hamburger (Mobile) */}
         {showSidebar && (
-          <div className="absolute top-4 left-4 z-20 xl:hidden lg:hidden">
+          <div className="absolute top-4 left-4 z-20 lg:hidden xl:hidden">
             <button
               onClick={openSidebar}
               className="rounded-lg p-2 transition-colors hover:bg-white/10"
@@ -47,12 +47,14 @@ const MainLayout = ({ children, showSidebar = true }: MainLayoutProps) => {
         )}
         {/* Mobile Sidebar */}
         {showSidebar && isSidebarOpen && (
-          <div className="fixed inset-0 z-30 xl:hidden lg:hidden">
+          <div className="fixed inset-0 z-30 lg:hidden xl:hidden">
             <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
           </div>
         )}
         {/* Main Content */}
-        <main className={`flex flex-1 flex-col items-center justify-start px-4 py-20 xl:px-12 xl:py-15 xl:pr-20 ${ipadProPadding}`}>
+        <main
+          className={`flex flex-1 flex-col items-center justify-start px-4 py-20 xl:px-12 xl:py-15 xl:pr-20 ${ipadProPadding}`}
+        >
           {children}
         </main>
       </div>
