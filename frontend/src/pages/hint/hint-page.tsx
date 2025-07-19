@@ -20,31 +20,45 @@ function Page() {
   const juniorName1 = 'John Doe';
   const juniorName2 = 'Jane Smith';
 
-  // Guess state management
+  type CorrectAnswer = string | number | null;
+
+  // Set correct answer from backend
+  const [correctAnswer, setCorrectAnswer] = useState<CorrectAnswer>(100);
   const [guessState, setGuessState] = useState<GuessState>('n/a');
   const [attempts, setAttempts] = useState(0);
-  const [correctAnswer] = useState(100); // Example correct answer, change with actual answer
   const maxAttempts = 3;
+
+  const onResult = useCallback((result: 'success' | 'fail', guess: string) => {
+    /**
+     * @TODO Handle the result of the guess
+     */
+  }, []);
+
+  const checkAnswer = useCallback(
+    (guess: string | number) => {
+      if (correctAnswer === null) return false;
+      return String(guess).trim().toLowerCase() === String(correctAnswer).trim().toLowerCase();
+    },
+    [correctAnswer],
+  );
 
   const handleGuessSubmit = useCallback(
     (guess: string) => {
-      const numericGuess = parseInt(guess, 10);
+      if (attempts >= maxAttempts) return; 
+
       const newAttempts = attempts + 1;
-
-      if (numericGuess === correctAnswer) {
-        setGuessState('success');
-        return;
-      }
-
-      setAttempts(newAttempts);
-      setGuessState('fail');
+      const isCorrect = checkAnswer(guess);
+      const result = isCorrect ? 'success' : 'fail';
+      setGuessState(result);
+      if (!isCorrect) setAttempts(newAttempts);
+      console.log(`Guess: ${guess}, Result: ${result}, Attempts: ${newAttempts}`);
+      onResult(result, guess);
     },
-    [attempts, correctAnswer],
+    [attempts, checkAnswer, onResult],
   );
 
   const resetGuess = useCallback(() => {
     setGuessState('n/a');
-    setAttempts(0);
   }, []);
 
   const HINTS1_KEY = 'csfd_hints_set1';
@@ -160,6 +174,8 @@ function Page() {
     if (!editingSet2) setDraftHintsSet2(hintsSet2);
   }, [hintsSet2, editingSet2]);
 
+  const outOfAttempts = attempts >= maxAttempts;
+
   return (
     <MainLayout>
       <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-20">
@@ -249,10 +265,13 @@ function Page() {
         {/* Overlay for Success/Fail */}
         {(guessState === 'success' || guessState === 'fail') && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 xl:pl-[11%]"
             onClick={resetGuess}
           >
-            <RevealResult state={guessState === 'success' ? 'success' : 'fail'} />
+            <RevealResult
+              state={guessState === 'success' ? 'success' : 'fail'}
+              outOfAttempts={outOfAttempts}
+            />
           </div>
         )}
       </main>
