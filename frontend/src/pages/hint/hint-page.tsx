@@ -83,13 +83,13 @@ function Page() {
         key: i,
         title: i < revealedCount ? '' : `${i - revealedCount + 1}`,
         description: editingSet1 ? draftHintsSet1[i] : hintsSet1[i],
-        stage: i < revealedCount ? 'shown' : 'hidden' as 'shown' | 'hidden',
+        stage: i < revealedCount ? 'shown' : ('hidden' as 'shown' | 'hidden'),
         editable: editingSet1 && i < revealedCount,
       };
     });
   };
 
-  // Call this to reveal the next hint card 
+  // Call this to reveal the next hint card
   const revealNextHintSet = () => {
     setRevealedCount((prev) => Math.min(prev + 1, 3));
   };
@@ -170,7 +170,7 @@ function Page() {
           )}
 
           {/* First set of Hint Cards */}
-          <div className="mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 ipadpro-pl-one-col">
+          <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
             {getHintCardsSet1().map((card) => (
               <HintCard
                 key={card.key}
@@ -187,7 +187,7 @@ function Page() {
           {/* TEMPPP: To reveal next card button (remove when integrating) */}
           {!isSenior && (
             <button
-              className="mb-4 px-4 py-2 rounded bg-white text-black hover:bg-gry-200 "
+              className="hover:bg-gry-200 mb-4 rounded bg-white px-4 py-2 text-black"
               onClick={revealNextHintSet}
             >
               Reveal Next Hint
@@ -217,7 +217,7 @@ function Page() {
         {isSenior && isDoubleSenior && (
           <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
             <div className="mb-4 font-[Poppins] text-xl text-white">Junior: {juniorName2}</div>
-            <div className="mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 ipadpro-pl-one-col">
+            <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
               {[0, 1, 2].map((i) => (
                 <HintCard
                   key={i}

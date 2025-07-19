@@ -47,7 +47,9 @@ function HintCard({
               <div className="absolute right-2 bottom-2 z-50 flex items-center">
                 <span
                   className={`rounded-full border border-gray-300 bg-white px-2 py-0.5 text-xs shadow select-none ${
-                    description.length >= MAX_LENGTH ? 'border-red-400 text-red-500' : 'text-gray-500'
+                    description.length >= MAX_LENGTH
+                      ? 'border-red-400 text-red-500'
+                      : 'text-gray-500'
                   }`}
                 >
                   {description.length}/{MAX_LENGTH}
