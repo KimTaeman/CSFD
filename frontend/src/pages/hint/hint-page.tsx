@@ -60,6 +60,40 @@ function Page() {
   const [editingSet2, setEditingSet2] = useState(false);
   const [draftHintsSet2, setDraftHintsSet2] = useState(hintsSet2);
 
+  // Reveal count for each set (0 = none, 1 = first, 2 = second, 3 = all)
+  // edit here to change how many hints are revealed initially
+  // the function to reveal the next hint is revealNextHintSet()
+  const [revealedCount, setRevealedCount] = useState(0);
+
+  // Returns array of hint card data for first set
+  const getHintCardsSet1 = () => {
+    return [0, 1, 2].map((i) => {
+      // Senior: all shown, no title
+      if (isSenior) {
+        return {
+          key: i,
+          title: '',
+          description: editingSet1 ? draftHintsSet1[i] : hintsSet1[i],
+          stage: 'shown' as 'shown',
+          editable: editingSet1,
+        };
+      }
+      // Non-senior: reveal logic
+      return {
+        key: i,
+        title: i < revealedCount ? '' : `${i - revealedCount + 1}`,
+        description: editingSet1 ? draftHintsSet1[i] : hintsSet1[i],
+        stage: i < revealedCount ? 'shown' : 'hidden' as 'shown' | 'hidden',
+        editable: editingSet1 && i < revealedCount,
+      };
+    });
+  };
+
+  // Call this to reveal the next hint card 
+  const revealNextHintSet = () => {
+    setRevealedCount((prev) => Math.min(prev + 1, 3));
+  };
+
   // Edit handlers for first set
   const handleEditHintsSet1 = useCallback(() => {
     setDraftHintsSet1(hintsSet1);
@@ -128,7 +162,7 @@ function Page() {
 
   return (
     <MainLayout>
-      <main className=" mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-20">
+      <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-20">
         <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
           {/* Junior label for first set */}
           {isSenior && (
@@ -137,31 +171,28 @@ function Page() {
 
           {/* First set of Hint Cards */}
           <div className="mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 ipadpro-pl-one-col">
-            <HintCard
-              title=""
-              description={editingSet1 ? draftHintsSet1[0] : hintsSet1[0]}
-              stage="shown"
-              type={isSenior ? 'senior' : 'freshman'}
-              editable={isSenior && editingSet1}
-              onChange={(v) => handleHintChangeSet1(0, v)}
-            />
-            <HintCard
-              title=""
-              description={editingSet1 ? draftHintsSet1[1] : hintsSet1[1]}
-              stage="shown"
-              type={isSenior ? 'senior' : 'freshman'}
-              editable={isSenior && editingSet1}
-              onChange={(v) => handleHintChangeSet1(1, v)}
-            />
-            <HintCard
-              title=""
-              description={editingSet1 ? draftHintsSet1[2] : hintsSet1[2]}
-              stage="shown"
-              type={isSenior ? 'senior' : 'freshman'}
-              editable={isSenior && editingSet1}
-              onChange={(v) => handleHintChangeSet1(2, v)}
-            />
+            {getHintCardsSet1().map((card) => (
+              <HintCard
+                key={card.key}
+                title={card.title}
+                description={card.description}
+                stage={card.stage}
+                type={isSenior ? 'senior' : 'freshman'}
+                editable={card.editable}
+                onChange={(v) => handleHintChangeSet1(card.key, v)}
+              />
+            ))}
           </div>
+
+          {/* TEMPPP: To reveal next card button (remove when integrating) */}
+          {!isSenior && (
+            <button
+              className="mb-4 px-4 py-2 rounded bg-white text-black hover:bg-gry-200 "
+              onClick={revealNextHintSet}
+            >
+              Reveal Next Hint
+            </button>
+          )}
 
           {/* Guess/Edit for first ncode */}
           <div className="mb-8 w-full">
@@ -183,35 +214,21 @@ function Page() {
         </div>
 
         {/* Second set for double ncode senior */}
-
         {isSenior && isDoubleSenior && (
           <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
             <div className="mb-4 font-[Poppins] text-xl text-white">Junior: {juniorName2}</div>
             <div className="mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 ipadpro-pl-one-col">
-              <HintCard
-                title=""
-                description={editingSet2 ? draftHintsSet2[0] : hintsSet2[0]}
-                stage="shown"
-                type="senior"
-                editable={isSenior && editingSet2}
-                onChange={(v) => handleHintChangeSet2(0, v)}
-              />
-              <HintCard
-                title=""
-                description={editingSet2 ? draftHintsSet2[1] : hintsSet2[1]}
-                stage="shown"
-                type="senior"
-                editable={isSenior && editingSet2}
-                onChange={(v) => handleHintChangeSet2(1, v)}
-              />
-              <HintCard
-                title=""
-                description={editingSet2 ? draftHintsSet2[2] : hintsSet2[2]}
-                stage="shown"
-                type="senior"
-                editable={isSenior && editingSet2}
-                onChange={(v) => handleHintChangeSet2(2, v)}
-              />
+              {[0, 1, 2].map((i) => (
+                <HintCard
+                  key={i}
+                  title=""
+                  description={editingSet2 ? draftHintsSet2[i] : hintsSet2[i]}
+                  stage="shown"
+                  type="senior"
+                  editable={isSenior && editingSet2}
+                  onChange={(v) => handleHintChangeSet2(i, v)}
+                />
+              ))}
             </div>
             <div className="mb-8 w-full">
               <Guess
