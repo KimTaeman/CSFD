@@ -13,7 +13,7 @@ function getInitialHints(key: string) {
 
 function Page() {
   // User role state to control senior/junior view
-  const [isSenior] = useState(true);
+  const [isSenior] = useState(false);
   const [isDoubleSenior] = useState(true);
 
   // Junior names for each set
@@ -128,7 +128,7 @@ function Page() {
 
   return (
     <MainLayout>
-      <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-12">
+      <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-20">
         <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
           {/* Junior label for first set */}
           {isSenior && (
@@ -136,7 +136,7 @@ function Page() {
           )}
 
           {/* First set of Hint Cards */}
-          <div className="mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
+          <div className="mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
             <HintCard
               title=""
               description={editingSet1 ? draftHintsSet1[0] : hintsSet1[0]}

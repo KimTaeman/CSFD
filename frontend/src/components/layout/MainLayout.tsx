@@ -42,7 +42,7 @@ const MainLayout = ({ children, showSidebar = true }: MainLayoutProps) => {
           </div>
         )}
         {/* Main Content */}
-        <main className="flex flex-1 flex-col items-center justify-start px-4 py-20 xl:px-12 xl:py-12">
+        <main className="flex flex-1 flex-col items-center justify-start px-4 py-20 xl:px-12 xl:py-15 xl:pr-20">
           {children}
         </main>
       </div>
