@@ -33,7 +33,7 @@ const RevealResult: React.FC<RevealResultProps> = ({ state, outOfAttempts = fals
             <p className="text-center text-[#C50A0A]">That wasn’t your secret senior…The stars</p>
             <p className="text-center text-[#C50A0A]">remain silent</p>
             <p className="mt-[1%] text-center text-white">
-              {outOfAttempts ? 'No more chances' : "Try again, little witch."}
+              {outOfAttempts ? 'No more chances' : 'Try again, little witch.'}
             </p>
           </>
         )}
