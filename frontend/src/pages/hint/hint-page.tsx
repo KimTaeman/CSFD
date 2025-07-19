@@ -44,7 +44,7 @@ function Page() {
 
   const handleGuessSubmit = useCallback(
     (guess: string) => {
-      if (attempts >= maxAttempts) return; 
+      if (attempts >= maxAttempts) return;
 
       const newAttempts = attempts + 1;
       const isCorrect = checkAnswer(guess);
