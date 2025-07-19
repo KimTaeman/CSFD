@@ -136,7 +136,7 @@ function Page() {
           )}
 
           {/* First set of Hint Cards */}
-          <div className="mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
+          <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
             <HintCard
               title=""
               description={editingSet1 ? draftHintsSet1[0] : hintsSet1[0]}
@@ -187,7 +187,7 @@ function Page() {
         {isSenior && isDoubleSenior && (
           <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
             <div className="mb-4 font-[Poppins] text-xl text-white">Junior: {juniorName2}</div>
-            <div className="mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
               <HintCard
                 title=""
                 description={editingSet2 ? draftHintsSet2[0] : hintsSet2[0]}
