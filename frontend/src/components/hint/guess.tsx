@@ -78,7 +78,7 @@ function Guess({
       )}
 
       {/* Desktop layout */}
-      <div className="hidden w-full items-center gap-4 lg:flex">
+      <div className="hidden w-7/11 items-center gap-4 lg:flex">
         {isSenior ? (
           <div className="-mt-13 mb-4 flex w-full justify-start">
             {isEditing ? (
