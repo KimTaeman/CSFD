@@ -41,7 +41,7 @@ const Page = () => {
   if (showWelcome) {
     return (
       <div className="bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-contain">
-        <div className="flex h-175 w-full flex-col items-center justify-center space-y-8 px-4 ">
+        <div className="flex h-175 w-full flex-col items-center justify-center space-y-8 px-4">
           <div className="flex flex-col items-center justify-center text-center">
             <h1 className="font-irish-grover text-effect text-[1.75rem] leading-snug text-white sm:text-[2.25rem] md:text-[2.5rem] lg:text-[3rem]">
               "Welcome, little witchling.
