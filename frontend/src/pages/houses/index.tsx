@@ -40,8 +40,8 @@ const Page = () => {
   // Show welcome page
   if (showWelcome) {
     return (
-      <div className="star-bg min-h-screen bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-top bg-no-repeat sm:bg-center md:bg-[length:100%_auto] lg:bg-contain">
-        <div className="flex h-screen w-full flex-col items-center justify-center space-y-8 px-4 pt-10 sm:space-y-10 sm:px-8 sm:pt-16 md:space-y-12 md:px-16 md:pt-24 lg:px-24 xl:-my-50">
+      <div className="bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-contain">
+        <div className="flex h-175 w-full flex-col items-center justify-center space-y-8 px-4 ">
           <div className="flex flex-col items-center justify-center text-center">
             <h1 className="font-irish-grover text-effect text-[1.75rem] leading-snug text-white sm:text-[2.25rem] md:text-[2.5rem] lg:text-[3rem]">
               "Welcome, little witchling.
@@ -58,7 +58,7 @@ const Page = () => {
 
   // Show main page with magic pot
   return (
-    <div className="star-bg relative min-h-svh bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-contain bg-position-[50%_0] bg-no-repeat">
+    <div className="relative min-h-svh bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-contain bg-position-[50%_0] bg-no-repeat">
       {/* Login Success Notification */}
       {showLoginSuccess && (
         <div className="fixed top-8 left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300 ease-in-out">
