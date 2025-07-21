@@ -7,7 +7,7 @@ interface HouseDetailsProps {
 const HouseDetail = ({ houseData }: HouseDetailsProps) => {
   return (
     <div className="detail-box-border-glow detail-box-particles detail-box-shimmer font-inter w-full max-w-5xl transform rounded-3xl bg-black/20 backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02]">
-      <div className="relative z-10 flex flex-col items-start justify-start space-y-6 p-8">
+      <div className="relative z-10 flex flex-col items-start justify-start space-y-6 p-7">
         {/* Detail Paragraphs */}
         <div className="space-y-4">
           <p className="font-inter text-left text-lg leading-relaxed font-medium break-words hyphens-auto text-white">

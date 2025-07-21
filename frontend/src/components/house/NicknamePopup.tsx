@@ -15,8 +15,8 @@ const NickName: React.FC<NickNameProps> = ({ onSubmit }) => {
   };
 
   return (
-    <div className="hover:shadow-3xl font-inter w-full max-w-2xl rounded-3xl border border-white/30 bg-white/20 p-6 font-medium text-black shadow-2xl backdrop-blur-lg transition-all duration-300 ease-in-out hover:border-white/70 hover:bg-white/60">
-      <h1 className="font-inter mb-8 text-center text-xl font-bold text-gray-800">
+    <div className="hover:shadow-3xl font-inter w-full max-w-2xl rounded-3xl border-none bg-white/40 p-6 font-medium text-black shadow-2xl backdrop-blur-lg transition-all duration-300 ease-in-out hover:bg-white/50">
+      <h1 className="font-inter text- mb-8 text-center text-xl font-bold text-gray-800">
         What shall we call you in the enchanted realm?
       </h1>
       <form onSubmit={handleSubmit} className="font-inter space-y-6 font-medium">

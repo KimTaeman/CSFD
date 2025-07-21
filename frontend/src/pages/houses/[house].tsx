@@ -65,9 +65,9 @@ const Page = () => {
   }
 
   return (
-    <div className="bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-contain">
+    <div className="min-h-svh bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-cover bg-center bg-no-repeat">
       <div className="light-particle-colored dust-mote">
-        <div className="flex flex-col items-center justify-center space-y-9 px-4 py-35">
+        <div className="flex min-h-screen flex-col items-center justify-center space-y-9 scroll-auto px-12 py-20">
           <img
             className="animated-drift has-[+button:hover]:animate-wiggle-more -ml-8 w-full max-w-[420px]"
             src={houseInfo.img}
