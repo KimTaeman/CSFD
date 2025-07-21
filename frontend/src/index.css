@@ -126,22 +126,12 @@ body {
   background-color: transparent !important;
 }
 
+button {
+  cursor: pointer;
+}
+
 .bg-fixed {
   background-attachment: fixed;
-}
-
-/* dark background to prevent white flash ._. */
-#root {
-  background-color: #000000;
-  min-height: 100vh;
-}
-
-body {
-  background-color: #000000;
-}
-
-html {
-  background-color: #000000;
 }
 
 /* for 1080p with 150% */
@@ -197,6 +187,16 @@ html {
     rgba(250, 143, 33, 0.4) 20%,
     transparent 40%
   );
+}
+
+.pot-width {
+  max-width: 420px;
+}
+
+@media (min-width: 1797px) and (max-width: 3000px) {
+  .pot-width {
+    max-width: 720px;
+  }
 }
 
 /*used for character animated*/
