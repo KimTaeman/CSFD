@@ -50,8 +50,8 @@ const CombinedCoven: React.FC<CombinedCovenProps> = ({ covenType, onClick, class
 
   const textContent = (
     <div className="flex flex-1 flex-col items-start justify-start space-y-2">
-      <h3 className="font-ribeye text-[1.5rem] text-white">{coven.name}</h3>
-      <p className="font-inter text-[0.7rem] text-white/80">{coven.role}</p>
+      <h3 className="font-ribeye text-xl text-white xl:text-3xl">{coven.name}</h3>
+      <p className="font-inter text-sm text-white/80 xl:text-lg">{coven.role}</p>
     </div>
   );
 
@@ -66,7 +66,7 @@ const CombinedCoven: React.FC<CombinedCovenProps> = ({ covenType, onClick, class
       className={`w-full max-w-85 transform rounded-3xl border border-white/30 bg-black/10 backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02] ${onClick ? 'cursor-pointer' : ''} ${className}`}
       onClick={onClick}
     >
-      <div className="ipadpro-px-2 flex flex-row items-center px-8 py-6">
+      <div className="ipadpro-px-2 flex flex-row items-center px-8 py-6 md:px-4">
         {coven.imagePosition === 'left' ? (
           <>
             {imageContent}
