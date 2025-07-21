@@ -1,31 +1,20 @@
-// components/ProtectedRoute.tsx
-import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
-import api from '../../api/axios';
+import { useAuthContext } from '@/hooks/useAuthContext';
+import { Navigate, useLocation } from 'react-router-dom';
+import LoadingLayout from '../layout/loading';
 
-// TODO: fix type error
-// TODO: find better way to wrap protected routes
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isAuthenticated, isLoading } = useAuthContext();
+  const location = useLocation();
 
-function ProtectedRoute({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await api.get('/api/auth/me');
-        setIsAuthenticated(true);
-      } catch {
-        setIsAuthenticated(false);
-      }
-    };
-    checkAuth();
-  }, []);
-
-  if (isAuthenticated === null) {
-    return <div>Loading...</div>;
+  if (isLoading) {
+    return <LoadingLayout />;
   }
 
-  return isAuthenticated ? children : <Navigate to="/" />;
-}
+  if (!isAuthenticated) {
+    return <Navigate to="/" state={{ from: location }} replace />;
+  }
+
+  return <>{children}</>;
+};
 
 export default ProtectedRoute;
