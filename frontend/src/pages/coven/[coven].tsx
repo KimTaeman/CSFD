@@ -66,13 +66,15 @@ const Page = () => {
 
           {/* Cards grid */}
           <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
-            {students.map((user: StudentInfo) => (
-              <ProfileModal
-                key={user.studentId}
-                user={user}
-                onClick={() => handleOpenModal(user)}
-              />
-            ))}
+            {students
+              .filter((user: StudentInfo) => `${user.house.toLowerCase()}Coven` === coven)
+              .map((user: StudentInfo) => (
+                <ProfileModal
+                  key={user.studentId}
+                  user={user}
+                  onClick={() => handleOpenModal(user)}
+                />
+              ))}
           </div>
         </div>
       </div>
