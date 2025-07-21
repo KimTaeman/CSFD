@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import * as Models from '@/models';
 import { NotFoundError } from '@/errors/not-found-error';
 
-// Placeholders - Replace with actual logic
 export const getStudentById = async (
   req: Request,
   res: Response,
@@ -64,6 +63,18 @@ export const getAllJuniors = async (
       throw new NotFoundError();
     }
     res.status(200).json({ data: juniors });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const guessMentor = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  const { guess } = req.body;
+
+  try {
+    const result = await Models.guessMentor(Number(id), guess);
+    res.status(200).json({ success: true, data: result });
   } catch (error) {
     next(error);
   }

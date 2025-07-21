@@ -12,5 +12,6 @@ router.get('/seniors', Controller.getAllSeniors);
 router.get('/:id', Controller.getStudentById);
 
 // PUT
+router.put('/:id/guess', Controller.guessMentor);
 
 export default router;
