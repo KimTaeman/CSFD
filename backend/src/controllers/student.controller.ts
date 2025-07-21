@@ -68,3 +68,24 @@ export const getAllJuniors = async (
     next(error);
   }
 };
+
+export const updateStudentById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const data = req.body;
+    const id = Number(req.params.id);
+
+    const updated = await Models.updateStudentById(id, data);
+
+    if (!updated) {
+      throw new NotFoundError();
+    }
+
+    res.status(200).json({ data: updated });
+  } catch (error) {
+    next(error);
+  }
+};
