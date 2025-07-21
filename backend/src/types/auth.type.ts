@@ -21,6 +21,7 @@ export interface StudentInfo {
       instagram: string | null;
       discord: string | null;
       line: string | null;
+      lives: number | null;
     };
   }>;
   mentor?: {

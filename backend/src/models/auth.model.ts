@@ -86,7 +86,7 @@ export const getStudentInfo = (userId: number): Promise<StudentInfo | null> => {
       },
       givenHints: {
         orderBy: {
-          order: 'asc',
+          id: 'asc',
         },
       },
       receivedHints: {

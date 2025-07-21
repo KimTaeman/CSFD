@@ -122,12 +122,17 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
             id: mentee.junior.id,
             displayName: mentee.junior.displayName,
             nickname: mentee.junior.nickname,
-            lives: student.lives,
+            lives: mentee.junior.lives,
             instagram: mentee.junior.instagram,
             discord: mentee.junior.discord,
             line: mentee.junior.line,
           }))
         : null,
+      mentor: isSenior
+        ? null
+        : {
+            id: student.mentor?.senior.id,
+          },
       hints: isSenior ? student.givenHints : student.receivedHints,
       house: student.house,
       instagram: student.instagram,
