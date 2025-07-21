@@ -7,7 +7,8 @@
 @theme {
   --font-inter: 'Inter', sans-serif;
   --font-irish-grover: 'Irish Grover', sans-serif;
-  --font-ribeye: 'Ribeye', san-serif;
+  --font-ribeye: 'Ribeye', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
 }
 
 @layer utilities {
@@ -32,6 +33,7 @@
       rgba(255, 255, 255, 0.066) 100%
     );
   }
+
   .overlay-bg {
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(2px);
