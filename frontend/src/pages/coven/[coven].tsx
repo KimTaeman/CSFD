@@ -4,16 +4,21 @@ import CombinedCoven from '@/components/coven/covenBadge/covenBagdes';
 import ProfileModal from '@/components/coven/profileModal';
 import ProfilePopup from '@/components/coven/profilePopup';
 import type { StudentInfo } from '@/types/type';
-import { useDataContext } from '@/hooks/useDataContext';
 import MainLayout from '../layout';
+import { useAuthContext } from '@/hooks/useAuthContext';
+import { useFetch } from '@/hooks/useFetch';
+import { useQuery } from '@tanstack/react-query';
+import LoadingLayout from '@/components/layout/loading';
 
 const Page = () => {
   const { coven = '' } = useParams();
   const navigate = useNavigate();
+
+  const { isAuthenticated } = useAuthContext();
+  const { fetchStudents } = useFetch();
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<StudentInfo | null>(null);
-
-  const { students } = useDataContext();
 
   const validCovens = ['alchemireCoven', 'etheraCoven', 'isotarCoven', 'zireliaCoven'];
 
@@ -23,6 +28,16 @@ const Page = () => {
       return;
     }
   }, [coven, navigate]);
+
+  const {
+    data: students,
+    isPending,
+    error,
+  } = useQuery({
+    queryKey: ['students'],
+    queryFn: fetchStudents,
+    enabled: isAuthenticated,
+  });
 
   const handleOpenModal = (user: StudentInfo): void => {
     setSelectedUser(user);
@@ -34,9 +49,9 @@ const Page = () => {
     setSelectedUser(null);
   };
 
-  if (!students) {
-    return <div>Loading...</div>;
-  }
+  if (isPending) return <LoadingLayout />;
+
+  if (error) return <div>An error occurred: {error.message}</div>;
 
   return (
     <MainLayout>
@@ -51,7 +66,7 @@ const Page = () => {
 
           {/* Cards grid */}
           <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
-            {students.map((user, index) => (
+            {students.map((user: StudentInfo) => (
               <ProfileModal
                 key={user.studentId}
                 user={user}

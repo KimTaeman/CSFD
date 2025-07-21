@@ -134,6 +134,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.1.10
         version: 4.1.11(rolldown-vite@7.0.9(@types/node@24.0.14)(jiti@2.4.2)(yaml@2.8.0))
+      '@tanstack/react-query':
+        specifier: ^5.83.0
+        version: 5.83.0(react@19.1.0)
       '@vitejs/plugin-react-oxc':
         specifier: ^0.2.3
         version: 0.2.3(rolldown-vite@7.0.9(@types/node@24.0.14)(jiti@2.4.2)(yaml@2.8.0))
@@ -183,6 +186,9 @@ importers:
       '@eslint/js':
         specifier: ^9.29.0
         version: 9.31.0
+      '@tanstack/eslint-plugin-query':
+        specifier: ^5.81.2
+        version: 5.81.2(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)
       '@types/node':
         specifier: ^24.0.7
         version: 24.0.14
@@ -230,7 +236,7 @@ importers:
         version: rolldown-vite@7.0.9(@types/node@24.0.14)(jiti@2.4.2)(yaml@2.8.0)
       vite-plugin-pages:
         specifier: ^0.33.1
-        version: 0.33.1(react-router@7.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(rolldown-vite@7.0.9(@types/node@24.0.14)(jiti@2.4.2)(yaml@2.8.0))
+        version: 0.33.1(react-router@7.7.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(rolldown-vite@7.0.9(@types/node@24.0.14)(jiti@2.4.2)(yaml@2.8.0))
 
 packages:
 
@@ -855,6 +861,19 @@ packages:
     resolution: {integrity: sha512-RHYhrR3hku0MJFRV+fN2gNbDNEh3dwKvY8XJvTxCSXeMOsCRSr+uKvDWQcbizrHgjML6ZmTE5OwMrl5wKcujCw==}
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7
+
+  '@tanstack/eslint-plugin-query@5.81.2':
+    resolution: {integrity: sha512-h4k6P6fm5VhKP5NkK+0TTVpGGyKQdx6tk7NYYG7J7PkSu7ClpLgBihw7yzK8N3n5zPaF3IMyErxfoNiXWH/3/A==}
+    peerDependencies:
+      eslint: ^8.57.0 || ^9.0.0
+
+  '@tanstack/query-core@5.83.0':
+    resolution: {integrity: sha512-0M8dA+amXUkyz5cVUm/B+zSk3xkQAcuXuz5/Q/LveT4ots2rBpPTZOzd7yJa2Utsf8D2Upl5KyjhHRY+9lB/XA==}
+
+  '@tanstack/react-query@5.83.0':
+    resolution: {integrity: sha512-/XGYhZ3foc5H0VM2jLSD/NyBRIOK4q9kfeml4+0x2DlL6xVuAcVEW+hTlTapAmejObg0i3eNqhkr2dT+eciwoQ==}
+    peerDependencies:
+      react: ^19.0.0
 
   '@tsconfig/node10@1.0.11':
     resolution: {integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==}
@@ -3969,6 +3988,21 @@ snapshots:
       tailwindcss: 4.1.11
       vite: rolldown-vite@7.0.9(@types/node@24.0.14)(jiti@2.4.2)(yaml@2.8.0)
 
+  '@tanstack/eslint-plugin-query@5.81.2(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)':
+    dependencies:
+      '@typescript-eslint/utils': 8.37.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)
+      eslint: 9.31.0(jiti@2.4.2)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  '@tanstack/query-core@5.83.0': {}
+
+  '@tanstack/react-query@5.83.0(react@19.1.0)':
+    dependencies:
+      '@tanstack/query-core': 5.83.0
+      react: 19.1.0
+
   '@tsconfig/node10@1.0.11': {}
 
   '@tsconfig/node12@1.0.11': {}
@@ -6319,7 +6353,7 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite-plugin-pages@0.33.1(react-router@7.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(rolldown-vite@7.0.9(@types/node@24.0.14)(jiti@2.4.2)(yaml@2.8.0)):
+  vite-plugin-pages@0.33.1(react-router@7.7.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(rolldown-vite@7.0.9(@types/node@24.0.14)(jiti@2.4.2)(yaml@2.8.0)):
     dependencies:
       '@types/debug': 4.1.12
       debug: 4.4.1(supports-color@5.5.0)
