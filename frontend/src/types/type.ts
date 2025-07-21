@@ -22,32 +22,23 @@ export interface StudentInfo {
   lives: number | null;
   isSenior: boolean | null;
   mentees: Array<{
-    junior: {
-      id: string;
-      displayName: string;
-      nickname: string | null;
-      instagram: string | null;
-      discord: string | null;
-      line: string | null;
-    };
+    id: string;
+    displayName: string;
+    nickname: string | null;
+    instagram: string | null;
+    discord: string | null;
+    line: string | null;
+    lives: number | null;
   }>;
   mentor?: {
-    senior: {
-      id: string;
-      displayName: string;
-      nickname: string | null;
-      instagram: string | null;
-      discord: string | null;
-      line: string | null;
-    };
-  } | null;
-  givenHints: Array<{
     id: string;
-    order: number;
-    content: string;
-    revealDate: Date;
-  }>;
-  receivedHints: Array<{
+    displayName: string;
+    nickname: string | null;
+    instagram: string | null;
+    discord: string | null;
+    line: string | null;
+  } | null;
+  hints: Array<{
     id: string;
     order: number;
     content: string;

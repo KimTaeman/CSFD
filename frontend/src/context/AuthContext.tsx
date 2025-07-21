@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createContext, type ReactNode } from 'react';
 
 interface IAuthContext {
-  user: StudentInfo | null | undefined;
+  user: StudentInfo;
   isAuthenticated: boolean;
   isLoading: boolean;
   logout: () => void;
