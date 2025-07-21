@@ -16,7 +16,7 @@ const Page = () => {
       <div className="flex-1 p-4 md:p-8">
         <div className="mx-auto max-w-4xl">
           {/* Character cards grid - 2x2 on larger screens, single column on mobile */}
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:mb-8">
+          <div className="mb-8 grid grid-cols-1 justify-items-center gap-6 md:grid-cols-2">
             <CombinedCoven
               covenType="alchemireCoven"
               onClick={() => handleCovenClick('alchemireCoven')}
