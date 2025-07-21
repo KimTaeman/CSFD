@@ -218,6 +218,7 @@ function Page() {
           <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
             <div className="mb-4 font-[Poppins] text-xl text-white">Junior: {juniorName2}</div>
             <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
+
               {[0, 1, 2].map((i) => (
                 <HintCard
                   key={i}
@@ -229,6 +230,7 @@ function Page() {
                   onChange={(v) => handleHintChangeSet2(i, v)}
                 />
               ))}
+
             </div>
             <div className="mb-8 w-full">
               <Guess
