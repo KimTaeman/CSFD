@@ -15,7 +15,9 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClick }) => {
             <img className="max-w-30 rounded-xl" src={user.profilePic} alt={user.nickname} />
           </div>
           <div className="flex flex-1 flex-col items-start justify-start space-y-2">
-            <h3 className="font-inter text-[1.5rem] font-bold text-white">{user.displayName}</h3>
+            <h3 className="font-inter text-[1.5rem] font-bold text-white">
+              {user.nickname || user.studentId}
+            </h3>
             <p className="font-inter text-[0.7rem] text-white/80">{user.role}</p>
           </div>
         </div>
