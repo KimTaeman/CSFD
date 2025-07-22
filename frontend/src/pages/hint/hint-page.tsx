@@ -7,7 +7,7 @@ import LoadingLayout from '@/components/layout/loading';
 import HintCard from '@/components/hint/hint-card';
 import Guess from '@/components/hint/guess';
 import RevealResult from '@/components/hint/RevealResult';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import emptyHeart from '@/assets/filled-heart.svg';
 import filledHeart from '@/assets/empty-heart.svg';
 import { formatDistanceToNowStrict } from 'date-fns';
@@ -44,20 +44,14 @@ function Page() {
     return () => clearInterval(interval);
   }, [updateCountdown]);
 
+  const queryClient = useQueryClient();
+
   const { mutate: updateHint } = useMutation({
     mutationFn: (hints: Hint[]) => api.put('/hints', hints),
   });
 
-  useEffect(() => {
-    if (user) {
-      setDraftHints(user.hints);
-    }
-  }, [user]);
-
-  console.log(user);
-
-  const handleGuessSubmit = useCallback(
-    async (guess: string) => {
+  const { mutate: submitGuess } = useMutation({
+    mutationFn: async (guess: string) => {
       if (!user || user.isSenior) return;
 
       const id = user.id;
@@ -70,8 +64,26 @@ function Page() {
       const result = isCorrect ? 'success' : 'fail';
       setGuessState(result);
       if (!isCorrect) setRevealedCount((prev) => prev + 1);
+      return data;
     },
-    [user, revealedCount],
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['authUser'] });
+    },
+  });
+
+  useEffect(() => {
+    if (user) {
+      setDraftHints(user.hints);
+    }
+  }, [user]);
+
+  console.log(user);
+
+  const handleGuessSubmit = useCallback(
+    (guess: string) => {
+      submitGuess(guess);
+    },
+    [submitGuess],
   );
 
   const resetGuess = useCallback(() => {
