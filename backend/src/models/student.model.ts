@@ -1,6 +1,5 @@
 import prisma from '@/config/prismaClient';
 import { UpdateStudent } from '@/types/student.type';
-import { resourceUsage } from 'process';
 
 const getStudentById = async (id: number) => {
   return prisma.student.findUnique({
