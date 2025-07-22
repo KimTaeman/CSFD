@@ -78,6 +78,11 @@ export const updateStudentById = async (
     const data = req.body;
     const id = Number(req.params.id);
 
+    if (isNaN(id) || id <= 0) {
+      const error = new Error('Invalid ID parameter. ID must be a positive integer.');
+      error.status = 400; // Bad Request
+      throw error;
+    }
     const updated = await Models.updateStudentById(id, data);
 
     if (!updated) {
