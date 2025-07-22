@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import EditIcon from '@/assets/edit.svg';
 
 interface CardProps {
-  title: string;
+  title?: string;
   description: string;
   stage: 'hidden' | 'shown';
   type?: 'freshman' | 'senior';
@@ -38,7 +38,7 @@ function HintCard({
       className={`relative h-32 w-full rounded-4xl p-3 sm:h-32 sm:w-[94%] md:h-48 lg:h-48 lg:w-110 lg:rounded-4xl lg:p-4 ${getCardStyles()}`}
       style={{ display: 'flex', flexDirection: 'column' }}
     >
-      <h2 className="text-sm font-bold text-black lg:text-lg">{title}</h2>
+      {/* <h2 className="text-sm font-bold text-black lg:text-lg">{title}</h2> */}
       <div className="relative flex flex-1 flex-col justify-start">
         {stage === 'shown' ? (
           editable ? (
