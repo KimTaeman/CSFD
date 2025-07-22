@@ -9,7 +9,7 @@ interface GuessProps {
   attempts: number;
   maxAttempts: number;
   onReset: () => void;
-  isSenior?: boolean;
+  isSenior?: boolean | null;
   onEditHints?: () => void;
   onConfirm?: () => void;
   onCancel?: () => void;
@@ -20,25 +20,24 @@ function Guess({
   guessState,
   attempts,
   maxAttempts,
-  onReset,
   isSenior = false,
   onEditHints = () => {},
   onConfirm = () => {},
   onCancel = () => {},
 }: GuessProps) {
-  const [inputValue, setInputValue] = useState('');
+  const [inputHint, setInputHint] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isEditing, setIsEditing] = useState(false);
 
   const handleSubmit = () => {
-    if (!inputValue.trim()) {
+    if (!inputHint.trim()) {
       setErrorMessage('Please enter a value');
       return;
     }
     if (guessState === 'n/a') {
       setErrorMessage('');
-      onGuessSubmit(inputValue.trim());
-      setInputValue('');
+      onGuessSubmit(inputHint.trim());
+      setInputHint('');
     }
   };
 
@@ -49,7 +48,7 @@ function Guess({
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    setInputHint(e.target.value);
     if (errorMessage) {
       setErrorMessage('');
     }
@@ -111,7 +110,7 @@ function Guess({
             <input
               type="text"
               placeholder="ex. 880"
-              value={inputValue}
+              value={inputHint}
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               disabled={guessState !== 'n/a' || attempts >= maxAttempts}
@@ -162,7 +161,7 @@ function Guess({
             <input
               type="text"
               placeholder="ex. 880"
-              value={inputValue}
+              value={inputHint}
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               disabled={guessState !== 'n/a'}

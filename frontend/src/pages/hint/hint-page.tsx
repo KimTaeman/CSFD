@@ -1,277 +1,158 @@
-import { useProfileState } from '@/hooks/useProfileState';
+import { useState, useCallback, useEffect } from 'react';
+import { useAuthContext } from '@/hooks/useAuthContext';
+import api from '@/api/axios';
+import type { GuessState, Hint } from '@/types/hint.types';
+import MainLayout from '../layout';
+import LoadingLayout from '@/components/layout/loading';
 import HintCard from '@/components/hint/hint-card';
 import Guess from '@/components/hint/guess';
 import RevealResult from '@/components/hint/RevealResult';
-import { useState, useCallback, useEffect } from 'react';
-import type { GuessState } from '@/types/hint.types';
-import MainLayout from '../layout';
-
-function getInitialHints(key: string) {
-  const saved = localStorage.getItem(key);
-  return saved ? JSON.parse(saved) : ['', '', ''];
-}
+import { useMutation } from '@tanstack/react-query';
 
 function Page() {
-  // User role state to control senior/junior view
-  const [isSenior] = useState(false);
-  const [isDoubleSenior] = useState(true);
-
-  // Junior names for each set
-  const juniorName1 = 'John Doe';
-  const juniorName2 = 'Jane Smith';
-
-  type CorrectAnswer = string | number | null;
-
-  // Set correct answer from backend
-  const [correctAnswer, setCorrectAnswer] = useState<CorrectAnswer>(100);
+  const { user } = useAuthContext();
   const [guessState, setGuessState] = useState<GuessState>('n/a');
-  const [attempts, setAttempts] = useState(0);
-  const maxAttempts = 3;
+  const [revealedCount, setRevealedCount] = useState(0);
+  const [editing, setEditing] = useState(false);
+  const [draftHints, setDraftHints] = useState<Hint[]>([]);
 
-  const onResult = useCallback((result: 'success' | 'fail', guess: string) => {
-    /**
-     * @TODO Handle the result of the guess
-     */
-  }, []);
+  const { mutate: updateHint } = useMutation({
+    mutationFn: (hints: Hint[]) => api.put('/hints', hints),
+  });
 
-  const checkAnswer = useCallback(
-    (guess: string | number) => {
-      if (correctAnswer === null) return false;
-      return String(guess).trim().toLowerCase() === String(correctAnswer).trim().toLowerCase();
-    },
-    [correctAnswer],
-  );
+  useEffect(() => {
+    if (user) {
+      setDraftHints(user.hints);
+    }
+  }, [user]);
+
+  console.log(user);
 
   const handleGuessSubmit = useCallback(
     (guess: string) => {
-      if (attempts >= maxAttempts) return;
+      if (!user || user.isSenior) return;
 
-      const newAttempts = attempts + 1;
-      const isCorrect = checkAnswer(guess);
+      const id = user.id;
+
+      if (revealedCount >= 3) return;
+
+      const res = api.put(`/students/${id}/guess`, guess);
+      console.log(res);
+
+      const isCorrect = user.mentor?.id === guess;
       const result = isCorrect ? 'success' : 'fail';
       setGuessState(result);
-      if (!isCorrect) setAttempts(newAttempts);
-      console.log(`Guess: ${guess}, Result: ${result}, Attempts: ${newAttempts}`);
-      onResult(result, guess);
+      if (!isCorrect) setRevealedCount((prev) => prev + 1);
     },
-    [attempts, checkAnswer, onResult],
+    [user, revealedCount],
   );
 
   const resetGuess = useCallback(() => {
     setGuessState('n/a');
   }, []);
 
-  const HINTS1_KEY = 'csfd_hints_set1';
-  const HINTS2_KEY = 'csfd_hints_set2';
-
-  // Hints state for first set (3 hints)
-  const [hintsSet1, setHintsSet1] = useState(() => getInitialHints(HINTS1_KEY));
-  const [editingSet1, setEditingSet1] = useState(false);
-  const [draftHintsSet1, setDraftHintsSet1] = useState(hintsSet1);
-
-  // Hints state for second set (3 hints)
-  const [hintsSet2, setHintsSet2] = useState(() => getInitialHints(HINTS2_KEY));
-  const [editingSet2, setEditingSet2] = useState(false);
-  const [draftHintsSet2, setDraftHintsSet2] = useState(hintsSet2);
-
-  // Reveal count for each set (0 = none, 1 = first, 2 = second, 3 = all)
-  // edit here to change how many hints are revealed initially
-  // the function to reveal the next hint is revealNextHintSet()
-  const [revealedCount, setRevealedCount] = useState(0);
-
-  // Returns array of hint card data for first set
-  const getHintCardsSet1 = () => {
-    return [0, 1, 2].map((i) => {
-      // Senior: all shown, no title
-      if (isSenior) {
-        return {
-          key: i,
-          title: '',
-          description: editingSet1 ? draftHintsSet1[i] : hintsSet1[i],
-          stage: 'shown' as 'shown',
-          editable: editingSet1,
-        };
-      }
-      // Non-senior: reveal logic
-      return {
-        key: i,
-        title: i < revealedCount ? '' : `${i - revealedCount + 1}`,
-        description: editingSet1 ? draftHintsSet1[i] : hintsSet1[i],
-        stage: i < revealedCount ? 'shown' : ('hidden' as 'shown' | 'hidden'),
-        editable: editingSet1 && i < revealedCount,
-      };
-    });
-  };
-
-  // Call this to reveal the next hint card
-  const revealNextHintSet = () => {
-    setRevealedCount((prev) => Math.min(prev + 1, 3));
-  };
-
-  // Edit handlers for first set
-  const handleEditHintsSet1 = useCallback(() => {
-    setDraftHintsSet1(hintsSet1);
-    setEditingSet1(true);
-  }, [hintsSet1]);
-
-  const handleHintChangeSet1 = useCallback((idx: number, value: string) => {
-    setDraftHintsSet1((prev: string[]) => {
-      const copy: string[] = [...prev];
-      copy[idx] = value;
-      return copy;
-    });
+  const handleEdit = useCallback(() => {
+    setEditing(true);
   }, []);
 
-  const handleConfirmEditSet1 = useCallback(() => {
-    setHintsSet1(draftHintsSet1);
-    setEditingSet1(false);
-  }, [draftHintsSet1]);
+  const handleCancel = useCallback(() => {
+    setEditing(false);
+    setDraftHints(user.hints);
+  }, [user]);
 
-  const handleCancelEditSet1 = useCallback(() => {
-    setDraftHintsSet1(hintsSet1);
-    setEditingSet1(false);
-  }, [hintsSet1]);
+  const handleConfirm = useCallback(() => {
+    updateHint(draftHints);
+    setEditing(false);
+  }, [draftHints, updateHint]);
 
-  // Edit handlers for second set
-  const handleEditHintsSet2 = useCallback(() => {
-    setDraftHintsSet2(hintsSet2);
-    setEditingSet2(true);
-  }, [hintsSet2]);
-
-  const handleHintChangeSet2 = useCallback((idx: number, value: string) => {
-    setDraftHintsSet2((prev: string[]) => {
-      const copy = [...prev];
-      copy[idx] = value;
-      return copy;
-    });
+  const handleHintChange = useCallback((id: string, content: string) => {
+    setDraftHints((prev) => prev.map((hint) => (hint.id === id ? { ...hint, content } : hint)));
   }, []);
 
-  const handleConfirmEditSet2 = useCallback(() => {
-    setHintsSet2(draftHintsSet2);
-    setEditingSet2(false);
-  }, [draftHintsSet2]);
+  if (!user) return <LoadingLayout />;
 
-  const handleCancelEditSet2 = useCallback(() => {
-    setDraftHintsSet2(hintsSet2);
-    setEditingSet2(false);
-  }, [hintsSet2]);
-
-  // Save to localStorage when hints change
-  useEffect(() => {
-    localStorage.setItem(HINTS1_KEY, JSON.stringify(hintsSet1));
-  }, [hintsSet1]);
-  useEffect(() => {
-    localStorage.setItem(HINTS2_KEY, JSON.stringify(hintsSet2));
-  }, [hintsSet2]);
-
-  // Keep draftHintsSet1 in sync with hintsSet1 when not editing
-  useEffect(() => {
-    if (!editingSet1) setDraftHintsSet1(hintsSet1);
-  }, [hintsSet1, editingSet1]);
-
-  // Keep draftHintsSet2 in sync with hintsSet2 when not editing
-  useEffect(() => {
-    if (!editingSet2) setDraftHintsSet2(hintsSet2);
-  }, [hintsSet2, editingSet2]);
-
-  const outOfAttempts = attempts >= maxAttempts;
+  const isSenior = user.isSenior;
 
   return (
     <MainLayout>
       <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-20">
-        <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
-          {/* Junior label for first set */}
-          {isSenior && (
-            <div className="font-[Poppins] text-xl text-white">Junior: {juniorName1}</div>
-          )}
+        {isSenior &&
+          user.mentees.map((mentee, index) => {
+            const menteeHints = draftHints.slice(index * 3, index * 3 + 3);
+            return (
+              <div key={mentee.id} className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
+                <div className="font-[Poppins] text-xl text-white">
+                  Junior: {mentee.displayName}
+                </div>
+                <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
+                  {menteeHints.map((hint, i) => (
+                    <HintCard
+                      key={hint.id}
+                      title={''}
+                      description={hint.content}
+                      stage={'shown'}
+                      type={'senior'}
+                      editable={editing}
+                      onChange={(v) => handleHintChange(hint.id, v)}
+                    />
+                  ))}
+                </div>
+                {}
+                <div className="mb-8 w-full">
+                  <Guess
+                    onGuessSubmit={() => {}}
+                    guessState={'n/a'}
+                    attempts={0}
+                    maxAttempts={0}
+                    onReset={() => {}}
+                    isSenior={isSenior}
+                    onEditHints={handleEdit}
+                    onConfirm={handleConfirm}
+                    onCancel={handleCancel}
+                  />
+                </div>
+              </div>
+            );
+          })}
 
-          {/* First set of Hint Cards */}
-          <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
-            {getHintCardsSet1().map((card) => (
-              <HintCard
-                key={card.key}
-                title={card.title}
-                description={card.description}
-                stage={card.stage}
-                type={isSenior ? 'senior' : 'freshman'}
-                editable={card.editable}
-                onChange={(v) => handleHintChangeSet1(card.key, v)}
-              />
-            ))}
-          </div>
-
-          {/* TEMPPP: To reveal next card button (remove when integrating) */}
-          {!isSenior && (
-            <button
-              className="hover:bg-gry-200 mb-4 rounded bg-white px-4 py-2 text-black"
-              onClick={revealNextHintSet}
-            >
-              Reveal Next Hint
-            </button>
-          )}
-
-          {/* Guess/Edit for first ncode */}
-          <div className="mb-8 w-full">
-            {!isSenior && (
-              <div className="mb-7 text-2xl text-white select-none">Guess your P'code 💚💚💚</div>
-            )}
-            <Guess
-              onGuessSubmit={handleGuessSubmit}
-              guessState={guessState}
-              attempts={attempts}
-              maxAttempts={maxAttempts}
-              onReset={resetGuess}
-              isSenior={isSenior}
-              onEditHints={handleEditHintsSet1}
-              onConfirm={handleConfirmEditSet1}
-              onCancel={handleCancelEditSet1}
-            />
-          </div>
-        </div>
-
-        {/* Second set for double ncode senior */}
-        {isSenior && isDoubleSenior && (
+        {!isSenior && (
           <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
-            <div className="mb-4 font-[Poppins] text-xl text-white">Junior: {juniorName2}</div>
-            <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
-              {[0, 1, 2].map((i) => (
+            <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
+              {draftHints.map((hint, i) => (
                 <HintCard
-                  key={i}
-                  title=""
-                  description={editingSet2 ? draftHintsSet2[i] : hintsSet2[i]}
-                  stage="shown"
-                  type="senior"
-                  editable={isSenior && editingSet2}
-                  onChange={(v) => handleHintChangeSet2(i, v)}
+                  key={hint.id}
+                  title={!isSenior && i >= revealedCount ? `${i - revealedCount + 1}` : ''}
+                  description={hint.content}
+                  stage={!isSenior && i >= revealedCount ? 'hidden' : 'shown'}
+                  type={isSenior ? 'senior' : 'freshman'}
+                  editable={editing}
+                  onChange={(v) => handleHintChange(hint.id, v)}
                 />
               ))}
             </div>
             <div className="mb-8 w-full">
+              <div className="mb-7 text-2xl text-white select-none">Guess your P'code 💚💚💚</div>
               <Guess
                 onGuessSubmit={handleGuessSubmit}
                 guessState={guessState}
-                attempts={attempts}
-                maxAttempts={maxAttempts}
+                attempts={revealedCount}
+                maxAttempts={3}
                 onReset={resetGuess}
                 isSenior={isSenior}
-                onEditHints={handleEditHintsSet2}
-                onConfirm={handleConfirmEditSet2}
-                onCancel={handleCancelEditSet2}
+                onEditHints={handleEdit}
+                onConfirm={handleConfirm}
+                onCancel={handleCancel}
               />
             </div>
           </div>
         )}
 
-        {/* Overlay for Success/Fail */}
         {(guessState === 'success' || guessState === 'fail') && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 xl:pl-[11%]"
             onClick={resetGuess}
           >
-            <RevealResult
-              state={guessState === 'success' ? 'success' : 'fail'}
-              outOfAttempts={outOfAttempts}
-            />
+            <RevealResult state={guessState} outOfAttempts={revealedCount >= 3} />
           </div>
         )}
       </main>
