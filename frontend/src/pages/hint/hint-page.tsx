@@ -218,21 +218,21 @@ function Page() {
               <div className="mb-7 flex items-center gap-0 text-2xl text-white select-none">
                 Guess your P'code
                 {/* Hearts */}
-                <span className="flex items-center gap-1 ml-3 ">
+                <span className="ml-3 flex items-center gap-1">
                   <img
                     src={attempts < 3 ? filledHeart : emptyHeart}
                     alt="heart"
-                    className="w-7 h-7"
+                    className="h-7 w-7"
                   />
                   <img
                     src={attempts < 2 ? filledHeart : emptyHeart}
                     alt="heart"
-                    className="w-7 h-7"
+                    className="h-7 w-7"
                   />
                   <img
                     src={attempts < 1 ? filledHeart : emptyHeart}
                     alt="heart"
-                    className="w-7 h-7"
+                    className="h-7 w-7"
                   />
                 </span>
               </div>
