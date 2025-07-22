@@ -175,7 +175,7 @@ function Page() {
                   {Array.from({ length: 3 }).map((_, i) => (
                     <img
                       key={i}
-                      src={(user.lives ?? 3) > i ? filledHeart : emptyHeart}
+                      src={(user.lives ?? 3) > i ? emptyHeart : filledHeart}
                       alt="heart"
                       className="h-7 w-7"
                     />
