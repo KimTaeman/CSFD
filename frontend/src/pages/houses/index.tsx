@@ -1,18 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import RandomButton from '@/components/house/RandomButton';
 import NickName from '@/components/house/NicknamePopup';
 import LoginSucess from '@/components/layout/loginSucceed';
+import api from '@/api/axios';
+import { useAuthContext } from '@/hooks/useAuthContext';
 
 const Page = () => {
+  const { user } = useAuthContext();
   const [showWelcome, setShowWelcome] = useState(true);
   const [showLoginSuccess, setShowLoginSuccess] = useState(false);
   const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
 
   // Handle nickname submission
-  const handleNicknameSubmit = (userNickname: string) => {
+  const handleNicknameSubmit = async (userNickname: string) => {
     setNickname(userNickname);
+    await api.put('/auth/complete-registration', {
+      nickname,
+    });
+
     setShowWelcome(false);
     setShowLoginSuccess(true);
 
@@ -24,17 +31,10 @@ const Page = () => {
 
   // Handle random button click
   const handleRandomClick = async () => {
-    try {
-      const response = await fetch('/api/user/house');
-      const data = await response.json();
-      const userHouse = data.house; // e.g., 'ethera', 'zirelia', etc.
+    const userHouse = user.house; // e.g., 'ethera', 'zirelia', etc.
 
-      // Navigate to the user's house
-      navigate(`/houses/ethera`);
-    } catch (error) {
-      console.error('Error fetching user house:', error);
-      // Fallback navigation or error handling
-    }
+    // Navigate to the user's house
+    navigate(`/houses/${userHouse}`);
   };
 
   // Show welcome page
