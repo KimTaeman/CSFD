@@ -8,10 +8,10 @@ import HintCard from '@/components/hint/hint-card';
 import Guess from '@/components/hint/guess';
 import RevealResult from '@/components/hint/RevealResult';
 import { useMutation } from '@tanstack/react-query';
-import filledHeart from '@/assets/filled-heart.svg';
-import emptyHeart from '@/assets/empty-heart.svg';
-import { formatDistanceToNowStrict, addHours, addDays } from 'date-fns';
-import { utcToZonedTime } from 'date-fns-tz';
+import emptyHeart from '@/assets/filled-heart.svg';
+import filledHeart from '@/assets/empty-heart.svg';
+import { formatDistanceToNowStrict } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
 
 function Page() {
   const { user } = useAuthContext();
@@ -21,13 +21,13 @@ function Page() {
   const [draftHints, setDraftHints] = useState<Hint[]>([]);
   const [countdown, setCountdown] = useState<string[]>(['', '', '']);
 
-  const hintReleaseDates = [
-    utcToZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'), // July 29th, 12 AM GMT+7 (Bangkok)
-    utcToZonedTime(new Date(2025, 7, 1, 0, 0, 0), 'Asia/Bangkok'), // August 1st, 12 AM GMT+7 (Bangkok)
-    utcToZonedTime(new Date(2025, 7, 3, 0, 0, 0), 'Asia/Bangkok'), // August 3rd, 12 AM GMT+7 (Bangkok)
-  ];
-
   const updateCountdown = useCallback(() => {
+    const hintReleaseDates = [
+      toZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'), // July 29th, 12 AM GMT+7 (Bangkok)
+      toZonedTime(new Date(2025, 7, 1, 0, 0, 0), 'Asia/Bangkok'), // August 1st, 12 AM GMT+7 (Bangkok)
+      toZonedTime(new Date(2025, 7, 3, 0, 0, 0), 'Asia/Bangkok'), // August 3rd, 12 AM GMT+7 (Bangkok)
+    ];
+
     const newCountdown = hintReleaseDates.map((date) => {
       const now = new Date();
       if (now < date) {
@@ -36,11 +36,11 @@ function Page() {
       return '';
     });
     setCountdown(newCountdown);
-  }, [hintReleaseDates]);
+  }, []);
 
   useEffect(() => {
     updateCountdown();
-    const interval = setInterval(updateCountdown, 1000); // Update every second
+    const interval = setInterval(updateCountdown, 360000); // Update every second
     return () => clearInterval(interval);
   }, [updateCountdown]);
 
@@ -173,17 +173,17 @@ function Page() {
                 {/* Hearts */}
                 <span className="ml-3 flex items-center gap-1">
                   <img
-                    src={(user.lives ?? 3) < 1 ? filledHeart : emptyHeart}
+                    src={(user.lives ?? 3) < 1 ? emptyHeart : filledHeart}
                     alt="heart"
                     className="h-7 w-7"
                   />
                   <img
-                    src={(user.lives ?? 3) < 2 ? filledHeart : emptyHeart}
+                    src={(user.lives ?? 3) < 2 ? emptyHeart : filledHeart}
                     alt="heart"
                     className="h-7 w-7"
                   />
                   <img
-                    src={(user.lives ?? 3) < 3 ? filledHeart : emptyHeart}
+                    src={(user.lives ?? 3) < 3 ? emptyHeart : filledHeart}
                     alt="heart"
                     className="h-7 w-7"
                   />
