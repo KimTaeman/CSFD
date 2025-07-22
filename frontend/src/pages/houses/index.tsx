@@ -5,33 +5,43 @@ import NickName from '@/components/house/NicknamePopup';
 import LoginSucess from '@/components/layout/loginSucceed';
 import api from '@/api/axios';
 import { useAuthContext } from '@/hooks/useAuthContext';
+import { useMutation } from '@tanstack/react-query';
 
 const Page = () => {
   const { user } = useAuthContext();
+
   const [showWelcome, setShowWelcome] = useState(true);
   const [showLoginSuccess, setShowLoginSuccess] = useState(false);
   const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
 
+  const mutation = useMutation({
+    mutationFn: async (userNickname: string) => {
+      await api.put(`/students/${user.id}`, {
+        nickname: userNickname,
+      });
+    },
+    onSuccess: () => {
+      setShowWelcome(false);
+      setShowLoginSuccess(true);
+      setTimeout(() => {
+        setShowLoginSuccess(false);
+      }, 3000);
+    },
+    onError: (e) => {
+      console.error('Registration failed:', e);
+    },
+  });
+
   // Handle nickname submission
   const handleNicknameSubmit = async (userNickname: string) => {
     setNickname(userNickname);
-    await api.put('/auth/complete-registration', {
-      nickname,
-    });
-
-    setShowWelcome(false);
-    setShowLoginSuccess(true);
-
-    // Hide login success after 3 seconds
-    setTimeout(() => {
-      setShowLoginSuccess(false);
-    }, 3000);
+    mutation.mutate(userNickname);
   };
 
   // Handle random button click
   const handleRandomClick = async () => {
-    const userHouse = user.house; // e.g., 'ethera', 'zirelia', etc.
+    const userHouse = user.house.toLowerCase(); // e.g., 'ethera', 'zirelia', etc.
 
     // Navigate to the user's house
     navigate(`/houses/${userHouse}`);
