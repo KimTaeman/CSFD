@@ -43,7 +43,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const logoutMutation = useMutation({
     mutationFn: logoutUser,
     onSuccess: () => {
-      queryClient.removeQueries({ queryKey: ['authUser'] });
+      queryClient.setQueryData(['authUser'], null);
     },
   });
 
@@ -55,7 +55,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext
       value={{
         user,
-        isAuthenticated: isSuccess,
+        isAuthenticated: !!user && isSuccess,
         isLoading: isPending,
         logout,
         isLoggingOut: logoutMutation.isPending,

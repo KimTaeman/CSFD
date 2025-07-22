@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { useAuthContext } from './useAuthContext';
 import api from '@/api/axios';
 import type { ProfileData } from '@/types/profile.types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface UseProfileStateReturn {
   isSidebarOpen: boolean;
@@ -17,12 +18,19 @@ interface UseProfileStateReturn {
 
 export function useProfileState(): UseProfileStateReturn {
   const { user } = useAuthContext();
+  const queryClient = useQueryClient();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+
+  const mutation = useMutation({
+    mutationFn: (data: ProfileData) => api.put(`/students/${user.id}`, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['authUser'] });
+      setIsEditing(false);
+    },
+  });
 
   useEffect(() => {
     const checkMobile = () => {
@@ -53,20 +61,10 @@ export function useProfileState(): UseProfileStateReturn {
   const handleEditClick = useCallback(() => setIsEditing(true), []);
 
   const handleConfirm = useCallback(
-    async (data: ProfileData) => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        await api.put(`/students/${user.id}`, data);
-        setIsEditing(false);
-      } catch (err) {
-        setError('Failed to save profile. Please try again.');
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
+    (data: ProfileData) => {
+      mutation.mutate(data);
     },
-    [user],
+    [mutation],
   );
 
   const handleCancel = useCallback(() => setIsEditing(false), []);
@@ -74,8 +72,8 @@ export function useProfileState(): UseProfileStateReturn {
   return {
     isSidebarOpen: isMobile ? isMobileSidebarOpen : isDesktopSidebarOpen,
     isEditing,
-    isLoading,
-    error,
+    isLoading: mutation.isPending,
+    error: mutation.error ? 'Failed to save profile. Please try again.' : null,
     closeSidebar,
     openSidebar,
     handleEditClick,
