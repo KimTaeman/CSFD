@@ -5,10 +5,11 @@ import NickName from '@/components/house/NicknamePopup';
 import LoginSucess from '@/components/layout/loginSucceed';
 import api from '@/api/axios';
 import { useAuthContext } from '@/hooks/useAuthContext';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const Page = () => {
   const { user } = useAuthContext();
+  const queryClient = useQueryClient();
 
   const [showWelcome, setShowWelcome] = useState(true);
   const [showLoginSuccess, setShowLoginSuccess] = useState(false);
@@ -22,6 +23,7 @@ const Page = () => {
       });
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['authUser'] });
       setShowWelcome(false);
       setShowLoginSuccess(true);
       setTimeout(() => {
