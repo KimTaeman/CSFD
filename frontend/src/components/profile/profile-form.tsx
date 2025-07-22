@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import Instagram from '@/assets/instagram-icon.svg';
 import Discord from '@/assets/discord-icon.svg';
 import LINE from '@/assets/line-icon.svg';
@@ -11,6 +11,7 @@ interface ProfileFormProps {
   onEditClick: () => void;
   onConfirm: () => void;
   onCancel: () => void;
+  onFormChange: (data: ProfileData) => void;
   initialData?: Partial<ProfileData>;
 }
 
@@ -19,20 +20,19 @@ function ProfileForm({
   onEditClick,
   onConfirm,
   onCancel,
+  onFormChange,
   initialData,
 }: ProfileFormProps) {
   const { user } = useAuthContext();
 
-  console.log(user);
-
   const INITIAL_PROFILE_DATA: ProfileData = {
-    fullName: user.displayName,
+    displayName: user.displayName,
     nickname: user.nickname,
     studentId: user.studentId,
     nationality: user.nationality,
     instagram: user.instagram,
     discord: user.discord,
-    lineId: user.line,
+    line: user.line,
   };
 
   const [formData, setFormData] = useState<ProfileData>({
@@ -40,9 +40,13 @@ function ProfileForm({
     ...initialData,
   });
 
+  useEffect(() => {
+    onFormChange(formData);
+  }, [formData, onFormChange]);
+
   const formFields: FormField[] = useMemo(
     () => [
-      { key: 'fullName', label: 'Full Name', type: 'text' },
+      { key: 'displayName', label: 'Full Name', type: 'text' },
       { key: 'nickname', label: 'Nickname', type: 'text' },
       { key: 'studentId', label: 'Student ID', type: 'text' },
       { key: 'nationality', label: 'Nationality', type: 'text' },
@@ -54,7 +58,7 @@ function ProfileForm({
     () => [
       { key: 'instagram', label: 'Instagram', icon: Instagram, iconColor: 'text-pink-500' },
       { key: 'discord', label: 'Discord', icon: Discord, iconColor: 'text-indigo-400' },
-      { key: 'lineId', label: 'LINE ID', icon: LINE, iconColor: 'text-green-500' },
+      { key: 'line', label: 'LINE ID', icon: LINE, iconColor: 'text-green-500' },
     ],
     [],
   );
@@ -89,7 +93,7 @@ function ProfileForm({
             ref={(el) => setInputRef(field.key, el)}
             id={field.key}
             type={field.type}
-            value={formData[field.key]}
+            value={formData[field.key] || ''}
             onChange={(e) => handleInputChange(field.key, e.target.value)}
             onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
             disabled={!isEditing}
@@ -111,7 +115,7 @@ function ProfileForm({
               <input
                 ref={(el) => setInputRef(field.key, el)}
                 id={field.key}
-                value={formData[field.key]}
+                value={formData[field.key] || ''}
                 onChange={(e) => handleInputChange(field.key, e.target.value)}
                 onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
                 disabled={!isEditing}

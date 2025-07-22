@@ -6,9 +6,11 @@ import ProfilePicUpload from '@/components/profile/ProfilePicUpload';
 import { useProfilePicUpload } from '@/hooks/useProfilePicUpload';
 import { useEffect, useState } from 'react';
 import MainLayout from '../layout';
+import type { ProfileData } from '@/types/profile.types';
 
 function Page() {
   const { isEditing, handleEditClick, handleConfirm, handleCancel } = useProfileState();
+  const [formData, setFormData] = useState<ProfileData | null>(null);
 
   // Profile picture state
   const [profilePic, setProfilePic] = useState<string | null>(null);
@@ -32,6 +34,12 @@ function Page() {
     }
   }, [profilePic]);
 
+  const handleConfirmClick = () => {
+    if (formData) {
+      handleConfirm(formData);
+    }
+  };
+
   return (
     <MainLayout>
       <div className="flex flex-1 flex-col items-center justify-center gap-y-14 p-4 xl:grid xl:grid-cols-2 xl:items-start xl:gap-x-16 xl:px-20 xl:py-5">
@@ -54,8 +62,9 @@ function Page() {
           <ProfileForm
             isEditing={isEditing}
             onEditClick={handleEditClick}
-            onConfirm={handleConfirm}
+            onConfirm={handleConfirmClick}
             onCancel={handleCancel}
+            onFormChange={setFormData}
           />
         </div>
       </div>
