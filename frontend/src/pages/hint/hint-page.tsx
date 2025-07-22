@@ -10,6 +10,8 @@ import RevealResult from '@/components/hint/RevealResult';
 import { useMutation } from '@tanstack/react-query';
 import filledHeart from '@/assets/filled-heart.svg';
 import emptyHeart from '@/assets/empty-heart.svg';
+import { formatDistanceToNowStrict, addHours, addDays } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
 
 function Page() {
   const { user } = useAuthContext();
@@ -17,6 +19,30 @@ function Page() {
   const [revealedCount, setRevealedCount] = useState(0);
   const [editing, setEditing] = useState(false);
   const [draftHints, setDraftHints] = useState<Hint[]>([]);
+  const [countdown, setCountdown] = useState<string[]>(['', '', '']);
+
+  const hintReleaseDates = [
+    utcToZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'), // July 29th, 12 AM GMT+7 (Bangkok)
+    utcToZonedTime(new Date(2025, 7, 1, 0, 0, 0), 'Asia/Bangkok'), // August 1st, 12 AM GMT+7 (Bangkok)
+    utcToZonedTime(new Date(2025, 7, 3, 0, 0, 0), 'Asia/Bangkok'), // August 3rd, 12 AM GMT+7 (Bangkok)
+  ];
+
+  const updateCountdown = useCallback(() => {
+    const newCountdown = hintReleaseDates.map((date) => {
+      const now = new Date();
+      if (now < date) {
+        return formatDistanceToNowStrict(date, { addSuffix: true });
+      }
+      return '';
+    });
+    setCountdown(newCountdown);
+  }, [hintReleaseDates]);
+
+  useEffect(() => {
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000); // Update every second
+    return () => clearInterval(interval);
+  }, [updateCountdown]);
 
   const { mutate: updateHint } = useMutation({
     mutationFn: (hints: Hint[]) => api.put('/hints', hints),
@@ -124,7 +150,9 @@ function Page() {
                 const isPlaceholder = !hint;
                 const displayTitle =
                   !isSenior && i >= revealedCount ? `${i - revealedCount + 1}` : '';
-                const description = hint?.content || 'Hint not yet available';
+                const description =
+                  hint?.content ||
+                  (countdown[i] ? `Hint available ${countdown[i]}` : 'Hint not yet available');
 
                 return (
                   <HintCard
@@ -145,7 +173,7 @@ function Page() {
                 {/* Hearts */}
                 <span className="ml-3 flex items-center gap-1">
                   <img
-                    src={(user.lives ?? 3) < 3 ? filledHeart : emptyHeart}
+                    src={(user.lives ?? 3) < 1 ? filledHeart : emptyHeart}
                     alt="heart"
                     className="h-7 w-7"
                   />
@@ -155,7 +183,7 @@ function Page() {
                     className="h-7 w-7"
                   />
                   <img
-                    src={(user.lives ?? 3) < 1 ? filledHeart : emptyHeart}
+                    src={(user.lives ?? 3) < 3 ? filledHeart : emptyHeart}
                     alt="heart"
                     className="h-7 w-7"
                   />
