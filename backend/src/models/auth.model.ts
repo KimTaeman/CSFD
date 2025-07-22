@@ -44,7 +44,7 @@ export const updateStudentProfile = (microsoftId: string, account: AccountInfo) 
   return prisma.student.update({
     where: { microsoftId },
     data: {
-      displayName: account.name,
+      // displayName: account.name,
       email: account.username,
     },
   });
