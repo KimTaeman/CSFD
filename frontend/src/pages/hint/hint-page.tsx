@@ -8,6 +8,8 @@ import HintCard from '@/components/hint/hint-card';
 import Guess from '@/components/hint/guess';
 import RevealResult from '@/components/hint/RevealResult';
 import { useMutation } from '@tanstack/react-query';
+import filledHeart from '@/assets/filled-heart.svg';
+import emptyHeart from '@/assets/empty-heart.svg';
 
 function Page() {
   const { user } = useAuthContext();
@@ -131,7 +133,27 @@ function Page() {
               ))}
             </div>
             <div className="mb-8 w-full">
-              <div className="mb-7 text-2xl text-white select-none">Guess your P'code 💚💚💚</div>
+              <div className="mb-7 flex items-center gap-0 text-2xl text-white select-none">
+                Guess your P'code
+                {/* Hearts */}
+                <span className="ml-3 flex items-center gap-1">
+                  <img
+                    src={user.lives < 3 ? filledHeart : emptyHeart}
+                    alt="heart"
+                    className="h-7 w-7"
+                  />
+                  <img
+                    src={user.lives < 2 ? filledHeart : emptyHeart}
+                    alt="heart"
+                    className="h-7 w-7"
+                  />
+                  <img
+                    src={user.lives < 1 ? filledHeart : emptyHeart}
+                    alt="heart"
+                    className="h-7 w-7"
+                  />
+                </span>
+              </div>
               <Guess
                 onGuessSubmit={handleGuessSubmit}
                 guessState={guessState}
