@@ -74,7 +74,7 @@ export const guessMentor = async (req: Request, res: Response, next: NextFunctio
 
   try {
     const result = await Models.guessMentor(Number(id), guess);
-    res.status(200).json({ success: true, data: result });
+    res.status(200).json({ success: true, info: result });
   } catch (error) {
     next(error);
   }
