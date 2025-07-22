@@ -4,6 +4,8 @@ import Guess from '@/components/hint/guess';
 import RevealResult from '@/components/hint/RevealResult';
 import { useState, useCallback, useEffect } from 'react';
 import type { GuessState } from '@/types/hint.types';
+import filledHeart from '@/assets/filled-heart.svg';
+import emptyHeart from '@/assets/empty-heart.svg';
 import MainLayout from '../layout';
 
 function getInitialHints(key: string) {
@@ -213,7 +215,27 @@ function Page() {
           {/* Guess/Edit for first ncode */}
           <div className="mb-8 w-full">
             {!isSenior && (
-              <div className="mb-7 text-2xl text-white select-none">Guess your P'code 💚💚💚</div>
+              <div className="mb-7 flex items-center gap-0 text-2xl text-white select-none">
+                Guess your P'code
+                {/* Hearts */}
+                <span className="flex items-center gap-1 ml-3 ">
+                  <img
+                    src={attempts < 3 ? filledHeart : emptyHeart}
+                    alt="heart"
+                    className="w-7 h-7"
+                  />
+                  <img
+                    src={attempts < 2 ? filledHeart : emptyHeart}
+                    alt="heart"
+                    className="w-7 h-7"
+                  />
+                  <img
+                    src={attempts < 1 ? filledHeart : emptyHeart}
+                    alt="heart"
+                    className="w-7 h-7"
+                  />
+                </span>
+              </div>
             )}
             <Guess
               onGuessSubmit={handleGuessSubmit}
