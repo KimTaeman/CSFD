@@ -138,17 +138,17 @@ function Page() {
                 {/* Hearts */}
                 <span className="ml-3 flex items-center gap-1">
                   <img
-                    src={user.lives < 3 ? filledHeart : emptyHeart}
+                    src={(user.lives ?? 3) < 3 ? filledHeart : emptyHeart}
                     alt="heart"
                     className="h-7 w-7"
                   />
                   <img
-                    src={user.lives < 2 ? filledHeart : emptyHeart}
+                    src={(user.lives ?? 3) < 2 ? filledHeart : emptyHeart}
                     alt="heart"
                     className="h-7 w-7"
                   />
                   <img
-                    src={user.lives < 1 ? filledHeart : emptyHeart}
+                    src={(user.lives ?? 3) < 1 ? filledHeart : emptyHeart}
                     alt="heart"
                     className="h-7 w-7"
                   />

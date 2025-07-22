@@ -42,7 +42,7 @@ function DashboardPage() {
       <p>Display Name: {user.displayName}</p>
       <p>Email: {user.email}</p>
       <p>Nickname: {user.nickname || 'No nickname'}</p>
-      <p>Lives: {user.lives || 3}</p>
+      <p>Lives: {user.lives ?? 3}</p>
       <p>House: {user.house || 'No house assigned'}</p>
       <p>
         {user.displayName} ({user.nickname || 'No nickname'})
