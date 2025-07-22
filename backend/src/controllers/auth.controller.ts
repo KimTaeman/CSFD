@@ -135,6 +135,7 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
       instagram: student.instagram,
       discord: student.discord,
       line: student.line,
+      lives: isSenior ? null : student.lives,
     };
 
     console.log('student', student.mentees);

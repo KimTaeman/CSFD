@@ -120,17 +120,24 @@ function Page() {
         {!isSenior && (
           <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
             <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
-              {draftHints.map((hint, i) => (
-                <HintCard
-                  key={hint.id}
-                  title={!isSenior && i >= revealedCount ? `${i - revealedCount + 1}` : ''}
-                  description={hint.content}
-                  stage={!isSenior && i >= revealedCount ? 'hidden' : 'shown'}
-                  type={isSenior ? 'senior' : 'freshman'}
-                  editable={editing}
-                  onChange={(v) => handleHintChange(hint.id, v)}
-                />
-              ))}
+              {[...Array(3)].map((_, i) => {
+                const hint = draftHints[i];
+                const isPlaceholder = !hint;
+                const displayTitle = !isSenior && i >= revealedCount ? `${i - revealedCount + 1}` : '';
+                const description = hint?.content || 'Hint not yet available';
+
+                return (
+                  <HintCard
+                    key={hint?.id || `placeholder-${i}`}
+                    title={displayTitle}
+                    description={description}
+                    stage={'shown'}
+                    type={isSenior ? 'senior' : 'freshman'}
+                    editable={editing && !isPlaceholder}
+                    onChange={(v) => hint && handleHintChange(hint.id, v)}
+                  />
+                );
+              })}
             </div>
             <div className="mb-8 w-full">
               <div className="mb-7 flex items-center gap-0 text-2xl text-white select-none">
