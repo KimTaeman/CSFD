@@ -172,21 +172,14 @@ function Page() {
                 Guess your P'code
                 {/* Hearts */}
                 <span className="ml-3 flex items-center gap-1">
-                  <img
-                    src={(user.lives ?? 3) < 1 ? emptyHeart : filledHeart}
-                    alt="heart"
-                    className="h-7 w-7"
-                  />
-                  <img
-                    src={(user.lives ?? 3) < 2 ? emptyHeart : filledHeart}
-                    alt="heart"
-                    className="h-7 w-7"
-                  />
-                  <img
-                    src={(user.lives ?? 3) < 3 ? emptyHeart : filledHeart}
-                    alt="heart"
-                    className="h-7 w-7"
-                  />
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <img
+                      key={i}
+                      src={(user.lives ?? 3) > i ? filledHeart : emptyHeart}
+                      alt="heart"
+                      className="h-7 w-7"
+                    />
+                  ))}
                 </span>
               </div>
               <Guess
