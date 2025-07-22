@@ -13,5 +13,6 @@ router.get('/:id', Controller.getStudentById);
 
 // PUT
 router.put('/:id/guess', Controller.guessMentor);
+router.put('/:id', Controller.updateStudentById);
 
 export default router;

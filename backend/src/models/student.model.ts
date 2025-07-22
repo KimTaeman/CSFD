@@ -1,4 +1,5 @@
 import prisma from '@/config/prismaClient';
+import { UpdateStudent } from '@/types/student.type';
 
 const getStudentById = async (id: number) => {
   return prisma.student.findUnique({
@@ -15,6 +16,15 @@ const getAllStudents = async () => {
 const getAllSeniors = async () => {
   return prisma.student.findMany({
     where: { isSenior: true },
+  });
+};
+
+const updateStudentById = async (id: number, data: UpdateStudent) => {
+  return prisma.student.update({
+    where: {
+      id,
+    },
+    data: data,
   });
 };
 
@@ -77,4 +87,11 @@ const guessMentor = async (id: number, guess: string) => {
   return { isCorrect: false, message: 'Incorrect guess.' };
 };
 
-export { getStudentById, getAllStudents, getAllSeniors, getAllJuniors, guessMentor };
+export {
+  getStudentById,
+  getAllStudents,
+  getAllSeniors,
+  getAllJuniors,
+  updateStudentById,
+  guessMentor,
+};

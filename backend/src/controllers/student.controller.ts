@@ -79,3 +79,28 @@ export const guessMentor = async (req: Request, res: Response, next: NextFunctio
     next(error);
   }
 };
+
+export const updateStudentById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const data = req.body;
+    const id = Number(req.params.id);
+
+    if (isNaN(id) || id <= 0) {
+      throw new NotFoundError();
+    }
+
+    const updated = await Models.updateStudentById(id, data);
+
+    if (!updated) {
+      throw new NotFoundError();
+    }
+
+    res.status(200).json({ data: updated });
+  } catch (error) {
+    next(error);
+  }
+};
