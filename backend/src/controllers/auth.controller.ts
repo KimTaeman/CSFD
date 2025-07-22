@@ -116,6 +116,8 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
       email: student.email,
       nickname: student.nickname,
       role: student.role,
+      nationality: student.nationality,
+      studentId: student.studentId,
       isSenior: isSenior,
       mentees: isSenior
         ? student.mentees.map((mentee) => ({

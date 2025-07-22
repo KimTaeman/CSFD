@@ -12,6 +12,8 @@ export interface StudentInfo {
   email: string;
   nickname: string | null;
   role: string;
+  studentId: string | null;
+  nationality: string | null;
   lives: number | null;
   mentees: Array<{
     junior: {

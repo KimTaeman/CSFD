@@ -4,6 +4,7 @@ import Discord from '@/assets/discord-icon.svg';
 import LINE from '@/assets/line-icon.svg';
 import type { ProfileData, FormField, SocialMediaField } from '@/types/profile.types';
 import { useFormNavigation } from '@/hooks/useFormNavigation';
+import { useAuthContext } from '@/hooks/useAuthContext';
 
 interface ProfileFormProps {
   isEditing: boolean;
@@ -13,16 +14,6 @@ interface ProfileFormProps {
   initialData?: Partial<ProfileData>;
 }
 
-const INITIAL_PROFILE_DATA: ProfileData = {
-  fullName: 'Penny Trationas',
-  nickname: 'Lil Penny',
-  studentId: '61130500879',
-  nationality: 'Uzbekistan',
-  instagram: 'yung.brkeness.official',
-  discord: 'Toast#6821',
-  lineId: 'toast.uz',
-};
-
 function ProfileForm({
   isEditing,
   onEditClick,
@@ -30,6 +21,20 @@ function ProfileForm({
   onCancel,
   initialData,
 }: ProfileFormProps) {
+  const { user } = useAuthContext();
+
+  console.log(user);
+
+  const INITIAL_PROFILE_DATA: ProfileData = {
+    fullName: user.displayName,
+    nickname: user.nickname,
+    studentId: user.studentId,
+    nationality: user.nationality,
+    instagram: user.instagram,
+    discord: user.discord,
+    lineId: user.line,
+  };
+
   const [formData, setFormData] = useState<ProfileData>({
     ...INITIAL_PROFILE_DATA,
     ...initialData,

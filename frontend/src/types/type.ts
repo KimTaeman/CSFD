@@ -16,7 +16,7 @@ export interface StudentInfo {
   profilePic: string;
   instagram: string;
   discord: string;
-  line?: string;
+  line: string;
   email: string;
   role: string;
   lives: number | null;
