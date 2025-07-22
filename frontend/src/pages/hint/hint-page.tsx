@@ -31,14 +31,14 @@ function Page() {
   console.log(user);
 
   const handleGuessSubmit = useCallback(
-    (guess: string) => {
+    async (guess: string) => {
       if (!user || user.isSenior) return;
 
       const id = user.id;
 
       if (revealedCount >= 3) return;
 
-      const { data } = api.put(`/students/${id}/guess`, { guess: guess });
+      const { data } = await api.put(`/students/${id}/guess`, { guess: guess });
 
       const isCorrect = data.info.isCorrect;
       const result = isCorrect ? 'success' : 'fail';
