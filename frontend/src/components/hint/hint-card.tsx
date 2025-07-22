@@ -48,7 +48,7 @@ function HintCard({
       }}
     >
       <div className={`flex items-center justify-center ${title ? 'pt-1 md:pt-8 xl:pt-7' : ''}`}>
-        <h2 className="font-ribeye text-center text-8xl text-black w-full">{title}</h2>
+        <h2 className="font-ribeye w-full text-center text-8xl text-black">{title}</h2>
       </div>
       <div className="relative flex flex-1 flex-col justify-start">
         {stage === 'shown' ? (
