@@ -38,10 +38,9 @@ function Page() {
 
       if (revealedCount >= 3) return;
 
-      const res = api.put(`/students/${id}/guess`, guess);
-      console.log(res);
+      const { data } = api.put(`/students/${id}/guess`, { guess: guess });
 
-      const isCorrect = user.mentor?.id === guess;
+      const isCorrect = data.info.isCorrect;
       const result = isCorrect ? 'success' : 'fail';
       setGuessState(result);
       if (!isCorrect) setRevealedCount((prev) => prev + 1);
