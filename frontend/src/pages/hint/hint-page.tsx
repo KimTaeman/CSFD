@@ -123,7 +123,8 @@ function Page() {
               {[...Array(3)].map((_, i) => {
                 const hint = draftHints[i];
                 const isPlaceholder = !hint;
-                const displayTitle = !isSenior && i >= revealedCount ? `${i - revealedCount + 1}` : '';
+                const displayTitle =
+                  !isSenior && i >= revealedCount ? `${i - revealedCount + 1}` : '';
                 const description = hint?.content || 'Hint not yet available';
 
                 return (
