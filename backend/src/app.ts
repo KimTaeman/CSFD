@@ -7,6 +7,7 @@ import session from 'express-session';
 import config from './config/config';
 
 const app = express();
+app.set('trust proxy', 1);
 
 app.use(compression());
 app.use(cookieParser());
@@ -21,6 +22,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: config.nodeEnv === 'production',
+      sameSite: 'lax',
     },
   }),
 );
