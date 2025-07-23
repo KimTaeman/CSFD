@@ -116,6 +116,7 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
       email: student.email,
       nickname: student.nickname,
       role: student.role,
+      isHouseLeader: student.isHouseLeader,
       nationality: student.nationality,
       studentId: student.studentId,
       isSenior: isSenior,
