@@ -139,7 +139,6 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
       lives: isSenior ? null : student.lives,
     };
 
-    console.log('student', student.mentees);
     res.status(200).json(responseData);
   } catch (error) {
     next(error);
