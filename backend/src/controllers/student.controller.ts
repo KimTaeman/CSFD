@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import * as Models from '@/models';
 import { NotFoundError } from '@/errors/not-found-error';
 import { UnauthorizedError } from '@/errors/not-authorized-error';
+import { cloudinary } from '@/utils/cloudinary';
 
 export const getStudentById = async (
   req: Request,
@@ -89,6 +90,7 @@ export const updateStudentById = async (
   try {
     const data = req.body;
     const id = Number(req.params.id);
+    const { profilePic: dataUri } = data;
 
     if (!req.session.user?.id) {
       throw new UnauthorizedError('Not authenticated.');
@@ -103,6 +105,12 @@ export const updateStudentById = async (
     if (isNaN(id) || id <= 0) {
       throw new NotFoundError();
     }
+
+    const uploaded = await cloudinary.uploader.upload(dataUri, {
+      folder: 'csfd/profiles',
+    });
+
+    data.profilePic = uploaded.secure_url;
 
     const updated = await Models.updateStudentById(id, data);
 

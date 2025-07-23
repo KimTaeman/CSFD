@@ -12,6 +12,7 @@ export interface StudentInfo {
   email: string;
   nickname: string | null;
   role: string;
+  profilePic: string | null;
   isHouseLeader: boolean | null;
   studentId: string | null;
   nationality: string | null;
