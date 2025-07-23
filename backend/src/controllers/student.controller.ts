@@ -90,8 +90,6 @@ export const updateStudentById = async (
   try {
     const data = req.body;
     const id = Number(req.params.id);
-    const { profilePic: dataUri } = data;
-
     if (!req.session.user?.id) {
       throw new UnauthorizedError('Not authenticated.');
     }
@@ -106,11 +104,16 @@ export const updateStudentById = async (
       throw new NotFoundError();
     }
 
-    const uploaded = await cloudinary.uploader.upload(dataUri, {
-      folder: 'csfd/profiles',
-    });
+    const { profilePic: dataUri } = data;
 
-    data.profilePic = uploaded.secure_url;
+    if (dataUri) {
+      const uploaded = await cloudinary.uploader.upload(dataUri, {
+        folder: 'csfd/profiles',
+      });
+      data.profilePic = uploaded.secure_url;
+    } else {
+      delete data.profilePic;
+    }
 
     const updated = await Models.updateStudentById(id, data);
 
