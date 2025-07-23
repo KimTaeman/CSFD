@@ -5,6 +5,7 @@ import LoadingLayout from '../layout/loading';
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, isLoading } = useAuthContext();
   const location = useLocation();
+  console.log(isAuthenticated);
 
   if (isLoading) {
     return <LoadingLayout />;

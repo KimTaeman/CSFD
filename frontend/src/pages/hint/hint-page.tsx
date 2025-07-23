@@ -158,16 +158,16 @@ function Page() {
                 const hint = user.hints[i];
                 const isPlaceholder = !hint;
                 const displayTitle = '';
+                // const description = 'hihi';
                 const description =
                   user.hints[revealedCount + i]?.content ||
                   (countdown[i] ? `Hint available ${countdown[i]}` : 'Hint not yet available');
-
                 return (
                   <HintCard
                     key={hint?.id || `placeholder-${i}`}
                     title={displayTitle}
-                    description={i < revealedCount ? hint.content : description}
-                    stage={i < revealedCount ? 'shown' : 'locked'}
+                    description={description}
+                    stage={'shown'}
                     type={'freshman'}
                     editable={false}
                     onChange={() => {}}

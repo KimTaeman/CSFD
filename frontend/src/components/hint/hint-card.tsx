@@ -38,7 +38,6 @@ function HintCard({
     }
     return 'bg-white bg-opacity-100 rounded-4xl lg:rounded-4xl';
   };
-
   return (
     <div
       className={`relative h-32 w-full p-3 sm:h-32 sm:w-[94%] md:h-48 lg:h-48 lg:w-110 lg:p-4 ${getCardStyles()}`}

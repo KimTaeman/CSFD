@@ -14,6 +14,7 @@ const Page = () => {
   const [showWelcome, setShowWelcome] = useState(true);
   const [showLoginSuccess, setShowLoginSuccess] = useState(false);
   const [nickname, setNickname] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const mutation = useMutation({
@@ -44,9 +45,13 @@ const Page = () => {
   // Handle random button click
   const handleRandomClick = async () => {
     const userHouse = user.house.toLowerCase(); // e.g., 'ethera', 'zirelia', etc.
+    setLoading(true);
 
+    setTimeout(() => {
+      setLoading(false);
+      navigate(`/houses/${userHouse}`);
+    }, 5000);
     // Navigate to the user's house
-    navigate(`/houses/${userHouse}`);
   };
 
   // Show welcome page
@@ -83,7 +88,7 @@ const Page = () => {
       <div className="pot-light-particle-colored h-screen">
         <div className="flex h-screen flex-col items-center justify-center px-12 py-20">
           <img className="pot-width w-full" src="/src/assets/magic-pot.png" alt="Magic Pot" />
-          <RandomButton onClick={handleRandomClick} />
+          <RandomButton onClick={handleRandomClick} isLoading={loading} />
         </div>
       </div>
     </div>

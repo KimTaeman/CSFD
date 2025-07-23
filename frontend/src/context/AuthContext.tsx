@@ -29,6 +29,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
   const { fetchUserData } = useFetch();
 
+  const isAuthenticated = !!queryClient.getQueryData(['authUser']);
+
   const {
     data: user,
     isPending,
@@ -55,7 +57,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext
       value={{
         user,
-        isAuthenticated: !!user && isSuccess,
+        isAuthenticated,
         isLoading: isPending,
         logout,
         isLoggingOut: logoutMutation.isPending,
