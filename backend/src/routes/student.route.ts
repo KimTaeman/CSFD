@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Controller from '@/controllers';
+import isAuthenticated from '@/middlewares/isAuthenticated';
 
 const router = Router();
 
@@ -13,6 +14,6 @@ router.get('/:id', Controller.getStudentById);
 
 // PUT
 router.put('/:id/guess', Controller.guessMentor);
-router.put('/:id', Controller.updateStudentById);
+router.put('/:id', isAuthenticated, Controller.updateStudentById);
 
 export default router;

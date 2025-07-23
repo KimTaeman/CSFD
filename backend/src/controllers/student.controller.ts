@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as Models from '@/models';
 import { NotFoundError } from '@/errors/not-found-error';
+import { UnauthorizedError } from '@/errors/not-authorized-error';
 
 export const getStudentById = async (
   req: Request,
@@ -89,15 +90,21 @@ export const updateStudentById = async (
     const data = req.body;
     const id = Number(req.params.id);
 
+    if (!req.session.user?.id) {
+      throw new UnauthorizedError('Not authenticated.');
+    }
+
+    const authenticatedUserId = req.session.user.id;
+
+    if (id != authenticatedUserId) {
+      throw new UnauthorizedError('You cannot edit this profile.');
+    }
+
     if (isNaN(id) || id <= 0) {
       throw new NotFoundError();
     }
 
     const updated = await Models.updateStudentById(id, data);
-
-    if (!updated) {
-      throw new NotFoundError();
-    }
 
     res.status(200).json({ data: updated });
   } catch (error) {
