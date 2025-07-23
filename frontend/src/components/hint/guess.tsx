@@ -13,6 +13,7 @@ interface GuessProps {
   onEditHints?: () => void;
   onConfirm?: () => void;
   onCancel?: () => void;
+  isEditing: boolean;
 }
 
 function Guess({
@@ -20,14 +21,15 @@ function Guess({
   guessState,
   attempts,
   maxAttempts,
+  onReset,
   isSenior = false,
   onEditHints = () => {},
   onConfirm = () => {},
   onCancel = () => {},
+  isEditing,
 }: GuessProps) {
   const [inputHint, setInputHint] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
 
   const handleSubmit = () => {
     if (!inputHint.trim()) {
@@ -54,42 +56,27 @@ function Guess({
     }
   };
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-    onEditHints();
-  };
-
-  const handleConfirm = () => {
-    setIsEditing(false);
-    onConfirm();
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-    onCancel();
-  };
-
   return (
     <div className="flex flex-col">
-      {/* Error message - only for freshman */}
+      {}
       {!isSenior && errorMessage && (
         <div className="mb-2 text-sm text-red-400 lg:text-base">{errorMessage}</div>
       )}
 
-      {/* Desktop layout */}
+      {}
       <div className="hidden w-7/11 items-center gap-4 lg:flex">
         {isSenior ? (
           <div className="-mt-13 mb-4 flex w-full justify-start">
             {isEditing ? (
               <div className="flex gap-4">
                 <button
-                  onClick={handleConfirm}
+                  onClick={onConfirm}
                   className="min-w-[160px] rounded-2xl bg-orange-400 px-6 py-3 text-xl whitespace-nowrap text-white transition-colors hover:bg-orange-500"
                 >
                   Confirm
                 </button>
                 <button
-                  onClick={handleCancel}
+                  onClick={onCancel}
                   className="min-w-[160px] rounded-2xl border border-white bg-transparent px-6 py-3 text-xl whitespace-nowrap text-white transition-colors hover:bg-white/10"
                 >
                   Cancel
@@ -97,7 +84,7 @@ function Guess({
               </div>
             ) : (
               <button
-                onClick={handleEditClick}
+                onClick={onEditHints}
                 className="flex items-center gap-3 rounded-2xl bg-orange-400 px-6 py-3 text-xl whitespace-nowrap text-white transition-colors hover:bg-orange-500"
               >
                 <img src={EditIconW} alt="" className="h-6 w-6" />
@@ -127,20 +114,20 @@ function Guess({
         )}
       </div>
 
-      {/* Mobile layout */}
+      {}
       <div className="flex w-full flex-col gap-3 lg:hidden">
         {isSenior ? (
           <div className="mb-3 flex w-full justify-start">
             {isEditing ? (
               <div className="ipadair-ml ml-4 flex gap-3">
                 <button
-                  onClick={handleConfirm}
+                  onClick={onConfirm}
                   className="min-w-[140px] rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500"
                 >
                   Confirm
                 </button>
                 <button
-                  onClick={handleCancel}
+                  onClick={onCancel}
                   className="min-w-[140px] rounded-xl border border-white bg-transparent px-6 py-3 text-base text-white transition-colors hover:bg-white/10"
                 >
                   Cancel
@@ -148,7 +135,7 @@ function Guess({
               </div>
             ) : (
               <button
-                onClick={handleEditClick}
+                onClick={onEditHints}
                 className="ipadair-ml ml-4 flex items-center gap-2 rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500"
               >
                 <img src={EditIconW} alt="" className="h-5 w-5" />
@@ -164,13 +151,13 @@ function Guess({
               value={inputHint}
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
-              disabled={guessState !== 'n/a'}
+              disabled={guessState !== 'n/a' || attempts >= maxAttempts}
               className="min-h-12 w-full rounded-xl border-none bg-white px-4 py-3 text-base text-black placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:bg-gray-300"
             />
             <div className="flex gap-3">
               <button
                 onClick={handleSubmit}
-                disabled={guessState !== 'n/a'}
+                disabled={guessState !== 'n/a' || attempts >= maxAttempts}
                 className="self-start rounded-xl bg-orange-400 px-5 py-1.5 text-xl text-white transition-colors hover:bg-orange-500 disabled:cursor-not-allowed disabled:bg-gray-400"
               >
                 send
