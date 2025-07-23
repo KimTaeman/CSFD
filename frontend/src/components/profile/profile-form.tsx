@@ -53,9 +53,19 @@ function ProfileForm({
 
   const socialMediaFields: SocialMediaField[] = useMemo(
     () => [
-      { key: 'instagram', label: 'Instagram', icon: "/assets/instagram-icon.svg", iconColor: 'text-pink-500' },
-      { key: 'discord', label: 'Discord', icon: "/assets/discord-icon.svg", iconColor: 'text-indigo-400' },
-      { key: 'line', label: 'LINE ID', icon: "/assets/line-icon.svg", iconColor: 'text-green-500' },
+      {
+        key: 'instagram',
+        label: 'Instagram',
+        icon: '/assets/instagram-icon.svg',
+        iconColor: 'text-pink-500',
+      },
+      {
+        key: 'discord',
+        label: 'Discord',
+        icon: '/assets/discord-icon.svg',
+        iconColor: 'text-indigo-400',
+      },
+      { key: 'line', label: 'LINE ID', icon: '/assets/line-icon.svg', iconColor: 'text-green-500' },
     ],
     [],
   );

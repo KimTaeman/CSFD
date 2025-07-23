@@ -57,7 +57,7 @@ const Page = () => {
     <MainLayout>
       {/* <div className="flex"> */}
       {/* Main content area */}
-      <div className="flex flex-col space-y-6 w-full">
+      <div className="flex w-full flex-col space-y-6">
         <div className="flex items-center justify-center">
           <CombinedCoven
             covenType={coven as 'alchemireCoven' | 'etheraCoven' | 'isotarCoven' | 'zireliaCoven'}
@@ -65,7 +65,7 @@ const Page = () => {
         </div>
 
         {/* Cards grid */}
-        <div className="mx-auto grid max-w-4xl grid-cols-1 sm:grid-cols-2 2 gap-4 md:gap-6 justify-center items-center">
+        <div className="2 mx-auto grid max-w-4xl grid-cols-1 items-center justify-center gap-4 sm:grid-cols-2 md:gap-6">
           {students
             .filter((user: StudentInfo) => `${user.house.toLowerCase()}Coven` === coven)
             .filter((user: StudentInfo) => user.isHouseLeader === true)
@@ -78,7 +78,7 @@ const Page = () => {
             ))}
         </div>
 
-        <div className="mx-auto grid max-w-4xl grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
           {students
             .filter((user: StudentInfo) => `${user.house.toLowerCase()}Coven` === coven)
             .filter((user: StudentInfo) => user.isHouseLeader === false)
