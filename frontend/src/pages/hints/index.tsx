@@ -17,7 +17,6 @@ function Page() {
   const { user, updateGuessStatus } = useAuthContext();
   const [guessState, setGuessState] = useState<GuessState>('n/a');
   const [revealedCount, setRevealedCount] = useState(0);
-  const [showSubmit, setShowSubmit] = useState(true);
 
   const [editingMenteeId, setEditingMenteeId] = useState<string | null>(null);
   const [draftHints, setDraftHints] = useState<Hint[]>([]);
@@ -161,11 +160,9 @@ function Page() {
             <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
               {[...Array(3)].map((_, i) => {
                 const hint = user.hints[i];
-                const isPlaceholder = !hint;
                 const displayTitle = '';
-                // const description = 'hihi';
                 const description =
-                  user.hints[revealedCount + i]?.content ||
+                  user.hints[i]?.content ||
                   (countdown[i] ? `Hint available ${countdown[i]}` : 'Hint not yet available');
                 return (
                   <HintCard

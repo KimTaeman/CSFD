@@ -52,7 +52,6 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
   };
 
   const handleCollapse = useCallback(() => {
-    console.log('Collapse clicked');
     onClose();
   }, [onClose]);
 
