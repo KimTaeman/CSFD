@@ -17,6 +17,7 @@ export interface StudentInfo {
   instagram: string;
   discord: string;
   line: string;
+  isFound?: boolean;
   email: string;
   role: string;
   isHouseLeader: boolean | null;

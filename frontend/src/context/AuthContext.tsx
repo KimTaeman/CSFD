@@ -8,9 +8,15 @@ interface IAuthContext {
   user: StudentInfo;
   isAuthenticated: boolean;
   isLoading: boolean;
+  updateGuessStatus: () => void;
   logout: () => void;
   isLoggingOut: boolean;
 }
+
+const guessCorrect = async (id: number) => {
+  const response = await api.get(`/students/${id}/isCorrect`);
+  return response.data.info.isFound;
+};
 
 const logoutUser = async () => {
   try {
@@ -42,6 +48,25 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     staleTime: 5 * 60 * 1000,
   });
 
+  const guessMutation = useMutation({
+    mutationFn: guessCorrect,
+    onSuccess: (isFound) => {
+      const oldData = queryClient.getQueryData(['authUser']);
+      if (oldData) {
+        queryClient.setQueryData(['authUser'], {
+          ...oldData,
+          isFound,
+        });
+      }
+    },
+  });
+
+  const updateGuessStatus = () => {
+    if (user?.id) {
+      guessMutation.mutate(user.id);
+    }
+  };
+
   const logoutMutation = useMutation({
     mutationFn: logoutUser,
     onSuccess: () => {
@@ -59,6 +84,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         user,
         isAuthenticated,
         isLoading: isPending,
+        updateGuessStatus,
         logout,
         isLoggingOut: logoutMutation.isPending,
       }}

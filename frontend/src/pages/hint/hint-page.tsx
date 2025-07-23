@@ -14,9 +14,10 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 
 function Page() {
-  const { user } = useAuthContext();
+  const { user, updateGuessStatus } = useAuthContext();
   const [guessState, setGuessState] = useState<GuessState>('n/a');
   const [revealedCount, setRevealedCount] = useState(0);
+  const [showSubmit, setShowSubmit] = useState(true);
 
   const [editingMenteeId, setEditingMenteeId] = useState<string | null>(null);
   const [draftHints, setDraftHints] = useState<Hint[]>([]);
@@ -66,10 +67,14 @@ function Page() {
       if (!isCorrect) setRevealedCount((prev) => prev + 1);
       return data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['authUser'] });
-    },
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries({ queryKey: ['authUser'] });
+    // },
   });
+
+  useEffect(() => {
+    updateGuessStatus();
+  }, [guessState]);
 
   useEffect(() => {
     if (user) {
@@ -135,7 +140,7 @@ function Page() {
                 </div>
                 <div className="mb-8 w-full">
                   <Guess
-                    onGuessSubmit={() => {}}
+                    onGuessSubmit={handleGuessSubmit}
                     guessState={'n/a'}
                     attempts={0}
                     maxAttempts={0}
@@ -175,34 +180,42 @@ function Page() {
                 );
               })}
             </div>
-            <div className="mb-8 w-full">
-              <div className="mb-7 flex items-center gap-0 text-2xl text-white select-none">
-                Guess your P'code
-                <span className="ml-3 flex items-center gap-1">
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <img
-                      key={i}
-                      src={(user.lives ?? 3) > i ? emptyHeart : filledHeart}
-                      alt="heart"
-                      className="h-7 w-7"
-                    />
-                  ))}
-                </span>
+            {!user.isFound ? (
+              <div className="mb-8 w-full">
+                <div className="mb-7 flex items-center gap-0 text-2xl text-white select-none">
+                  Guess your P'code
+                  <span className="ml-3 flex items-center gap-1">
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <img
+                        key={i}
+                        src={(user.lives ?? 3) > i ? emptyHeart : filledHeart}
+                        alt="heart"
+                        className="h-7 w-7"
+                      />
+                    ))}
+                  </span>
+                </div>
+                <Guess
+                  onGuessSubmit={handleGuessSubmit}
+                  guessState={guessState}
+                  attempts={revealedCount}
+                  maxAttempts={3}
+                  onReset={resetGuess}
+                  isSenior={isSenior}
+                  isEditing={false}
+                />
               </div>
-              <Guess
-                onGuessSubmit={handleGuessSubmit}
-                guessState={guessState}
-                attempts={revealedCount}
-                maxAttempts={3}
-                onReset={resetGuess}
-                isSenior={isSenior}
-                isEditing={false}
-              />
-            </div>
+            ) : (
+              <div className="text-center text-white">
+                <h2 className="mb-4 text-3xl font-semibold">Congratulations!</h2>
+                <p className="mb-2 text-xl text-gray-300">You've already found your P'code.</p>
+                <sub className="text-gray-500">Now tell your P'Code to treat you lunch</sub>
+              </div>
+            )}
           </div>
         )}
 
-        {(guessState === 'success' || (guessState === 'fail' && revealedCount >= 3)) && (
+        {(guessState === 'success' || guessState === 'fail') && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 xl:pl-[11%]"
             onClick={resetGuess}

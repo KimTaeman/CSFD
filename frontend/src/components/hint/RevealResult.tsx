@@ -7,6 +7,7 @@ interface RevealResultProps {
 }
 
 const RevealResult: React.FC<RevealResultProps> = ({ state, outOfAttempts = false }) => {
+  console.log(state);
   return (
     <div className="relative flex h-[25vw] max-h-[350px] w-[98%] max-w-[1400px] flex-col items-center justify-start px-[1%] pt-[1%]">
       {/* Radial gradient background | radial-hint-bg is in index.css */}
