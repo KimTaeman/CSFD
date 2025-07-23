@@ -1,5 +1,4 @@
 import Sidebar from '@/components/sidebar';
-import HamburgerIcon from '@/assets/hamburger.svg';
 import { useProfileState } from '@/hooks/useProfileState';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
@@ -22,7 +21,7 @@ const MainLayout = ({ children, showSidebar = true }: MainLayoutProps) => {
   }
 
   return (
-    <div className="relative min-h-screen bg-[url('/src/assets/bg-1.svg')] bg-cover bg-center bg-no-repeat text-white">
+    <div className="relative min-h-screen bg-[url('/assets/bg-magic.png')] bg-cover bg-fixed bg-top bg-no-repeat text-white">
       {/* Overlay */}
       <div className="pointer-events-none absolute inset-0 z-0 bg-black/15" />
       {/* Layout */}
@@ -41,7 +40,7 @@ const MainLayout = ({ children, showSidebar = true }: MainLayoutProps) => {
               className="rounded-lg p-2 transition-colors hover:bg-white/10"
               aria-label="Open menu"
             >
-              <img src={HamburgerIcon} alt="Menu" className="h-6 w-6" />
+              <img src="/assets/hamburger.svg" alt="Menu" className="h-6 w-6" />
             </button>
           </div>
         )}
@@ -53,7 +52,7 @@ const MainLayout = ({ children, showSidebar = true }: MainLayoutProps) => {
         )}
         {/* Main Content */}
         <main
-          className={`flex flex-1 flex-col items-center justify-start px-4 py-20 xl:px-12 xl:py-15 xl:pr-20 ${ipadProPadding}`}
+          className={`flex flex-1 flex-col items-center justify-start py-20 xl:px-12 xl:py-15 xl:pr-20 ${ipadProPadding}`}
         >
           {children}
         </main>

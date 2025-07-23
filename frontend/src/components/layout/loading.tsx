@@ -2,7 +2,7 @@ function LoadingLayout() {
   return (
     <div
       role="status"
-      className="flex min-h-svh flex-col items-center justify-center gap-3 bg-white dark:bg-gray-900"
+      className="flex min-h-svh flex-col items-center justify-center gap-3 bg-[#0d001f]"
     >
       {/* Animated Spinner SVG */}
       <svg
