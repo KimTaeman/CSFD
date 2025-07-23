@@ -28,9 +28,9 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
 
   const menuItems: MenuItem[] = useMemo(
     () => [
-      { name: 'Profile', icon: ProfileIcon, route: '/profile/profile-page' },
+      { name: 'Profile', icon: ProfileIcon, route: '/profile' },
       { name: 'Coven', icon: CovanIcon, route: '/coven/' },
-      { name: 'Hints', icon: HelpIcon, route: '/hint/hint-page' },
+      { name: 'Hints', icon: HelpIcon, route: '/hints' },
     ],
     [],
   );
