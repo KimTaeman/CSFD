@@ -116,13 +116,17 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
       email: student.email,
       nickname: student.nickname,
       role: student.role,
+      isHouseLeader: student.isHouseLeader,
+      profilePic: student.profilePic,
+      nationality: student.nationality,
+      studentId: student.studentId,
       isSenior: isSenior,
       mentees: isSenior
         ? student.mentees.map((mentee) => ({
             id: mentee.junior.id,
             displayName: mentee.junior.displayName,
             nickname: mentee.junior.nickname,
-            lives: student.lives,
+            lives: mentee.junior.lives,
             instagram: mentee.junior.instagram,
             discord: mentee.junior.discord,
             line: mentee.junior.line,
@@ -133,9 +137,9 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
       instagram: student.instagram,
       discord: student.discord,
       line: student.line,
+      lives: isSenior ? null : student.lives,
     };
 
-    console.log('student', student.mentees);
     res.status(200).json(responseData);
   } catch (error) {
     next(error);

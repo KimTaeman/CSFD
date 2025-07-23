@@ -6,7 +6,7 @@ function Page() {
   return (
     <div
       data-status="404"
-      className="fade-in fade-out flex min-h-screen flex-1 flex-col items-center justify-center gap-8 text-center"
+      className="fade-in fade-out flex min-h-screen flex-1 flex-col items-center justify-center gap-8 text-center text-white"
     >
       <div className="space-y-4">
         <h1 className="text-5xl font-bold">Page Not Found</h1>

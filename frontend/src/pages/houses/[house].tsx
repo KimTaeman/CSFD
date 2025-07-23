@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import HousesButton from '@/components/house/HouseButton';
 import HouseDetail from '@/components/house/HouseDetail';
-import type { HouseData } from '@/types/house.tpyes';
+import type { HouseData } from '@/types/house.types';
 
 export const housesData: Record<string, HouseData> = {
   ethera: {

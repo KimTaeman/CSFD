@@ -1,40 +1,57 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import RandomButton from '@/components/house/RandomButton';
 import NickName from '@/components/house/NicknamePopup';
 import LoginSucess from '@/components/layout/loginSucceed';
+import api from '@/api/axios';
+import { useAuthContext } from '@/hooks/useAuthContext';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const Page = () => {
+  const { user } = useAuthContext();
+  const queryClient = useQueryClient();
+
   const [showWelcome, setShowWelcome] = useState(true);
   const [showLoginSuccess, setShowLoginSuccess] = useState(false);
   const [nickname, setNickname] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Handle nickname submission
-  const handleNicknameSubmit = (userNickname: string) => {
-    setNickname(userNickname);
-    setShowWelcome(false);
-    setShowLoginSuccess(true);
+  const mutation = useMutation({
+    mutationFn: async (userNickname: string) => {
+      await api.put(`/students/${user.id}`, {
+        nickname: userNickname,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['authUser'] });
+      setShowWelcome(false);
+      setShowLoginSuccess(true);
+      setTimeout(() => {
+        setShowLoginSuccess(false);
+      }, 3000);
+    },
+    onError: (e) => {
+      console.error('Registration failed:', e);
+    },
+  });
 
-    // Hide login success after 3 seconds
-    setTimeout(() => {
-      setShowLoginSuccess(false);
-    }, 3000);
+  // Handle nickname submission
+  const handleNicknameSubmit = async (userNickname: string) => {
+    setNickname(userNickname);
+    mutation.mutate(userNickname);
   };
 
   // Handle random button click
   const handleRandomClick = async () => {
-    try {
-      const response = await fetch('/api/user/house');
-      const data = await response.json();
-      const userHouse = data.house; // e.g., 'ethera', 'zirelia', etc.
+    const userHouse = user.house.toLowerCase(); // e.g., 'ethera', 'zirelia', etc.
+    setLoading(true);
 
-      // Navigate to the user's house
-      navigate(`/houses/ethera`);
-    } catch (error) {
-      console.error('Error fetching user house:', error);
-      // Fallback navigation or error handling
-    }
+    setTimeout(() => {
+      setLoading(false);
+      navigate(`/houses/${userHouse}`);
+    }, 5000);
+    // Navigate to the user's house
   };
 
   // Show welcome page
@@ -71,7 +88,7 @@ const Page = () => {
       <div className="pot-light-particle-colored h-screen">
         <div className="flex h-screen flex-col items-center justify-center px-12 py-20">
           <img className="pot-width w-full" src="/src/assets/magic-pot.png" alt="Magic Pot" />
-          <RandomButton onClick={handleRandomClick} />
+          <RandomButton onClick={handleRandomClick} isLoading={loading} />
         </div>
       </div>
     </div>

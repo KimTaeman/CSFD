@@ -1,6 +1,6 @@
+import type { HouseData } from '@/types/house.types';
 import React from 'react';
 import { useNavigate } from 'react-router';
-import type { HouseData } from '@/pages/houses/[house]';
 
 interface HousesButtonProps {
   houseData: HouseData;

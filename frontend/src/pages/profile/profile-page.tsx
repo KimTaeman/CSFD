@@ -1,14 +1,18 @@
 import Picture from '@/components/profile/picture';
-import isotarImage from '@/assets/img-placeholder.png';
+import placeholderImage from '@/assets/img-placeholder.png';
 import ProfileForm from '@/components/profile/profile-form';
 import { useProfileState } from '@/hooks/useProfileState';
 import ProfilePicUpload from '@/components/profile/ProfilePicUpload';
 import { useProfilePicUpload } from '@/hooks/useProfilePicUpload';
 import { useEffect, useState } from 'react';
 import MainLayout from '../layout';
+import type { ProfileData } from '@/types/profile.types';
+import { useAuthContext } from '@/hooks/useAuthContext';
 
 function Page() {
+  const { user } = useAuthContext();
   const { isEditing, handleEditClick, handleConfirm, handleCancel } = useProfileState();
+  const [formData, setFormData] = useState<ProfileData | null>(null);
 
   // Profile picture state
   const [profilePic, setProfilePic] = useState<string | null>(null);
@@ -32,13 +36,19 @@ function Page() {
     }
   }, [profilePic]);
 
+  const handleConfirmClick = () => {
+    if (formData) {
+      handleConfirm(formData);
+    }
+  };
+
   return (
     <MainLayout>
       <div className="flex flex-1 flex-col items-center justify-center gap-y-14 p-4 xl:grid xl:grid-cols-2 xl:items-start xl:gap-x-16 xl:px-20 xl:py-5">
         {/* Picture Upload Section */}
         <div className="flex w-full justify-center xl:justify-end xl:pr-8">
           <Picture
-            src={profilePic || isotarImage}
+            src={profilePic || user.profilePic || placeholderImage}
             alt="Profile"
             className="aspect-[5/7] w-[186px] rounded-3xl sm:w-[25rem] lg:w-[22rem] xl:w-[25rem]"
             darken={hovered}
@@ -54,8 +64,9 @@ function Page() {
           <ProfileForm
             isEditing={isEditing}
             onEditClick={handleEditClick}
-            onConfirm={handleConfirm}
+            onConfirm={handleConfirmClick}
             onCancel={handleCancel}
+            onFormChange={setFormData}
           />
         </div>
       </div>
@@ -87,6 +98,9 @@ function Page() {
         onFileChange={picUpload.onFileChange}
         handleCropComplete={picUpload.handleCropComplete}
         saveCroppedImage={picUpload.saveCroppedImage}
+        isPending={picUpload.isPending}
+        isError={picUpload.isError}
+        isSuccess={picUpload.isSuccess}
       />
     </MainLayout>
   );

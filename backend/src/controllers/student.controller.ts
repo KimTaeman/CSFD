@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import * as Models from '@/models';
 import { NotFoundError } from '@/errors/not-found-error';
+import { UnauthorizedError } from '@/errors/not-authorized-error';
+import { cloudinary } from '@/utils/cloudinary';
 
-// Placeholders - Replace with actual logic
 export const getStudentById = async (
   req: Request,
   res: Response,
@@ -34,7 +35,7 @@ export const getAllStudents = async (
     if (!students) {
       throw new NotFoundError();
     }
-    res.status(200).json({ success: true, message: 'fetched student', students });
+    res.status(200).json({ success: true, message: 'fetched students', students });
   } catch (error) {
     next(error);
   }
@@ -69,6 +70,34 @@ export const getAllJuniors = async (
   }
 };
 
+export const guessMentor = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  const { guess } = req.body;
+
+  try {
+    const result = await Models.guessMentor(Number(id), guess);
+
+    if (!result) {
+      throw new NotFoundError();
+    }
+
+    res.status(200).json({ success: true, info: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const guessCorrect = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+
+  try {
+    const result = await Models.guessCorret(Number(id));
+    res.status(200).json({ success: true, info: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const updateStudentById = async (
   req: Request,
   res: Response,
@@ -77,17 +106,32 @@ export const updateStudentById = async (
   try {
     const data = req.body;
     const id = Number(req.params.id);
+    if (!req.session.user?.id) {
+      throw new UnauthorizedError('Not authenticated.');
+    }
+
+    const authenticatedUserId = req.session.user.id;
+
+    if (id != authenticatedUserId) {
+      throw new UnauthorizedError('You cannot edit this profile.');
+    }
 
     if (isNaN(id) || id <= 0) {
-      const error = new Error('Invalid ID parameter. ID must be a positive integer.');
-      error.status = 400; // Bad Request
-      throw error;
-    }
-    const updated = await Models.updateStudentById(id, data);
-
-    if (!updated) {
       throw new NotFoundError();
     }
+
+    const { profilePic: dataUri } = data;
+
+    if (dataUri) {
+      const uploaded = await cloudinary.uploader.upload(dataUri, {
+        folder: 'csfd/profiles',
+      });
+      data.profilePic = uploaded.secure_url;
+    } else {
+      delete data.profilePic;
+    }
+
+    const updated = await Models.updateStudentById(id, data);
 
     res.status(200).json({ data: updated });
   } catch (error) {

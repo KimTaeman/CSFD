@@ -1,11 +1,11 @@
 export interface ProfileData {
-  fullName: string;
+  displayName: string;
   nickname: string;
   studentId: string;
   nationality: string;
   instagram: string;
   discord: string;
-  lineId: string;
+  line: string;
 }
 
 export interface FormField {
@@ -15,7 +15,7 @@ export interface FormField {
 }
 
 export interface SocialMediaField {
-  key: keyof Pick<ProfileData, 'instagram' | 'discord' | 'lineId'>;
+  key: keyof Pick<ProfileData, 'instagram' | 'discord' | 'line'>;
   label: string;
   icon: string;
   iconColor: string;

@@ -9,45 +9,41 @@ export interface User {
 export interface StudentInfo {
   id: number;
   displayName: string;
+  nickname: string;
+  house: string;
+  nationality: string;
+  studentId: string;
+  profilePic: string;
+  instagram: string;
+  discord: string;
+  line: string;
+  isFound?: boolean;
   email: string;
-  nickname: string | null;
   role: string;
+  isHouseLeader: boolean | null;
   lives: number | null;
   isSenior: boolean | null;
   mentees: Array<{
-    junior: {
-      id: string;
-      displayName: string;
-      nickname: string | null;
-      instagram: string | null;
-      discord: string | null;
-      line: string | null;
-    };
+    id: string;
+    displayName: string;
+    nickname: string | null;
+    instagram: string | null;
+    discord: string | null;
+    line: string | null;
+    lives: number | null;
   }>;
   mentor?: {
-    senior: {
-      id: string;
-      displayName: string;
-      nickname: string | null;
-      instagram: string | null;
-      discord: string | null;
-      line: string | null;
-    };
+    id: string;
+    displayName: string;
+    nickname: string | null;
+    instagram: string | null;
+    discord: string | null;
+    line: string | null;
   } | null;
-  givenHints: Array<{
+  hints: Array<{
     id: string;
     order: number;
     content: string;
     revealDate: Date;
   }>;
-  receivedHints: Array<{
-    id: string;
-    order: number;
-    content: string;
-    revealDate: Date;
-  }>;
-  house: string | null;
-  instagram: string | null;
-  discord: string | null;
-  line: string | null;
 }

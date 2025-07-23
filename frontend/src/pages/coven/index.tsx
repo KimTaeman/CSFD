@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router';
 import CombinedCoven from '@/components/coven/covenBadge/covenBagdes';
 import DetailCoven from '@/components/coven/covenBadge/detailCoven';
 import MainLayout from '../layout';
-
 const Page = () => {
   const navigate = useNavigate();
 

@@ -1,4 +1,7 @@
+import api from '@/api/axios';
 import { useState, useCallback, useRef } from 'react';
+import { useAuthContext } from './useAuthContext';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface CropArea {
   x: number;
@@ -35,6 +38,9 @@ function getCroppedImg(imageSrc: string, crop: CropArea): Promise<string> {
 }
 
 export function useProfilePicUpload() {
+  const { user } = useAuthContext();
+  const queryClient = useQueryClient();
+
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -64,14 +70,37 @@ export function useProfilePicUpload() {
     [],
   );
 
+  const uploadProfilePic = async (croppedImage: string) => {
+    const { data } = await api.put(`/students/${user.id}`, { profilePic: croppedImage });
+    return data;
+  };
+
+  const {
+    mutate: uploadMutation,
+    isPending,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationFn: uploadProfilePic,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['authUser'] });
+      setImageSrc(data.profilePic);
+      close();
+    },
+    onError: (e) => {
+      console.error('Error uploading profile picture:', e);
+    },
+  });
+
   const saveCroppedImage = useCallback(
     async (onSave: (img: string) => void) => {
       if (!imageSrc || !croppedArea) return;
       const cropped = await getCroppedImg(imageSrc, croppedArea);
+      uploadMutation(cropped);
       onSave(cropped);
       close();
     },
-    [imageSrc, croppedArea, close],
+    [imageSrc, croppedArea, uploadMutation],
   );
 
   const openFileDialog = useCallback(() => {
@@ -93,5 +122,8 @@ export function useProfilePicUpload() {
     handleCropComplete,
     saveCroppedImage,
     openFileDialog,
+    isPending,
+    isError,
+    isSuccess,
   };
 }

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import EditIcon from '@/assets/edit.svg';
 
 interface CardProps {
-  title: string;
+  title?: string;
   description: string;
   stage: 'hidden' | 'shown';
   type?: 'freshman' | 'senior';
@@ -28,17 +28,27 @@ function HintCard({
 
   const getCardStyles = () => {
     if (type === 'freshman') {
-      return stage === 'shown' ? 'bg-white bg-opacity-100' : 'bg-white bg-opacity-50';
+      if (stage === 'shown') {
+        // Shown
+        return 'bg-[linear-gradient(236.05deg,#FFFFFF_1.41%,#BBB9B9_91.33%)] border border-white rounded-4xl lg:rounded-4xl';
+      } else {
+        // Hidden
+        return 'bg-[linear-gradient(180deg,rgba(255,255,255,0.2)_0%,#999999_100%)] border border-gray-300 border-solid rounded-4xl lg:rounded-4xl';
+      }
     }
-    return 'bg-white bg-opacity-100'; // Default for other types
+    return 'bg-white bg-opacity-100 rounded-4xl lg:rounded-4xl';
   };
-
   return (
     <div
-      className={`relative h-32 w-full rounded-4xl p-3 sm:h-32 sm:w-[94%] md:h-48 lg:h-48 lg:w-110 lg:rounded-4xl lg:p-4 ${getCardStyles()}`}
-      style={{ display: 'flex', flexDirection: 'column' }}
+      className={`relative h-32 w-full p-3 sm:h-32 sm:w-[94%] md:h-48 lg:h-48 lg:w-110 lg:p-4 ${getCardStyles()}`}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}
     >
-      <h2 className="text-sm font-bold text-black lg:text-lg">{title}</h2>
+      <div className={`flex items-center justify-center ${title ? 'pt-1 md:pt-8 xl:pt-7' : ''}`}>
+        <h2 className="font-ribeye w-full text-center text-8xl text-black">{title}</h2>
+      </div>
       <div className="relative flex flex-1 flex-col justify-start">
         {stage === 'shown' ? (
           editable ? (

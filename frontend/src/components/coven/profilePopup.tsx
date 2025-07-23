@@ -1,73 +1,90 @@
 import React from 'react';
-import type { User } from '@/types/coven.types';
+import type { StudentInfo } from '@/types/type';
 
 type ProfilePopupProps = {
   isOpen: boolean;
   onClose: () => void;
-  user: User | null;
+  user: StudentInfo | null;
 };
 
 const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) => {
   if (!isOpen || !user) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-md" onClick={onClose}></div>
+  const socialLinks = [
+    { name: 'Instagram', handle: user.instagram, icon: '/src/assets/instagram-icon.svg' },
+    { name: 'Discord', handle: user.discord, icon: '/src/assets/discord-icon.svg' },
+    { name: 'Line', handle: user.line, icon: '/src/assets/line-icon.svg' },
+  ];
 
-      <div className="w-full max-w-60 transform rounded-3xl border border-white/30 bg-black/10 backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02] sm:max-w-150">
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
+
+      {/* Modal Card */}
+      <div className="relative w-full max-w-lg transform rounded-2xl border border-white/20 bg-white/80 p-6 shadow-xl backdrop-blur-xl transition-all duration-300 ease-in-out sm:max-w-2xl sm:p-8">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 flex h-6 w-6 items-center justify-center rounded-full transition-all duration-200 hover:bg-white/20"
+          className="absolute top-4 right-4 z-10 flex h-8 w-8 items-center justify-center rounded-full text-black transition-all hover:bg-black/20"
+          aria-label="Close"
         >
-          <img className="h-4 w-4" src="/src/assets/close.png" alt="Close" />
+          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={3}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
         </button>
-        <div className="flex flex-col items-start px-8 py-4 sm:flex-row">
-          <div className="mr-0 mb-4 flex flex-shrink-0 justify-center sm:mr-10 sm:mb-0">
+
+        <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-center sm:gap-8">
+          {/* Profile Image */}
+          <div className="flex-shrink-0">
             <img
-              className="h-32 w-32 rounded-xl object-cover"
-              src={user.profilePic}
-              alt={user.displayName}
+              className="h-40 w-40 rounded-full object-cover shadow-lg sm:h-48 sm:w-48 md:h-56 md:w-56"
+              src={user.profilePic || `/src/assets/profile-${user.house}.png`} // Fallback to a default image
+              alt={`${user.displayName || 'User'}'s profile picture`}
             />
           </div>
-          <div className="flex min-w-0 flex-1 flex-col items-start justify-start space-y-6 sm:flex-row sm:space-y-0 sm:space-x-6">
-            <div className="flex min-w-0 flex-col items-start justify-start space-y-2">
-              <p className="font-inter text-[0.7rem] whitespace-nowrap text-white">
-                Full Name : {user.displayName}
-              </p>
-              <p className="font-inter text-[0.7rem] whitespace-nowrap text-white/80">
-                Nickname : {user.nickname}
-              </p>
-              <p className="font-inter text-[0.7rem] whitespace-nowrap text-white/80">
-                Nationality : {user.nationality}
-              </p>
-              <p className="font-inter text-[0.7rem] whitespace-nowrap text-white/80">
-                Code : {user.studentId}
-              </p>
+
+          {/* User Details */}
+          <div className="flex w-full flex-col items-center text-center sm:items-start sm:text-left">
+            <h2 className="text-xl font-bold text-gray-900 md:text-2xl">
+              {user.displayName || 'Unnamed Student'}
+            </h2>
+            <p className="text-lg text-gray-600 md:text-xl">@{user.nickname || 'no-nickname'}</p>
+
+            <div className="my-4 h-px w-full bg-gray-300/50" />
+
+            <div className="text-md grid grid-cols-2 gap-x-6 gap-y-2 text-left text-gray-800 sm:text-lg">
+              <p className="font-semibold">Code:</p>
+              {/* Use logical OR (||) to provide a fallback value */}
+              <p>{user.studentId.slice(-3) || 'N/A'}</p>
+              <p className="font-semibold">Nationality:</p>
+              <p>{user.nationality || 'N/A'}</p>
             </div>
-            <div className="flex min-w-0 flex-col items-start justify-start space-y-2">
-              <p className="font-inter text-[0.7rem] whitespace-nowrap text-white/80">
-                Social Media
-              </p>
-              <div className="flex flex-row items-center space-x-2">
-                <img className="h-4 w-4 flex-shrink-0" src="/src/assets/instagram-logo.png" />
-                <p className="font-inter text-[0.7rem] whitespace-nowrap text-white/80">
-                  {user.instagram}
-                </p>
+
+            <div className="mt-6">
+              <h3 className="text-md font-semibold text-gray-700 sm:text-lg">Social Media</h3>
+              <div className="mt-2 flex flex-col space-y-2">
+                {/* Render all social links, showing a placeholder if the handle is missing */}
+                {socialLinks.map((social) => (
+                  <div key={social.name} className="flex items-center space-x-3">
+                    <img
+                      className="h-6 w-6 flex-shrink-0 sm:h-8 sm:w-8"
+                      src={social.icon}
+                      alt={`${social.name} icon`}
+                    />
+                    {/* Add styling to the placeholder to differentiate it */}
+                    <p
+                      className={`text-md text-black sm:text-lg ${!social.handle && 'text-gray-500 italic'}`}
+                    >
+                      {social.handle || 'Not provided'}
+                    </p>
+                  </div>
+                ))}
               </div>
-              <div className="flex flex-row items-center space-x-2">
-                <img className="h-4 w-4 flex-shrink-0" src="/src/assets/discord.png" />
-                <p className="font-inter text-[0.7rem] whitespace-nowrap text-white/80">
-                  {user.discord}
-                </p>
-              </div>
-              {user.line && (
-                <div className="flex flex-row items-center space-x-2">
-                  <img className="h-4 w-4 flex-shrink-0" src="/src/assets/line.png" />
-                  <p className="font-inter text-[0.7rem] whitespace-nowrap text-white/80">
-                    {user.line}
-                  </p>
-                </div>
-              )}
             </div>
           </div>
         </div>

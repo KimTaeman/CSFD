@@ -5,6 +5,9 @@ import HelpIcon from '@/assets/help-icon.svg';
 import LogoutIcon from '@/assets/logout-icon.png';
 import BackArrow from '@/assets/back-arrow.svg';
 import { NavLink } from 'react-router';
+import api from '@/api/axios';
+import { useQueryClient } from '@tanstack/react-query';
+import { useAuthContext } from '@/hooks/useAuthContext';
 
 interface MenuItem {
   name: string;
@@ -20,6 +23,7 @@ interface SidebarProps {
 }
 
 function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
+  const { logout } = useAuthContext();
   const [active, setActive] = useState('Profile');
 
   const menuItems: MenuItem[] = useMemo(
@@ -43,9 +47,9 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
     [onNavigate, onClose],
   );
 
-  const handleLogout = useCallback(() => {
-    onLogout?.() ?? console.log('Logout clicked');
-  }, [onLogout, onClose]);
+  const handleLogout = async () => {
+    await logout();
+  };
 
   const handleCollapse = useCallback(() => {
     console.log('Collapse clicked');
@@ -121,7 +125,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
       <div className="lg:hidden">
         {shouldShowMobile && (
           <aside
-            className="sidebar-dark-glow fixed top-14 bottom-14 left-14 z-50 flex w-70 flex-col rounded-4xl"
+            className="sidebar-dark-glow fixed top-14 left-14 z-50 flex w-70 flex-col rounded-4xl"
             role="navigation"
           >
             {/* Close button */}

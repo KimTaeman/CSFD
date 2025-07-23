@@ -1,43 +1,52 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import Instagram from '@/assets/instagram-icon.svg';
 import Discord from '@/assets/discord-icon.svg';
 import LINE from '@/assets/line-icon.svg';
 import type { ProfileData, FormField, SocialMediaField } from '@/types/profile.types';
 import { useFormNavigation } from '@/hooks/useFormNavigation';
+import { useAuthContext } from '@/hooks/useAuthContext';
 
 interface ProfileFormProps {
   isEditing: boolean;
   onEditClick: () => void;
   onConfirm: () => void;
   onCancel: () => void;
+  onFormChange: (data: ProfileData) => void;
   initialData?: Partial<ProfileData>;
 }
-
-const INITIAL_PROFILE_DATA: ProfileData = {
-  fullName: 'Penny Trationas',
-  nickname: 'Lil Penny',
-  studentId: '61130500879',
-  nationality: 'Uzbekistan',
-  instagram: 'yung.brkeness.official',
-  discord: 'Toast#6821',
-  lineId: 'toast.uz',
-};
 
 function ProfileForm({
   isEditing,
   onEditClick,
   onConfirm,
   onCancel,
+  onFormChange,
   initialData,
 }: ProfileFormProps) {
+  const { user } = useAuthContext();
+
+  const INITIAL_PROFILE_DATA: ProfileData = {
+    displayName: user.displayName,
+    nickname: user.nickname,
+    studentId: user.studentId,
+    nationality: user.nationality,
+    instagram: user.instagram,
+    discord: user.discord,
+    line: user.line,
+  };
+
   const [formData, setFormData] = useState<ProfileData>({
     ...INITIAL_PROFILE_DATA,
     ...initialData,
   });
 
+  useEffect(() => {
+    onFormChange(formData);
+  }, [formData, onFormChange]);
+
   const formFields: FormField[] = useMemo(
     () => [
-      { key: 'fullName', label: 'Full Name', type: 'text' },
+      { key: 'displayName', label: 'Full Name', type: 'text' },
       { key: 'nickname', label: 'Nickname', type: 'text' },
       { key: 'studentId', label: 'Student ID', type: 'text' },
       { key: 'nationality', label: 'Nationality', type: 'text' },
@@ -49,7 +58,7 @@ function ProfileForm({
     () => [
       { key: 'instagram', label: 'Instagram', icon: Instagram, iconColor: 'text-pink-500' },
       { key: 'discord', label: 'Discord', icon: Discord, iconColor: 'text-indigo-400' },
-      { key: 'lineId', label: 'LINE ID', icon: LINE, iconColor: 'text-green-500' },
+      { key: 'line', label: 'LINE ID', icon: LINE, iconColor: 'text-green-500' },
     ],
     [],
   );
@@ -84,7 +93,7 @@ function ProfileForm({
             ref={(el) => setInputRef(field.key, el)}
             id={field.key}
             type={field.type}
-            value={formData[field.key]}
+            value={formData[field.key] || ''}
             onChange={(e) => handleInputChange(field.key, e.target.value)}
             onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
             disabled={!isEditing}
@@ -106,7 +115,7 @@ function ProfileForm({
               <input
                 ref={(el) => setInputRef(field.key, el)}
                 id={field.key}
-                value={formData[field.key]}
+                value={formData[field.key] || ''}
                 onChange={(e) => handleInputChange(field.key, e.target.value)}
                 onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
                 disabled={!isEditing}

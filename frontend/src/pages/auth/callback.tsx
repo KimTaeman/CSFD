@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/axios';
 
@@ -8,15 +8,13 @@ function AuthCallback() {
   useEffect(() => {
     const checkUserStatus = async () => {
       try {
-        const response = await api.get('/api/auth/me');
+        const response = await api.get('/auth/me');
         const user = response.data;
-        // TODO: get email from user and validate with the excel file and add student id maybe
-        console.log(user);
 
         if (!user.nickname) {
-          navigate('/register');
+          navigate('/houses');
         } else {
-          navigate('/dashboard');
+          navigate('/coven');
         }
       } catch (error) {
         console.error('Authentication check failed', error);
