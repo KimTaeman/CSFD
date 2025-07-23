@@ -1,5 +1,4 @@
 import React from 'react';
-import SparkleImage from '@/assets/sparkle.png';
 
 interface RevealResultProps {
   state: 'success' | 'fail';
@@ -15,7 +14,7 @@ const RevealResult: React.FC<RevealResultProps> = ({ state, outOfAttempts = fals
       {/* Sparkle image for success */}
       {state === 'success' && (
         <img
-          src={SparkleImage}
+          src="/assets/sparkle.png"
           alt=""
           className="pointer-events-none absolute inset-0 z-0 -mt-[12%] -ml-[1.5%] h-full w-full scale-[2.5] object-contain"
         />

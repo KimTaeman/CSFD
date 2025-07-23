@@ -57,7 +57,7 @@ const Page = () => {
     <MainLayout>
       {/* <div className="flex"> */}
       {/* Main content area */}
-      <div className="flex flex-col space-y-6">
+      <div className="flex flex-col space-y-6 w-full">
         <div className="flex items-center justify-center">
           <CombinedCoven
             covenType={coven as 'alchemireCoven' | 'etheraCoven' | 'isotarCoven' | 'zireliaCoven'}
@@ -65,9 +65,23 @@ const Page = () => {
         </div>
 
         {/* Cards grid */}
-        <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 md:gap-6">
+        <div className="mx-auto grid max-w-4xl grid-cols-1 sm:grid-cols-2 2 gap-4 md:gap-6 justify-center items-center">
           {students
             .filter((user: StudentInfo) => `${user.house.toLowerCase()}Coven` === coven)
+            .filter((user: StudentInfo) => user.isHouseLeader === true)
+            .map((user: StudentInfo) => (
+              <ProfileModal
+                key={user.studentId}
+                user={user}
+                onClick={() => handleOpenModal(user)}
+              />
+            ))}
+        </div>
+
+        <div className="mx-auto grid max-w-4xl grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {students
+            .filter((user: StudentInfo) => `${user.house.toLowerCase()}Coven` === coven)
+            .filter((user: StudentInfo) => user.isHouseLeader === false)
             .map((user: StudentInfo) => (
               <ProfileModal
                 key={user.studentId}

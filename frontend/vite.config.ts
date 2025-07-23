@@ -15,16 +15,6 @@ export default defineConfig({
     tailwindcss(),
     Pages({
       dirs: './src/pages',
-      // extendRoute(route, parent) {
-      //   if (route.path === '/auth') {
-      //     return route;
-      //   }
-      //
-      //   return {
-      //     ...route,
-      //     meta: { auth: true },
-      //   };
-      // },
     }),
   ],
   server: {

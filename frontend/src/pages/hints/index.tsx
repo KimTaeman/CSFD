@@ -8,8 +8,6 @@ import HintCard from '@/components/hint/hint-card';
 import Guess from '@/components/hint/guess';
 import RevealResult from '@/components/hint/RevealResult';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import emptyHeart from '@/assets/filled-heart.svg';
-import filledHeart from '@/assets/empty-heart.svg';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 
@@ -124,7 +122,7 @@ function Page() {
                 <div className="font-[Poppins] text-xl text-white">
                   Junior: {mentee.displayName}
                 </div>
-                <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
+                <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
                   {menteeHints.map((hint) => (
                     <HintCard
                       key={hint.id}
@@ -157,7 +155,7 @@ function Page() {
 
         {!isSenior && (
           <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
-            <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
+            <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
               {[...Array(3)].map((_, i) => {
                 const hint = user.hints[i];
                 const displayTitle = '';
@@ -185,7 +183,7 @@ function Page() {
                     {Array.from({ length: 3 }).map((_, i) => (
                       <img
                         key={i}
-                        src={(user.lives ?? 3) > i ? emptyHeart : filledHeart}
+                        src={(user.lives ?? 3) > i ? "/assets/filled-heart.svg" : "/assets/empty-heart.svg"}
                         alt="heart"
                         className="h-7 w-7"
                       />

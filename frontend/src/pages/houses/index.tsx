@@ -57,7 +57,7 @@ const Page = () => {
   // Show welcome page
   if (showWelcome) {
     return (
-      <div className="bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-contain">
+      <div className="bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-contain">
         <div className="light-particle-colored">
           <div className="flex h-screen w-full flex-col items-center justify-center space-y-8 px-12">
             <div className="flex flex-col items-center justify-center text-center">
@@ -77,7 +77,7 @@ const Page = () => {
 
   // Show main page with magic pot
   return (
-    <div className="min-h-svh bg-[#15022f] bg-[url('/src/assets/bg-1.png')] bg-cover bg-center bg-no-repeat">
+    <div className="min-h-svh bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-cover bg-center bg-no-repeat">
       {/* Login Success Notification */}
       {showLoginSuccess && (
         <div className="fixed top-8 left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300 ease-in-out">
@@ -87,7 +87,7 @@ const Page = () => {
 
       <div className="pot-light-particle-colored h-screen">
         <div className="flex h-screen flex-col items-center justify-center px-12 py-20">
-          <img className="pot-width w-full" src="/src/assets/magic-pot.png" alt="Magic Pot" />
+          <img className="pot-width w-full" src="/assets/magic-pot.png" alt="Magic Pot" />
           <RandomButton onClick={handleRandomClick} isLoading={loading} />
         </div>
       </div>

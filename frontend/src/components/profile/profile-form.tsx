@@ -1,7 +1,4 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import Instagram from '@/assets/instagram-icon.svg';
-import Discord from '@/assets/discord-icon.svg';
-import LINE from '@/assets/line-icon.svg';
 import type { ProfileData, FormField, SocialMediaField } from '@/types/profile.types';
 import { useFormNavigation } from '@/hooks/useFormNavigation';
 import { useAuthContext } from '@/hooks/useAuthContext';
@@ -56,9 +53,9 @@ function ProfileForm({
 
   const socialMediaFields: SocialMediaField[] = useMemo(
     () => [
-      { key: 'instagram', label: 'Instagram', icon: Instagram, iconColor: 'text-pink-500' },
-      { key: 'discord', label: 'Discord', icon: Discord, iconColor: 'text-indigo-400' },
-      { key: 'line', label: 'LINE ID', icon: LINE, iconColor: 'text-green-500' },
+      { key: 'instagram', label: 'Instagram', icon: "/assets/instagram-icon.svg", iconColor: 'text-pink-500' },
+      { key: 'discord', label: 'Discord', icon: "/assets/discord-icon.svg", iconColor: 'text-indigo-400' },
+      { key: 'line', label: 'LINE ID', icon: "/assets/line-icon.svg", iconColor: 'text-green-500' },
     ],
     [],
   );

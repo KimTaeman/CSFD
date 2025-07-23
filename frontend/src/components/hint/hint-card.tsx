@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import EditIcon from '@/assets/edit.svg';
 
 interface CardProps {
   title?: string;
@@ -40,7 +39,7 @@ function HintCard({
   };
   return (
     <div
-      className={`relative h-32 w-full p-3 sm:h-32 sm:w-[94%] md:h-48 lg:h-48 lg:w-110 lg:p-4 ${getCardStyles()}`}
+      className={`relative h-32 w-full p-3 sm:h-32 sm:max-w-[94%] md:h-48 lg:h-48 lg:max-w-110 mx-auto lg:p-4 ${getCardStyles()}`}
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -96,7 +95,7 @@ function HintCard({
           aria-label="Edit hint"
         >
           <img
-            src={EditIcon}
+            src="/assets/edit.svg"
             alt="Edit"
             className="pointer-events-none h-12 w-12 opacity-70 lg:h-20 lg:w-20"
           />

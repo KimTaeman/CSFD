@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import EditIconW from '@/assets/edit-w.svg';
 
 type GuessState = 'n/a' | 'success' | 'fail';
 
@@ -87,7 +86,7 @@ function Guess({
                 onClick={onEditHints}
                 className="flex items-center gap-3 rounded-2xl bg-orange-400 px-6 py-3 text-xl whitespace-nowrap text-white transition-colors hover:bg-orange-500"
               >
-                <img src={EditIconW} alt="" className="h-6 w-6" />
+                <img src="/assets/edit-w.svg" alt="" className="h-6 w-6" />
                 Edit your hints
               </button>
             )}
@@ -138,7 +137,7 @@ function Guess({
                 onClick={onEditHints}
                 className="ipadair-ml ml-4 flex items-center gap-2 rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500"
               >
-                <img src={EditIconW} alt="" className="h-5 w-5" />
+                <img src="/assets/edit-w.svg" alt="" className="h-5 w-5" />
                 Edit your hints
               </button>
             )}

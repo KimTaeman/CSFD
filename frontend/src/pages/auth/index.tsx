@@ -1,5 +1,3 @@
-import bg from '../../assets/bg-1.png';
-
 function HomePage() {
   const handleLogin = () => {
     window.location.href = `${import.meta.env.VITE_API_URL}/auth/login`;
@@ -8,7 +6,7 @@ function HomePage() {
   return (
     <div
       className="flex h-screen items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: `url(${bg})` }}
+      style={{ backgroundImage: `url(/assets/bg-magic.png)` }}
     >
       <div className="text-center">
         <button

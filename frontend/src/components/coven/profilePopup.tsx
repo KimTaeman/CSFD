@@ -11,9 +11,9 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
   if (!isOpen || !user) return null;
 
   const socialLinks = [
-    { name: 'Instagram', handle: user.instagram, icon: '/src/assets/instagram-icon.svg' },
-    { name: 'Discord', handle: user.discord, icon: '/src/assets/discord-icon.svg' },
-    { name: 'Line', handle: user.line, icon: '/src/assets/line-icon.svg' },
+    { name: 'Instagram', handle: user.instagram, icon: '/assets/instagram-icon.svg' },
+    { name: 'Discord', handle: user.discord, icon: '/assets/discord-icon.svg' },
+    { name: 'Line', handle: user.line, icon: '/assets/line-icon.svg' },
   ];
 
   return (
@@ -43,7 +43,7 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
           <div className="flex-shrink-0">
             <img
               className="h-40 w-40 rounded-full object-cover shadow-lg sm:h-48 sm:w-48 md:h-56 md:w-56"
-              src={user.profilePic || `/src/assets/profile-${user.house}.png`} // Fallback to a default image
+              src={user.profilePic || `/assets/profile-${user.house}.png`} // Fallback to a default image
               alt={`${user.displayName || 'User'}'s profile picture`}
             />
           </div>

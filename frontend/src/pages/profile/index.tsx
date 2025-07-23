@@ -1,5 +1,4 @@
 import Picture from '@/components/profile/picture';
-import placeholderImage from '@/assets/img-placeholder.png';
 import ProfileForm from '@/components/profile/profile-form';
 import { useProfileState } from '@/hooks/useProfileState';
 import ProfilePicUpload from '@/components/profile/ProfilePicUpload';
@@ -48,7 +47,7 @@ function Page() {
         {/* Picture Upload Section */}
         <div className="flex w-full justify-center xl:justify-end xl:pr-8">
           <Picture
-            src={profilePic || user.profilePic || placeholderImage}
+            src={profilePic || user.profilePic || "/assets/img-placeholder.png"}
             alt="Profile"
             className="aspect-[5/7] w-[186px] rounded-3xl sm:w-[25rem] lg:w-[22rem] xl:w-[25rem]"
             darken={hovered}
