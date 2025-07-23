@@ -38,7 +38,6 @@ const Page = () => {
     queryFn: fetchStudents,
     enabled: isAuthenticated,
   });
-  
 
   const handleOpenModal = (user: StudentInfo): void => {
     setSelectedUser(user);
