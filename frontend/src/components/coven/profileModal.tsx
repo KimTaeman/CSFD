@@ -9,7 +9,12 @@ type ProfileModalProps = {
 const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClick }) => {
   console.log(user.isHouseLeader);
   return (
-    <div onClick={onClick} className="cursor-pointer">
+    <div onClick={onClick} className="relative cursor-pointer">
+      {user.isHouseLeader && (
+        <div
+          className={`absolute -top-10 -right-5 z-50 h-20 w-20 rotate-25 bg-[url('/src/assets/hat-${user.house}.png')] animate-wiggle bg-cover`}
+        ></div>
+      )}
       <div className="w-auto transform rounded-2xl border border-white/30 bg-white text-[#1C1B1A] backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02] md:max-w-80">
         <div className="flex flex-row items-center p-1">
           <div className="mr-4 aspect-[5/7] h-[75px] w-[60px] justify-center md:h-[100px] md:w-[80px]">
