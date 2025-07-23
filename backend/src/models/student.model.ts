@@ -10,7 +10,9 @@ const getStudentById = async (id: number) => {
 };
 
 const getAllStudents = async () => {
-  return prisma.student.findMany({});
+  return prisma.student.findMany({
+    orderBy: [{ isHouseLeader: 'desc' }, { role: 'asc' }],
+  });
 };
 
 const getAllSeniors = async () => {
