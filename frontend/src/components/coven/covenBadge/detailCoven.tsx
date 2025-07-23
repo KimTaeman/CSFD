@@ -3,19 +3,17 @@ const DetailCoven = () => {
     <div className="font-inter w-full max-w-5xl transform rounded-3xl bg-black/10 backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02]">
       <div className="relative z-10 flex flex-col items-start justify-start space-y-2 p-6">
         {/* Detail Paragraphs */}
-        <div className="font-inter text-left md:text-lg leading-relaxed font-medium break-words hyphens-auto text-white">
-          <p >
+        <div className="font-inter text-left leading-relaxed font-medium break-words hyphens-auto text-white md:text-lg">
+          <p>
             In Computer Science, we’re taught to follow logic—clear inputs, structured flows,
             predictable outcomes. But deep within every system lies a layer that can’t be debugged
             or compiled. A signal beyond the algorithm. That’s where the magic lives.
           </p>
-          <p >
+          <p>
             Some of us don’t just write code—we summon possibilities. We don’t just read data—we
             foresee patterns. We don’t just store variables—we distill power into them.
           </p>
-          <p >
-            You are not just a student of logic—you’re a weaver of unseen protocols.
-          </p>
+          <p>You are not just a student of logic—you’re a weaver of unseen protocols.</p>
         </div>
 
         {/* Decorative Elements */}

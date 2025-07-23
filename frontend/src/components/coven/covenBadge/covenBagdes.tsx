@@ -66,7 +66,7 @@ const CombinedCoven: React.FC<CombinedCovenProps> = ({ covenType, onClick, class
       className={`w-full max-w-85 transform rounded-3xl border border-white/30 bg-black/10 backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02] ${onClick ? 'cursor-pointer' : ''} ${className}`}
       onClick={onClick}
     >
-      <div className="ipadpro-px-2 flex flex-col sm:flex-row items-center px-8 py-6 md:px-4">
+      <div className="ipadpro-px-2 flex flex-col items-center px-8 py-6 sm:flex-row md:px-4">
         {coven.imagePosition === 'left' ? (
           <>
             {imageContent}

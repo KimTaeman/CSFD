@@ -183,7 +183,11 @@ function Page() {
                     {Array.from({ length: 3 }).map((_, i) => (
                       <img
                         key={i}
-                        src={(user.lives ?? 3) > i ? "/assets/filled-heart.svg" : "/assets/empty-heart.svg"}
+                        src={
+                          (user.lives ?? 3) > i
+                            ? '/assets/filled-heart.svg'
+                            : '/assets/empty-heart.svg'
+                        }
                         alt="heart"
                         className="h-7 w-7"
                       />
