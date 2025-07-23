@@ -38,6 +38,7 @@ const Page = () => {
     queryFn: fetchStudents,
     enabled: isAuthenticated,
   });
+  
 
   const handleOpenModal = (user: StudentInfo): void => {
     setSelectedUser(user);
@@ -55,29 +56,29 @@ const Page = () => {
 
   return (
     <MainLayout>
-      <div className="flex">
-        {/* Main content area */}
-        <div className="flex flex-[7] flex-col space-y-6 p-4 md:p-8">
-          <div className="flex items-center justify-center">
-            <CombinedCoven
-              covenType={coven as 'alchemireCoven' | 'etheraCoven' | 'isotarCoven' | 'zireliaCoven'}
-            />
-          </div>
+      {/* <div className="flex"> */}
+      {/* Main content area */}
+      <div className="flex flex-col space-y-6">
+        <div className="flex items-center justify-center">
+          <CombinedCoven
+            covenType={coven as 'alchemireCoven' | 'etheraCoven' | 'isotarCoven' | 'zireliaCoven'}
+          />
+        </div>
 
-          {/* Cards grid */}
-          <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
-            {students
-              .filter((user: StudentInfo) => `${user.house.toLowerCase()}Coven` === coven)
-              .map((user: StudentInfo) => (
-                <ProfileModal
-                  key={user.studentId}
-                  user={user}
-                  onClick={() => handleOpenModal(user)}
-                />
-              ))}
-          </div>
+        {/* Cards grid */}
+        <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 md:gap-6">
+          {students
+            .filter((user: StudentInfo) => `${user.house.toLowerCase()}Coven` === coven)
+            .map((user: StudentInfo) => (
+              <ProfileModal
+                key={user.studentId}
+                user={user}
+                onClick={() => handleOpenModal(user)}
+              />
+            ))}
         </div>
       </div>
+      {/* </div> */}
       <ProfilePopup isOpen={isModalOpen} onClose={handleCloseModal} user={selectedUser} />
     </MainLayout>
   );

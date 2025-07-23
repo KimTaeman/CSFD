@@ -19,6 +19,7 @@ export interface StudentInfo {
   line: string;
   email: string;
   role: string;
+  isHouseLeader: boolean | null;
   lives: number | null;
   isSenior: boolean | null;
   mentees: Array<{

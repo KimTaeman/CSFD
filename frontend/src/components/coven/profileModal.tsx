@@ -7,18 +7,25 @@ type ProfileModalProps = {
 };
 
 const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClick }) => {
+  console.log(user.isHouseLeader);
   return (
     <div onClick={onClick} className="cursor-pointer">
-      <div className="w-full max-w-80 transform rounded-3xl border border-white/30 bg-black/10 backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02]">
-        <div className="flex flex-row items-center px-8 py-4">
-          <div className="mr-8 flex w-full justify-center md:max-w-20">
-            <img className="max-w-30 rounded-xl" src={user.profilePic} alt={user.nickname} />
+      <div className="w-auto transform rounded-2xl border border-white/30 bg-white text-[#1C1B1A] backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02] md:max-w-80">
+        <div className="flex flex-row items-center p-1">
+          <div className="mr-4 aspect-[5/7] h-[75px] w-[60px] justify-center md:h-[100px] md:w-[80px]">
+            <img
+              className="h-full rounded-2xl object-cover"
+              src={user.profilePic || `/src/assets/profile-${user.house}.png`}
+              alt={user.nickname}
+            />
           </div>
           <div className="flex flex-1 flex-col items-start justify-start space-y-2">
-            <h3 className="font-inter text-[1.5rem] font-bold text-white">
+            <h3 className="font-inter text-md font-bold md:text-xl">
               {user.nickname || user.studentId}
             </h3>
-            <p className="font-inter text-[0.7rem] text-white/80">{user.role}</p>
+            <p className="font-inter text-sm md:text-lg">
+              {user.isHouseLeader ? 'House Master' : user.isSenior ? 'Senior' : 'Junior'}
+            </p>
           </div>
         </div>
       </div>
