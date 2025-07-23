@@ -15,6 +15,9 @@ interface ProfilePicUploadProps {
   handleCropComplete: (croppedArea: any, croppedAreaPixels: any) => void;
   saveCroppedImage: (onSave: (img: string) => void) => void;
   setImageSrc: (src: string | null) => void;
+  isPending: boolean;
+  isError: boolean;
+  isSuccess: boolean;
 }
 
 const ProfilePicUpload: React.FC<ProfilePicUploadProps> = ({
@@ -31,6 +34,9 @@ const ProfilePicUpload: React.FC<ProfilePicUploadProps> = ({
   handleCropComplete,
   saveCroppedImage,
   setImageSrc,
+  isPending,
+  isError,
+  isSuccess,
 }) => {
   if (!open) return null;
 
@@ -70,18 +76,21 @@ const ProfilePicUpload: React.FC<ProfilePicUploadProps> = ({
               setImageSrc(null);
               onClose();
             }}
+            disabled={isPending}
           >
             Cancel
           </button>
-          {imageSrc && (
-            <button
-              className="rounded-xl border border-white bg-transparent px-8 py-2 text-white transition-colors hover:bg-white/10"
-              onClick={() => saveCroppedImage(onSave)}
-            >
-              Save
-            </button>
-          )}
+
+          <button
+            className="rounded-xl border border-white bg-transparent px-8 py-2 text-white transition-colors hover:bg-white/10"
+            onClick={() => saveCroppedImage(onSave)}
+            disabled={isPending}
+          >
+            {isPending ? 'Saving...' : 'Save'}
+          </button>
         </div>
+        {isError && <p className="mt-2 text-red-500">Error uploading image.</p>}
+        {isSuccess && <p className="mt-2 text-green-500">Image uploaded successfully!</p>}
       </div>
     </div>
   );
