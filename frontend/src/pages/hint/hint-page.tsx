@@ -157,8 +157,7 @@ function Page() {
               {[...Array(3)].map((_, i) => {
                 const hint = user.hints[i];
                 const isPlaceholder = !hint;
-
-                const displayTitle = !isSenior && i >= revealedCount ? `Hint #${i + 1}` : '';
+                const displayTitle = '';
                 const description =
                   user.hints[revealedCount + i]?.content ||
                   (countdown[i] ? `Hint available ${countdown[i]}` : 'Hint not yet available');
