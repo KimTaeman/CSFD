@@ -76,6 +76,22 @@ export const guessMentor = async (req: Request, res: Response, next: NextFunctio
 
   try {
     const result = await Models.guessMentor(Number(id), guess);
+
+    if (!result) {
+      throw new NotFoundError();
+    }
+
+    res.status(200).json({ success: true, info: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const guessCorrect = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+
+  try {
+    const result = await Models.guessCorret(Number(id));
     res.status(200).json({ success: true, info: result });
   } catch (error) {
     next(error);
