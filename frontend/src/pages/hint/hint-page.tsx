@@ -17,15 +17,16 @@ function Page() {
   const { user } = useAuthContext();
   const [guessState, setGuessState] = useState<GuessState>('n/a');
   const [revealedCount, setRevealedCount] = useState(0);
-  const [editing, setEditing] = useState(false);
+
+  const [editingMenteeId, setEditingMenteeId] = useState<string | null>(null);
   const [draftHints, setDraftHints] = useState<Hint[]>([]);
   const [countdown, setCountdown] = useState<string[]>(['', '', '']);
 
   const updateCountdown = useCallback(() => {
     const hintReleaseDates = [
-      toZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'), // July 29th, 12 AM GMT+7 (Bangkok)
-      toZonedTime(new Date(2025, 7, 1, 0, 0, 0), 'Asia/Bangkok'), // August 1st, 12 AM GMT+7 (Bangkok)
-      toZonedTime(new Date(2025, 7, 3, 0, 0, 0), 'Asia/Bangkok'), // August 3rd, 12 AM GMT+7 (Bangkok)
+      toZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'),
+      toZonedTime(new Date(2025, 7, 1, 0, 0, 0), 'Asia/Bangkok'),
+      toZonedTime(new Date(2025, 7, 3, 0, 0, 0), 'Asia/Bangkok'),
     ];
 
     const newCountdown = hintReleaseDates.map((date) => {
@@ -40,7 +41,8 @@ function Page() {
 
   useEffect(() => {
     updateCountdown();
-    const interval = setInterval(updateCountdown, 360000); // Update every second
+
+    const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
   }, [updateCountdown]);
 
@@ -48,18 +50,16 @@ function Page() {
 
   const { mutate: updateHint } = useMutation({
     mutationFn: (hints: Hint[]) => api.put('/hints', hints),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['authUser'] });
+    },
   });
 
   const { mutate: submitGuess } = useMutation({
     mutationFn: async (guess: string) => {
-      if (!user || user.isSenior) return;
+      if (!user || user.isSenior || revealedCount >= 3) return;
 
-      const id = user.id;
-
-      if (revealedCount >= 3) return;
-
-      const { data } = await api.put(`/students/${id}/guess`, { guess: guess });
-
+      const { data } = await api.put(`/students/${user.id}/guess`, { guess: guess });
       const isCorrect = data.info.isCorrect;
       const result = isCorrect ? 'success' : 'fail';
       setGuessState(result);
@@ -74,34 +74,29 @@ function Page() {
   useEffect(() => {
     if (user) {
       setDraftHints(user.hints);
+
+      setRevealedCount(3 - (user.lives ?? 3));
     }
   }, [user]);
 
-  console.log(user);
+  const handleGuessSubmit = useCallback((guess: string) => submitGuess(guess), [submitGuess]);
 
-  const handleGuessSubmit = useCallback(
-    (guess: string) => {
-      submitGuess(guess);
-    },
-    [submitGuess],
-  );
+  const resetGuess = useCallback(() => setGuessState('n/a'), []);
 
-  const resetGuess = useCallback(() => {
-    setGuessState('n/a');
-  }, []);
-
-  const handleEdit = useCallback(() => {
-    setEditing(true);
+  const handleEdit = useCallback((menteeId: string) => {
+    setEditingMenteeId(menteeId);
   }, []);
 
   const handleCancel = useCallback(() => {
-    setEditing(false);
-    setDraftHints(user.hints);
+    setEditingMenteeId(null);
+    if (user) {
+      setDraftHints(user.hints);
+    }
   }, [user]);
 
   const handleConfirm = useCallback(() => {
     updateHint(draftHints);
-    setEditing(false);
+    setEditingMenteeId(null);
   }, [draftHints, updateHint]);
 
   const handleHintChange = useCallback((id: string, content: string) => {
@@ -118,25 +113,26 @@ function Page() {
         {isSenior &&
           user.mentees.map((mentee, index) => {
             const menteeHints = draftHints.slice(index * 3, index * 3 + 3);
+            const isEditingThisMentee = editingMenteeId === mentee.id;
+
             return (
               <div key={mentee.id} className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
                 <div className="font-[Poppins] text-xl text-white">
                   Junior: {mentee.displayName}
                 </div>
                 <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
-                  {menteeHints.map((hint, i) => (
+                  {menteeHints.map((hint) => (
                     <HintCard
                       key={hint.id}
                       title={''}
                       description={hint.content}
                       stage={'shown'}
                       type={'senior'}
-                      editable={editing}
+                      editable={isEditingThisMentee}
                       onChange={(v) => handleHintChange(hint.id, v)}
                     />
                   ))}
                 </div>
-                {}
                 <div className="mb-8 w-full">
                   <Guess
                     onGuessSubmit={() => {}}
@@ -145,9 +141,10 @@ function Page() {
                     maxAttempts={0}
                     onReset={() => {}}
                     isSenior={isSenior}
-                    onEditHints={handleEdit}
+                    onEditHints={() => handleEdit(mentee.id)}
                     onConfirm={handleConfirm}
                     onCancel={handleCancel}
+                    isEditing={isEditingThisMentee}
                   />
                 </div>
               </div>
@@ -158,23 +155,23 @@ function Page() {
           <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
             <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
               {[...Array(3)].map((_, i) => {
-                const hint = draftHints[i];
+                const hint = user.hints[i];
                 const isPlaceholder = !hint;
-                const displayTitle =
-                  !isSenior && i >= revealedCount ? `${i - revealedCount + 1}` : '';
+
+                const displayTitle = !isSenior && i >= revealedCount ? `Hint #${i + 1}` : '';
                 const description =
-                  hint?.content ||
+                  user.hints[revealedCount + i]?.content ||
                   (countdown[i] ? `Hint available ${countdown[i]}` : 'Hint not yet available');
 
                 return (
                   <HintCard
                     key={hint?.id || `placeholder-${i}`}
                     title={displayTitle}
-                    description={description}
-                    stage={'shown'}
-                    type={isSenior ? 'senior' : 'freshman'}
-                    editable={editing && !isPlaceholder}
-                    onChange={(v) => hint && handleHintChange(hint.id, v)}
+                    description={i < revealedCount ? hint.content : description}
+                    stage={i < revealedCount ? 'shown' : 'locked'}
+                    type={'freshman'}
+                    editable={false}
+                    onChange={() => {}}
                   />
                 );
               })}
@@ -182,7 +179,6 @@ function Page() {
             <div className="mb-8 w-full">
               <div className="mb-7 flex items-center gap-0 text-2xl text-white select-none">
                 Guess your P'code
-                {/* Hearts */}
                 <span className="ml-3 flex items-center gap-1">
                   {Array.from({ length: 3 }).map((_, i) => (
                     <img
@@ -201,15 +197,13 @@ function Page() {
                 maxAttempts={3}
                 onReset={resetGuess}
                 isSenior={isSenior}
-                onEditHints={handleEdit}
-                onConfirm={handleConfirm}
-                onCancel={handleCancel}
+                isEditing={false}
               />
             </div>
           </div>
         )}
 
-        {(guessState === 'success' || guessState === 'fail') && (
+        {(guessState === 'success' || (guessState === 'fail' && revealedCount >= 3)) && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 xl:pl-[11%]"
             onClick={resetGuess}
