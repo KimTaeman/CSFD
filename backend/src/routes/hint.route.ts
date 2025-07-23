@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import * as Controller from '@/controllers';
 
 const router = Router();
 
@@ -7,5 +8,6 @@ const router = Router();
 // GET
 
 // PUT
+router.put('/', Controller.updateHint);
 
 export default router;

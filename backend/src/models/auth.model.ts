@@ -44,7 +44,7 @@ export const updateStudentProfile = (microsoftId: string, account: AccountInfo) 
   return prisma.student.update({
     where: { microsoftId },
     data: {
-      displayName: account.name,
+      // displayName: account.name,
       email: account.username,
     },
   });
@@ -65,6 +65,8 @@ export const getStudentInfo = (userId: number): Promise<StudentInfo | null> => {
               instagram: true,
               discord: true,
               line: true,
+              nationality: true,
+              studentId: true,
               lives: true,
             },
           },
@@ -80,13 +82,15 @@ export const getStudentInfo = (userId: number): Promise<StudentInfo | null> => {
               instagram: true,
               discord: true,
               line: true,
+              nationality: true,
+              studentId: true,
             },
           },
         },
       },
       givenHints: {
         orderBy: {
-          order: 'asc',
+          id: 'asc',
         },
       },
       receivedHints: {

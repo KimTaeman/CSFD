@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
@@ -21,7 +23,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies and run formatter
         run: |
@@ -30,4 +32,4 @@ jobs:
 
       - uses: autofix-ci/action@v1
         with:
-          commit-message: 'style: apply Prettier format'
+          commit-message: "style: apply Prettier format"

@@ -12,6 +12,10 @@ export interface StudentInfo {
   email: string;
   nickname: string | null;
   role: string;
+  profilePic: string | null;
+  isHouseLeader: boolean | null;
+  studentId: string | null;
+  nationality: string | null;
   lives: number | null;
   mentees: Array<{
     junior: {
@@ -21,6 +25,7 @@ export interface StudentInfo {
       instagram: string | null;
       discord: string | null;
       line: string | null;
+      lives: number | null;
     };
   }>;
   mentor?: {
