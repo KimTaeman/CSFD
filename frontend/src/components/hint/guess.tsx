@@ -29,15 +29,17 @@ function Guess({
 }: GuessProps) {
   const [inputHint, setInputHint] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
   const handleSubmit = () => {
-    if (!inputHint.trim()) {
-      setErrorMessage('Please enter a value');
+    const isValid = /^[0-9]{3}$/.test(inputHint);
+
+    if (!isValid) {
+      setErrorMessage('Please enter exactly 3 digits.');
       return;
     }
+
     if (guessState === 'n/a') {
       setErrorMessage('');
-      onGuessSubmit(inputHint.trim());
+      onGuessSubmit(inputHint);
       setInputHint('');
     }
   };
@@ -49,7 +51,12 @@ function Guess({
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputHint(e.target.value);
+    const { value } = e.target;
+
+    // Allow only digits, and only up to 3 of them.
+    if (/^[0-9]{0,3}$/.test(value)) {
+      setInputHint(value);
+    }
     if (errorMessage) {
       setErrorMessage('');
     }
@@ -95,6 +102,7 @@ function Guess({
           <div className="flex w-full flex-col gap-3 lg:flex-row lg:items-center">
             <input
               type="text"
+              inputMode="numeric"
               placeholder="ex. 880"
               value={inputHint}
               onChange={handleInputChange}
