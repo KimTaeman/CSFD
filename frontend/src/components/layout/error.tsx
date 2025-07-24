@@ -15,7 +15,7 @@ function ErrorLayout({ error, resetErrorBoundary }: ErrorLayoutProps) {
             <h2 className="font-semibold">Something went wrong!</h2>
             <p>Please try again later or contact staff/administrator.</p>
             <button
-              className="w-full cursor-pointer rounded bg-gray-800 px-4 py-2 mt-2 text-white hover:bg-gray-900"
+              className="mt-2 w-full cursor-pointer rounded bg-gray-800 px-4 py-2 text-white hover:bg-gray-900"
               onClick={resetErrorBoundary}
             >
               Try Again
@@ -33,7 +33,9 @@ function ErrorLayout({ error, resetErrorBoundary }: ErrorLayoutProps) {
         <div className="my-8 space-y-4">
           <div className="space-y-4">
             <span className="font-semibold text-white">The following error has occurred:</span>{' '}
-            <pre className="mt-2 text-red-500 bg-gray-900 rounded-md px-2 py-2 w-fit mx-auto">{error.message}</pre>
+            <pre className="mx-auto mt-2 w-fit rounded-md bg-gray-900 px-2 py-2 text-red-500">
+              {error.message}
+            </pre>
           </div>
           <pre className="w-full max-w-screen overflow-x-auto rounded bg-gray-50 p-4 text-start">
             {error.stack}

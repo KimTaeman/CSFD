@@ -27,7 +27,7 @@ function Page() {
       <div className="flex flex-col gap-4 text-center">
         <img
           src="/assets/logo.png"
-          className="animate-jump-in animate-once mx-auto w-full max-w-96 pointer-events-none select-none"
+          className="animate-jump-in animate-once pointer-events-none mx-auto w-full max-w-96 select-none"
           alt="CSFD 2025"
         />
         <button

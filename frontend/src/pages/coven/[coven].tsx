@@ -58,7 +58,7 @@ const Page = () => {
       {/* <div className="flex"> */}
       {/* Main content area */}
       <div className="flex w-full flex-col space-y-8">
-        <div className="flex items-center justify-center mb-16">
+        <div className="mb-16 flex items-center justify-center">
           <CombinedCoven
             covenType={coven as 'alchemireCoven' | 'etheraCoven' | 'isotarCoven' | 'zireliaCoven'}
           />

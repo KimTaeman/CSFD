@@ -21,9 +21,9 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
 
   const menuItems: MenuItem[] = useMemo(
     () => [
-      { name: 'Profile', icon: "/assets/profile-icon.png", route: '/profile' },
-      { name: 'Coven', icon: "/assets/covan-icon.svg", route: '/coven/' },
-      { name: 'Hints', icon: "/assets/help-icon.svg", route: '/hints' },
+      { name: 'Profile', icon: '/assets/profile-icon.png', route: '/profile' },
+      { name: 'Coven', icon: '/assets/covan-icon.svg', route: '/coven/' },
+      { name: 'Hints', icon: '/assets/help-icon.svg', route: '/hints' },
     ],
     [],
   );
@@ -105,7 +105,12 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
                   className="mb-1 flex min-h-[42px] w-full items-center justify-between rounded-xl bg-[rgba(140,58,170,1)] px-6 py-3 font-medium text-white transition-all duration-200 hover:brightness-110 focus:ring-2 focus:ring-purple-400 focus:outline-none active:scale-95 active:brightness-90"
                 >
                   <span className="shadow-white-glow font-[Inter] text-sm">Logout</span>
-                  <img src="/assets/logout-icon.png" alt="" className="h-5 w-5" role="presentation" />
+                  <img
+                    src="/assets/logout-icon.png"
+                    alt=""
+                    className="h-5 w-5"
+                    role="presentation"
+                  />
                 </button>
               </div>
             </aside>
@@ -139,7 +144,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
                       to={item.route}
                       onClick={() => handleMenuClick(item.name)}
                       className={({ isActive }) =>
-                        `flex min-h-[58px] items-center gap-4 rounded-xl pl-4 py-2 text-left transition-all duration-200 focus:ring-2 focus:ring-white/50 focus:outline-none ${
+                        `flex min-h-[58px] items-center gap-4 rounded-xl py-2 pl-4 text-left transition-all duration-200 focus:ring-2 focus:ring-white/50 focus:outline-none ${
                           isActive ? 'selected-glow text-white' : 'text-white/60 hover:bg-white/10'
                         }`
                       }
@@ -164,8 +169,13 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
                 onClick={handleLogout}
                 className="mb-1 flex min-h-[42px] w-full items-center justify-between rounded-xl bg-[rgba(140,58,170,1)] px-6 py-3 font-medium text-white transition-all duration-200 hover:brightness-110 focus:ring-2 focus:ring-purple-400 focus:outline-none active:scale-95 active:brightness-90"
               >
-                  <img src="/assets/logout-icon.png" alt="" className="h-5 w-5 mr-2" role="presentation" />
-                  <span className="shadow-white-glow font-[Inter] text-sm">Logout</span>
+                <img
+                  src="/assets/logout-icon.png"
+                  alt=""
+                  className="mr-2 h-5 w-5"
+                  role="presentation"
+                />
+                <span className="shadow-white-glow font-[Inter] text-sm">Logout</span>
               </button>
             </div>
           </aside>

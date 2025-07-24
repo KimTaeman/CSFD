@@ -3,7 +3,7 @@ import { useFetch } from '@/hooks/useFetch';
 import type { StudentInfo } from '@/types/type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createContext, type ReactNode } from 'react';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 interface IAuthContext {
   user: StudentInfo;

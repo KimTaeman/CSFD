@@ -119,8 +119,10 @@ function Page() {
 
             return (
               <div key={mentee.id} className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
-                <div className="font-[Poppins] text-xl text-white text-center space-y-2">
-                  <h1 className="font-semibold">Your Junior {user.mentees.length > 1 && ("#" + (index + 1))}</h1>
+                <div className="space-y-2 text-center font-[Poppins] text-xl text-white">
+                  <h1 className="font-semibold">
+                    Your Junior {user.mentees.length > 1 && '#' + (index + 1)}
+                  </h1>
                   <span>{mentee.displayName}</span>
                 </div>
                 <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
@@ -163,8 +165,8 @@ function Page() {
                 <sub className="text-gray-500">Now tell your P'Code to treat you lunch</sub>
               </div>
             ) : (
-              <div className="font-[Poppins] text-white text-center space-y-2">
-                <h1 className="font-semibold text-xl">Guess Your P'Code</h1>
+              <div className="space-y-2 text-center font-[Poppins] text-white">
+                <h1 className="text-xl font-semibold">Guess Your P'Code</h1>
                 <div className="ml-3 flex items-center justify-center gap-1">
                   {Array.from({ length: 3 }).map((_, i) => (
                     <img
@@ -179,9 +181,7 @@ function Page() {
                     />
                   ))}
                 </div>
-                <span className="text-sm">
-                  {user.lives ?? 3} Live(s) Left
-                </span>
+                <span className="text-sm">{user.lives ?? 3} Live(s) Left</span>
               </div>
             )}
             <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
