@@ -23,7 +23,7 @@ function Page() {
   }
 
   return (
-    <div className="flex h-screen min-h-screen items-center justify-center bg-[url('/assets/bg-computer.png')] bg-cover bg-fixed bg-bottom bg-no-repeat px-4 text-white">
+    <div className="flex min-h-svh items-center justify-center bg-[url('/assets/bg-computer.png')] bg-cover bg-fixed bg-bottom bg-no-repeat px-4 text-white">
       <div className="flex flex-col gap-4 text-center">
         <img
           src="/assets/logo.png"
