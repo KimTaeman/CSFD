@@ -212,7 +212,7 @@ function Page() {
                   attempts={revealedCount}
                   maxAttempts={3}
                   onReset={resetGuess}
-                  isSenior={!isSenior}
+                  isSenior={isSenior}
                   isEditing={false}
                 />
               </div>
