@@ -79,9 +79,9 @@ function HintCard({
             </div>
           ) : (
             <div className="flex h-full w-full flex-1 items-center justify-center">
-              <p className="w-full text-center text-lg break-words whitespace-pre-line text-black lg:text-2xl">
+              <div className="w-full text-center text-lg break-words whitespace-pre-line text-black lg:text-2xl">
                 {description}
-              </p>
+              </div>
             </div>
           )
         ) : (
