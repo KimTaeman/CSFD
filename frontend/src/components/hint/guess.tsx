@@ -42,7 +42,7 @@ function Guess({
     }
   };
 
-  const handleKeyUp = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleSubmit();
     }
@@ -57,12 +57,6 @@ function Guess({
 
   return (
     <div className="flex flex-col">
-      {}
-      {!isSenior && errorMessage && (
-        <div className="mb-2 text-sm text-red-400 lg:text-base">{errorMessage}</div>
-      )}
-
-      <div className="flex flex-col">
         {/* Error message */}
         {!isSenior && errorMessage && (
           <div className="mb-2 text-sm text-red-400 lg:text-base">{errorMessage}</div>
@@ -119,7 +113,6 @@ function Guess({
           )}
         </div>
       </div>
-    </div>
   );
 }
 
