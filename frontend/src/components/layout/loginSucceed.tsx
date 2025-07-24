@@ -1,4 +1,4 @@
-const LoginSucess = () => {
+const LoginSuccess = () => {
   return (
     <div className="w-auto max-w-sm transform rounded-3xl border border-white/30 bg-white/10 backdrop-blur-lg">
       <div className="m-4 flex flex-row items-center space-x-4">
@@ -11,4 +11,4 @@ const LoginSucess = () => {
   );
 };
 
-export default LoginSucess;
+export default LoginSuccess;

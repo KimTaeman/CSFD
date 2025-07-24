@@ -119,8 +119,9 @@ function Page() {
 
             return (
               <div key={mentee.id} className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
-                <div className="font-[Poppins] text-xl text-white">
-                  Junior: {mentee.displayName}
+                <div className="font-[Poppins] text-xl text-white text-center space-y-2">
+                  <h1 className="font-semibold">Your Junior {user.mentees.length > 1 && ("#" + (index + 1))}</h1>
+                  <span>{mentee.displayName}</span>
                 </div>
                 <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
                   {menteeHints.map((hint) => (
@@ -155,6 +156,34 @@ function Page() {
 
         {!isSenior && (
           <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
+            {user.isFound ? (
+              <div className="text-center text-white">
+                <h2 className="mb-4 text-3xl font-semibold">Congratulations!</h2>
+                <p className="mb-2 text-xl text-gray-300">You've already found your P'code.</p>
+                <sub className="text-gray-500">Now tell your P'Code to treat you lunch</sub>
+              </div>
+            ) : (
+              <div className="font-[Poppins] text-white text-center space-y-2">
+                <h1 className="font-semibold text-xl">Guess Your P'Code</h1>
+                <div className="ml-3 flex items-center justify-center gap-1">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <img
+                      key={i}
+                      src={
+                        (user.lives ?? 3) > i
+                          ? '/assets/filled-heart.svg'
+                          : '/assets/empty-heart.svg'
+                      }
+                      alt="heart"
+                      className="size-8"
+                    />
+                  ))}
+                </div>
+                <span className="text-sm">
+                  {user.lives ?? 3} Live(s) Left
+                </span>
+              </div>
+            )}
             <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
               {[...Array(3)].map((_, i) => {
                 const hint = user.hints[i];
@@ -175,40 +204,17 @@ function Page() {
                 );
               })}
             </div>
-            {!user.isFound ? (
+            {!user.isFound && (
               <div className="mb-8 w-full">
-                <div className="mb-7 flex items-center gap-0 text-2xl text-white select-none">
-                  Guess your P'code
-                  <span className="ml-3 flex items-center gap-1">
-                    {Array.from({ length: 3 }).map((_, i) => (
-                      <img
-                        key={i}
-                        src={
-                          (user.lives ?? 3) > i
-                            ? '/assets/filled-heart.svg'
-                            : '/assets/empty-heart.svg'
-                        }
-                        alt="heart"
-                        className="h-7 w-7"
-                      />
-                    ))}
-                  </span>
-                </div>
                 <Guess
                   onGuessSubmit={handleGuessSubmit}
                   guessState={guessState}
                   attempts={revealedCount}
                   maxAttempts={3}
                   onReset={resetGuess}
-                  isSenior={isSenior}
+                  isSenior={!isSenior}
                   isEditing={false}
                 />
-              </div>
-            ) : (
-              <div className="text-center text-white">
-                <h2 className="mb-4 text-3xl font-semibold">Congratulations!</h2>
-                <p className="mb-2 text-xl text-gray-300">You've already found your P'code.</p>
-                <sub className="text-gray-500">Now tell your P'Code to treat you lunch</sub>
               </div>
             )}
           </div>

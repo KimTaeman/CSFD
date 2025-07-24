@@ -43,7 +43,7 @@ function Page() {
 
   return (
     <MainLayout>
-      <div className="flex flex-1 flex-col items-center justify-center gap-y-14 p-4 xl:grid xl:grid-cols-2 xl:items-start xl:gap-x-16 xl:px-20 xl:py-5">
+      <div className="flex w-full flex-1 flex-col items-center justify-center gap-y-14 p-4 xl:grid xl:grid-cols-2 xl:items-start xl:gap-x-16 xl:px-20 xl:py-5">
         {/* Picture Upload Section */}
         <div className="flex w-full justify-center xl:justify-end xl:pr-8">
           <Picture

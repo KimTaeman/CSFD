@@ -3,6 +3,7 @@ import { useFetch } from '@/hooks/useFetch';
 import type { StudentInfo } from '@/types/type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createContext, type ReactNode } from 'react';
+import {useNavigate} from "react-router-dom";
 
 interface IAuthContext {
   user: StudentInfo;
@@ -33,6 +34,7 @@ export const AuthContext = createContext<IAuthContext | null>(null);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { fetchUserData } = useFetch();
 
   const isAuthenticated = !!queryClient.getQueryData(['authUser']);
@@ -71,6 +73,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     mutationFn: logoutUser,
     onSuccess: () => {
       queryClient.setQueryData(['authUser'], null);
+      navigate('/');
     },
   });
 

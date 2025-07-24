@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import RandomButton from '@/components/house/RandomButton';
 import NickName from '@/components/house/NicknamePopup';
-import LoginSucess from '@/components/layout/loginSucceed';
+import LoginSuccess from '@/components/layout/loginSucceed';
 import api from '@/api/axios';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -81,7 +81,7 @@ const Page = () => {
       {/* Login Success Notification */}
       {showLoginSuccess && (
         <div className="fixed top-8 left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300 ease-in-out">
-          <LoginSucess />
+          <LoginSuccess />
         </div>
       )}
 
