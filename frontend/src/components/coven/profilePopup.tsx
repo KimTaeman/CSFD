@@ -8,6 +8,19 @@ type ProfilePopupProps = {
 };
 
 const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) => {
+  const getSocialLink = (name: string, handle: string) => {
+    if (!handle) return null;
+
+    switch (name) {
+      case 'Instagram':
+        return `https://instagram.com/${handle}`;
+      case 'Line':
+        return `https://line.me/ti/p/~${handle}`;
+      default:
+        return null;
+    }
+  };
+
   if (!isOpen || !user) return null;
 
   const socialLinks = [
@@ -76,12 +89,24 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
                       src={social.icon}
                       alt={`${social.name} icon`}
                     />
-                    {/* Add styling to the placeholder to differentiate it */}
-                    <p
-                      className={`text-md text-black sm:text-lg ${!social.handle && 'text-gray-500 italic'}`}
-                    >
-                      {social.handle || 'Not provided'}
-                    </p>
+                    {social.name === 'Discord' ? (
+                      <p
+                        className={`text-md sm:text-lg ${
+                          social.handle ? 'text-black' : 'text-gray-500 italic'
+                        }`}
+                      >
+                        {social.handle || 'Not provided'}
+                      </p>
+                    ) : (
+                      <a
+                        href={getSocialLink(social.name, social.handle)!}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-md text-blue-600 hover:underline sm:text-lg"
+                      >
+                        {social.handle}
+                      </a>
+                    )}
                   </div>
                 ))}
               </div>
