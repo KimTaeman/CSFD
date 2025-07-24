@@ -210,8 +210,8 @@ function Page() {
                   user.hints[i]?.content ||
                   (hintCountdown ? (
                     <>
-                      <div className="text-lg">Hint available in</div>
-                      <div className="font-mono text-2xl font-semibold">{hintCountdown}</div>
+                      <p className="text-lg">Hint available in</p>
+                      <p className="font-mono text-2xl font-semibold">{hintCountdown}</p>
                     </>
                   ) : (
                     'Nuh Uh'
