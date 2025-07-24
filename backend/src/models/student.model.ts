@@ -92,7 +92,7 @@ const guessMentor = async (id: number, guess: string) => {
 const guessCorret = async (id: number) => {
   return await prisma.mentor.findUnique({
     where: { juniorId: id },
-    select: { isFound: true }
+    select: { isFound: true },
   });
 };
 
