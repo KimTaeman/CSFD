@@ -67,7 +67,7 @@ const Page = () => {
         {/* Cards grid */}
         <div className="mx-auto grid max-w-4xl grid-cols-1 items-center justify-center gap-8 sm:grid-cols-2">
           {students
-            .filter((user: StudentInfo) => `${user.house.toLowerCase()}Coven` === coven)
+            .filter((user: StudentInfo) => `${user?.house?.toLowerCase()}Coven` === coven)
             .filter((user: StudentInfo) => user.isHouseLeader === true)
             .map((user: StudentInfo) => (
               <ProfileModal
@@ -80,7 +80,7 @@ const Page = () => {
 
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
           {students
-            .filter((user: StudentInfo) => `${user.house.toLowerCase()}Coven` === coven)
+            .filter((user: StudentInfo) => `${user?.house?.toLowerCase()}Coven` === coven)
             .filter((user: StudentInfo) => user.isHouseLeader === false)
             .map((user: StudentInfo) => (
               <ProfileModal
