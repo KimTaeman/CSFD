@@ -67,7 +67,7 @@ const Page = () => {
   return (
     <div className="min-h-svh bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-cover bg-center bg-no-repeat">
       <div className="light-particle-colored dust-mote">
-        <div className="flex min-h-screen flex-col items-center justify-center space-y-9 scroll-auto px-12 py-20">
+        <div className="flex min-h-svh flex-col items-center justify-center space-y-9 scroll-auto px-12 py-20">
           <img
             className="animated-drift has-[+button:hover]:animate-wiggle-more -ml-8 w-full max-w-[420px]"
             src={houseInfo.img}

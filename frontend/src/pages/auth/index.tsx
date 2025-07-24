@@ -5,7 +5,7 @@ function HomePage() {
 
   return (
     <div
-      className="flex h-screen items-center justify-center bg-cover bg-center"
+      className="flex h-svh items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: `url(/assets/bg-magic.png)` }}
     >
       <div className="text-center">

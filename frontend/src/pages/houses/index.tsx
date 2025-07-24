@@ -59,7 +59,7 @@ const Page = () => {
     return (
       <div className="bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-contain">
         <div className="light-particle-colored">
-          <div className="flex h-screen w-full flex-col items-center justify-center space-y-8 px-12">
+          <div className="flex h-svh w-full flex-col items-center justify-center space-y-8 px-12">
             <div className="flex flex-col items-center justify-center text-center">
               <h1 className="font-irish-grover text-effect text-[1.75rem] leading-snug text-white sm:text-[2.25rem] md:text-[2.5rem] lg:text-[3rem]">
                 "Welcome, little witchling.
@@ -85,8 +85,8 @@ const Page = () => {
         </div>
       )}
 
-      <div className="pot-light-particle-colored h-screen">
-        <div className="flex h-screen flex-col items-center justify-center px-12 py-20">
+      <div className="pot-light-particle-colored h-svh">
+        <div className="flex h-svh flex-col items-center justify-center px-12 py-20">
           <img className="pot-width w-full" src="/assets/magic-pot.png" alt="Magic Pot" />
           <RandomButton onClick={handleRandomClick} isLoading={loading} />
         </div>
