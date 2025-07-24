@@ -122,7 +122,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
       <div className="lg:hidden">
         {shouldShowMobile && (
           <aside
-            className="sidebar-dark-glow fixed top-4 left-16 z-50 flex max-w-70 flex-col rounded-2xl"
+            className="sidebar-dark-glow fixed top-4 left-16 z-[1000] flex max-w-70 flex-col rounded-2xl"
             role="navigation"
           >
             {/* Close button */}
@@ -169,13 +169,13 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
                 onClick={handleLogout}
                 className="mb-1 flex min-h-[42px] w-full items-center justify-between rounded-xl bg-[rgba(140,58,170,1)] px-6 py-3 font-medium text-white transition-all duration-200 hover:brightness-110 focus:ring-2 focus:ring-purple-400 focus:outline-none active:scale-95 active:brightness-90"
               >
-                <span className="shadow-white-glow font-[Inter] text-sm">Logout</span>
                 <img
                   src="/assets/logout-icon.png"
                   alt=""
-                  className="ml-2 h-5 w-5"
+                  className="mr-2 h-5 w-5"
                   role="presentation"
                 />
+                <span className="shadow-white-glow font-[Inter] text-sm">Logout</span>
               </button>
             </div>
           </aside>

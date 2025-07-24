@@ -121,20 +121,19 @@
     }
   }
 }
+
 /* for the hint page ._. */
 html,
 body {
-  background: url('/assets/bg-computer.png') center center / cover no-repeat fixed !important;
   min-height: 100vh;
 }
 
 #root {
-  background-color: transparent !important;
   min-height: 100vh;
 }
 
 body {
-  background-color: transparent !important;
+  background-color: #1c0635;
 }
 
 button {

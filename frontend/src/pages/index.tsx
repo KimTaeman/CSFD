@@ -25,10 +25,14 @@ function Page() {
   return (
     <div className="flex h-screen min-h-screen items-center justify-center bg-[url('/assets/bg-computer.png')] bg-cover bg-fixed bg-bottom bg-no-repeat px-4 text-white">
       <div className="flex flex-col gap-4 text-center">
-        <img src="/assets/logo.png" className="mx-auto w-full max-w-96" />
+        <img
+          src="/assets/logo.png"
+          className="animate-jump-in animate-once pointer-events-none mx-auto w-full max-w-96 select-none"
+          alt="CSFD 2025"
+        />
         <button
           onClick={handleLogin}
-          className="cursor-pointer rounded bg-purple-500 px-4 py-2 font-bold text-white hover:bg-purple-700"
+          className="animate-fade animate-once animate-delay-500 cursor-pointer rounded bg-purple-500 px-4 py-2 font-bold text-white hover:bg-purple-700"
         >
           Login with Microsoft
         </button>

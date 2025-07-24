@@ -43,7 +43,7 @@ const ProfilePicUpload: React.FC<ProfilePicUploadProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
       <div className="relative flex flex-col items-center overflow-hidden rounded-2xl p-4">
-        <div className="relative h-[400px] w-[300px] overflow-hidden rounded-2xl bg-black">
+        <div className="relative aspect-[3/4] min-h-[400px] w-full max-w-4xl overflow-hidden rounded-2xl bg-black sm:min-h-[500px]">
           {imageSrc ? (
             <Cropper
               image={imageSrc}
@@ -69,9 +69,9 @@ const ProfilePicUpload: React.FC<ProfilePicUploadProps> = ({
             </label>
           )}
         </div>
-        <div className="mt-6 flex gap-4">
+        <div className="mt-6 flex w-full flex-col-reverse flex-wrap gap-4 md:flex-row">
           <button
-            className="rounded-xl border border-white bg-transparent px-8 py-2 text-white transition-colors hover:bg-white/10"
+            className="w-full flex-1 rounded-xl border border-white bg-transparent px-8 py-2 text-white transition-colors hover:bg-white/10"
             onClick={() => {
               setImageSrc(null);
               onClose();
@@ -82,7 +82,7 @@ const ProfilePicUpload: React.FC<ProfilePicUploadProps> = ({
           </button>
 
           <button
-            className="rounded-xl border border-white bg-transparent px-8 py-2 text-white transition-colors hover:bg-white/10"
+            className="w-full flex-1 rounded-xl border border-white bg-white px-8 py-2 text-gray-900 transition-colors hover:bg-gray-900 hover:text-white"
             onClick={() => saveCroppedImage(onSave)}
             disabled={isPending}
           >
