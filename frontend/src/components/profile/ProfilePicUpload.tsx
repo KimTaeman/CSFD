@@ -62,7 +62,7 @@ const ProfilePicUpload: React.FC<ProfilePicUploadProps> = ({
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/*"
+                accept=".jpg,.jpeg,.png,.gif,.bmp,.webp"
                 className="hidden"
                 onChange={onFileChange}
               />
