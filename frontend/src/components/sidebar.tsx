@@ -33,7 +33,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
       setActive(itemName);
       onNavigate?.(itemName);
       // Only close sidebar on mobile
-      if (window.innerWidth < 1024) {
+      if (window.innerWidth < 768) {
         onClose();
       }
     },

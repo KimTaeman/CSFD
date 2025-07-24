@@ -34,7 +34,7 @@ export function useProfileState(): UseProfileStateReturn {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024); // lg breakpoint
+      setIsMobile(window.innerWidth < 768); // lg breakpoint
     };
 
     checkMobile();
