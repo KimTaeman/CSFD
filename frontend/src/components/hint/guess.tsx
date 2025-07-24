@@ -104,7 +104,7 @@ function Guess({
                 placeholder="ex. 880"
                 value={inputHint}
                 onChange={handleInputChange}
-                onKeyUp={handleKeyUp}
+                onKeyDown={handleKeyDown}
                 disabled={guessState !== 'n/a' || attempts >= maxAttempts}
                 className="min-h-12 w-full rounded-xl border-none bg-white px-4 py-3 text-base text-black placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:bg-gray-300 lg:rounded-2xl"
               />
