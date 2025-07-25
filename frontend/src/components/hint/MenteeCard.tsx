@@ -11,7 +11,7 @@ export interface Mentee {
 }
 
 export interface User {
-  mentees: unknown[];
+  mentees: Mentee[];
 }
 
 export interface MenteeCardProps {
