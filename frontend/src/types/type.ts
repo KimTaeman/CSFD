@@ -31,6 +31,8 @@ export interface StudentInfo {
     discord: string | null;
     line: string | null;
     lives: number | null;
+    isFound: boolean | null;
+    foundAt: Date | null;
   }>;
   mentor?: {
     id: string;

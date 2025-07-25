@@ -10,6 +10,8 @@ import RevealResult from '@/components/hint/RevealResult';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toZonedTime } from 'date-fns-tz';
 
+import { MenteeCard, type Mentee, type User } from '@/components/hint/MenteeCard';
+
 function Page() {
   const { user, updateGuessStatus } = useAuthContext();
   const [guessState, setGuessState] = useState<GuessState>('n/a');
@@ -77,7 +79,7 @@ function Page() {
     onSuccess: (data) => {
       if (!user) return;
 
-      const updatedLives = user.lives !== null ? user.lives - 1 : 2; // from 3 to 2/1/0
+      const updatedLives = user.lives !== null ? user.lives - 1 : 2;
       queryClient.setQueryData(['authUser'], {
         ...user,
         lives: data.info.isCorrect ? user.lives : updatedLives,
@@ -101,28 +103,20 @@ function Page() {
   const handleGuessSubmit = useCallback((guess: string) => submitGuess(guess), [submitGuess]);
 
   const resetGuess = useCallback(() => setGuessState('n/a'), []);
-
-  const handleEdit = useCallback((menteeId: string) => {
-    setEditingMenteeId(menteeId);
-  }, []);
-
+  const handleEdit = useCallback((menteeId: string) => setEditingMenteeId(menteeId), []);
   const handleCancel = useCallback(() => {
     setEditingMenteeId(null);
-    if (user) {
-      setDraftHints(user.hints);
-    }
+    if (user) setDraftHints(user.hints);
   }, [user]);
-
   const handleConfirm = useCallback(() => {
     updateHint(draftHints);
     setEditingMenteeId(null);
   }, [draftHints, updateHint]);
-
   const handleHintChange = useCallback((id: string, content: string) => {
     setDraftHints((prev) => prev.map((hint) => (hint.id === id ? { ...hint, content } : hint)));
   }, []);
 
-  if (!user || user.isFound === undefined) return <LoadingLayout />;
+  if (!user || (!user.isSenior && user.isFound === undefined)) return <LoadingLayout />;
 
   const isSenior = user.isSenior;
 
@@ -130,18 +124,13 @@ function Page() {
     <MainLayout>
       <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-20">
         {isSenior &&
-          user.mentees.map((mentee, index) => {
+          (user.mentees as Mentee[]).map((mentee, index) => {
             const menteeHints = draftHints.slice(index * 3, index * 3 + 3);
             const isEditingThisMentee = editingMenteeId === mentee.id;
 
             return (
               <div key={mentee.id} className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
-                <div className="space-y-2 text-center font-[Poppins] text-xl text-white">
-                  <h1 className="font-semibold">
-                    Your Junior {user.mentees.length > 1 && '#' + (index + 1)}
-                  </h1>
-                  <span>{mentee.displayName}</span>
-                </div>
+                <MenteeCard mentee={mentee} user={user as User} index={index} />
                 <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
                   {menteeHints.map((hint) => (
                     <HintCard
@@ -179,7 +168,7 @@ function Page() {
               <div className="text-center text-white">
                 <h2 className="mb-4 text-3xl font-semibold">Congratulations!</h2>
                 <p className="mb-2 text-xl text-gray-300">You've already found your P'code.</p>
-                <sub className="text-gray-500">Now tell your P'Code to treat you lunch</sub>
+                <sub className="text-gray-500">Now tell your P'Code to treat you to lunch</sub>
               </div>
             ) : (
               <div className="space-y-2 text-center font-[Poppins] text-white">
@@ -204,7 +193,6 @@ function Page() {
             <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
               {[...Array(3)].map((_, i) => {
                 const hint = user.hints[i];
-                const displayTitle = '';
                 const hintCountdown = countdown[i];
                 const description =
                   user.hints[i]?.content ||
@@ -216,11 +204,10 @@ function Page() {
                   ) : (
                     'Nuh Uh'
                   ));
-
                 return (
                   <HintCard
                     key={hint?.id || `placeholder-${i}`}
-                    title={displayTitle}
+                    title={''}
                     description={description}
                     stage={'shown'}
                     type={'freshman'}

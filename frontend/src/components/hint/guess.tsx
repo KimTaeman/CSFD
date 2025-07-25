@@ -72,9 +72,9 @@ function Guess({
       {/* Shared input/button layout for all screen sizes */}
       <div className="flex w-full flex-col gap-3 lg:flex-row lg:items-center lg:gap-4">
         {isSenior ? (
-          <div className="flex w-full flex-col gap-3 lg:-mt-13 lg:mb-4 lg:flex-row lg:justify-start lg:gap-4">
+          <div>
             {isEditing ? (
-              <>
+              <div className="flex w-full flex-col gap-3 lg:-mt-13 lg:mb-4 lg:flex-row lg:justify-start lg:gap-4">
                 <button
                   onClick={onConfirm}
                   className="min-w-[140px] rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500 lg:flex-1 lg:rounded-2xl"
@@ -87,11 +87,11 @@ function Guess({
                 >
                   Cancel
                 </button>
-              </>
+              </div>
             ) : (
               <button
                 onClick={onEditHints}
-                className="flex items-center gap-2 rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500 lg:flex-1 lg:gap-3 lg:rounded-2xl"
+                className="flex w-full items-center gap-2 rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500 lg:flex-1 lg:gap-3 lg:rounded-2xl"
               >
                 <img src="/assets/edit-w.svg" alt="" className="h-5 w-5 lg:h-6 lg:w-6" />
                 Edit your hints

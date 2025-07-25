@@ -59,7 +59,9 @@ export const getStudentInfo = async (userId: number): Promise<StudentInfo | null
     where: { id: userId },
     include: {
       mentees: {
-        include: {
+        select: {
+          isFound: true,
+          foundAt: true,
           junior: {
             select: {
               id: true,
@@ -68,11 +70,12 @@ export const getStudentInfo = async (userId: number): Promise<StudentInfo | null
               instagram: true,
               discord: true,
               line: true,
-              nationality: true,
-              studentId: true,
               lives: true,
             },
           },
+        },
+        orderBy: {
+          juniorId: 'asc',
         },
       },
       mentor: {
