@@ -126,6 +126,7 @@ function Page() {
 
   const isSenior = user.isSenior;
 
+  console.log('user', user);
   return (
     <MainLayout>
       <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-20">
@@ -140,7 +141,27 @@ function Page() {
                   <h1 className="font-semibold">
                     Your Junior {user.mentees.length > 1 && '#' + (index + 1)}
                   </h1>
-                  <span>{mentee.displayName}</span>
+                  <div className="flex items-center justify-center gap-x-3">
+                    <span>{mentee.displayName}</span>
+                    {mentee.isFound ? (
+                      <span className="rounded-full bg-green-200 px-3 py-1 text-sm font-semibold text-green-800">
+                        Found You{' '}
+                        {mentee.foundAt
+                          ? `on ${new Date(mentee.foundAt).toLocaleString('en-GB', {
+                              day: 'numeric',
+                              month: 'short',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              timeZone: 'UTC',
+                            })}`
+                          : 'in sometime'}
+                      </span>
+                    ) : (
+                      <span className="rounded-full bg-yellow-500 px-3 py-1 text-sm font-semibold text-white">
+                        Still Searching For You...
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
                   {menteeHints.map((hint) => (
