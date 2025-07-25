@@ -18,6 +18,8 @@ export interface StudentInfo {
   nationality: string | null;
   lives: number | null;
   mentees: Array<{
+    isFound: boolean | null;
+    foundAt: Date | null;
     junior: {
       id: string;
       displayName: string;
