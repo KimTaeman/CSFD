@@ -91,7 +91,7 @@ export const guessCorrect = async (req: Request, res: Response, next: NextFuncti
   const { id } = req.params;
 
   try {
-    const result = await Models.guessCorret(Number(id));
+    const result = await Models.guessCorrect(Number(id));
     res.status(200).json({ success: true, info: result });
   } catch (error) {
     next(error);
@@ -119,6 +119,9 @@ export const updateStudentById = async (
     if (isNaN(id) || id <= 0) {
       throw new NotFoundError();
     }
+
+    delete data.displayName;
+    delete data.studentId;
 
     const { profilePic: dataUri } = data;
 

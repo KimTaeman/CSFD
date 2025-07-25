@@ -12,25 +12,25 @@ const covenData: Record<string, CovenData> = {
   alchemireCoven: {
     name: 'Alchemire',
     role: 'Potion Brewer',
-    image: '/src/assets/alchemire.png',
+    image: '/assets/alchemire.png',
     imagePosition: 'right',
   },
   etheraCoven: {
     name: 'Ethera',
     role: 'Summoner',
-    image: '/src/assets/ethera.png',
+    image: '/assets/ethera.png',
     imagePosition: 'left',
   },
   isotarCoven: {
     name: 'Isotar',
     role: 'Visionary',
-    image: '/src/assets/isotar.png',
+    image: '/assets/isotar.png',
     imagePosition: 'right',
   },
   zireliaCoven: {
     name: 'Zirelia',
     role: 'Sorcerer',
-    image: '/src/assets/zirelia.png',
+    image: '/assets/zirelia.png',
     imagePosition: 'left',
   },
 };
@@ -57,16 +57,18 @@ const CombinedCoven: React.FC<CombinedCovenProps> = ({ covenType, onClick, class
 
   const imageContent = (
     <div className="flex w-full min-w-40 justify-center md:max-w-40">
-      <img src={coven.image} alt={coven.name} />
+      <img src={coven.image} alt={coven.name} className="pointer-events-none" />
     </div>
   );
 
   return (
     <div
-      className={`w-full max-w-85 transform rounded-3xl border border-white/30 bg-black/10 backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02] ${onClick ? 'cursor-pointer' : ''} ${className}`}
+      className={`w-full max-w-85 transform rounded-3xl border border-white/30 bg-gradient-to-br from-black/50 to-purple-800/60 backdrop-blur-lg transition-all duration-500 ease-in-out select-none hover:scale-[1.02] ${onClick ? 'cursor-pointer' : ''} ${className}`}
       onClick={onClick}
     >
-      <div className="ipadpro-px-2 flex flex-row items-center px-8 py-6 md:px-4">
+      <div
+        className={`ipadpro-px-2 flex ${coven.imagePosition === 'left' ? 'flex-col-reverse' : 'flex-col'} items-center px-8 py-6 sm:flex-row md:px-4`}
+      >
         {coven.imagePosition === 'left' ? (
           <>
             {imageContent}

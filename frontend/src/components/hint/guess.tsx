@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import EditIconW from '@/assets/edit-w.svg';
 
 type GuessState = 'n/a' | 'success' | 'fail';
 
@@ -30,27 +29,34 @@ function Guess({
 }: GuessProps) {
   const [inputHint, setInputHint] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
   const handleSubmit = () => {
-    if (!inputHint.trim()) {
-      setErrorMessage('Please enter a value');
+    const isValid = /^[0-9]{3}$/.test(inputHint);
+
+    if (!isValid) {
+      setErrorMessage('Please enter exactly 3 digits.');
       return;
     }
+
     if (guessState === 'n/a') {
       setErrorMessage('');
-      onGuessSubmit(inputHint.trim());
+      onGuessSubmit(inputHint);
       setInputHint('');
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleSubmit();
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputHint(e.target.value);
+    const { value } = e.target;
+
+    // Allow only digits, and only up to 3 of them.
+    if (/^[0-9]{0,3}$/.test(value)) {
+      setInputHint(value);
+    }
     if (errorMessage) {
       setErrorMessage('');
     }
@@ -58,112 +64,60 @@ function Guess({
 
   return (
     <div className="flex flex-col">
-      {}
+      {/* Error message */}
       {!isSenior && errorMessage && (
         <div className="mb-2 text-sm text-red-400 lg:text-base">{errorMessage}</div>
       )}
 
-      {}
-      <div className="hidden w-7/11 items-center gap-4 lg:flex">
+      {/* Shared input/button layout for all screen sizes */}
+      <div className="flex w-full flex-col gap-3 lg:flex-row lg:items-center lg:gap-4">
         {isSenior ? (
-          <div className="-mt-13 mb-4 flex w-full justify-start">
+          <div className="flex w-full flex-col gap-3 lg:-mt-13 lg:mb-4 lg:flex-row lg:justify-start lg:gap-4">
             {isEditing ? (
-              <div className="flex gap-4">
+              <>
                 <button
                   onClick={onConfirm}
-                  className="min-w-[160px] rounded-2xl bg-orange-400 px-6 py-3 text-xl whitespace-nowrap text-white transition-colors hover:bg-orange-500"
+                  className="min-w-[140px] rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500 lg:flex-1 lg:rounded-2xl"
                 >
                   Confirm
                 </button>
                 <button
                   onClick={onCancel}
-                  className="min-w-[160px] rounded-2xl border border-white bg-transparent px-6 py-3 text-xl whitespace-nowrap text-white transition-colors hover:bg-white/10"
+                  className="min-w-[140px] rounded-xl border border-white bg-transparent px-6 py-3 text-base text-white transition-colors hover:bg-white/10 lg:flex-1 lg:rounded-2xl"
                 >
                   Cancel
                 </button>
-              </div>
+              </>
             ) : (
               <button
                 onClick={onEditHints}
-                className="flex items-center gap-3 rounded-2xl bg-orange-400 px-6 py-3 text-xl whitespace-nowrap text-white transition-colors hover:bg-orange-500"
+                className="flex items-center gap-2 rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500 lg:flex-1 lg:gap-3 lg:rounded-2xl"
               >
-                <img src={EditIconW} alt="" className="h-6 w-6" />
+                <img src="/assets/edit-w.svg" alt="" className="h-5 w-5 lg:h-6 lg:w-6" />
                 Edit your hints
               </button>
             )}
           </div>
         ) : (
-          <>
+          <div className="flex w-full flex-col gap-3 lg:flex-row lg:items-center">
             <input
               type="text"
+              inputMode="numeric"
               placeholder="ex. 880"
               value={inputHint}
               onChange={handleInputChange}
-              onKeyPress={handleKeyPress}
+              onKeyDown={handleKeyDown}
               disabled={guessState !== 'n/a' || attempts >= maxAttempts}
-              className="min-h-14 flex-1 rounded-2xl border-none bg-white px-4 py-3 text-2xl text-black placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:bg-gray-300"
+              className="min-h-12 w-full rounded-xl border-none bg-white px-4 py-3 text-base text-black placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:bg-gray-300 lg:rounded-2xl"
             />
             <button
               onClick={handleSubmit}
               disabled={guessState !== 'n/a' || attempts >= maxAttempts}
-              className="ml-1 rounded-2xl bg-orange-400 px-6 py-3 text-2xl whitespace-nowrap text-white transition-colors hover:bg-orange-500 disabled:cursor-not-allowed disabled:bg-gray-400"
+              className="w-full self-start rounded-xl bg-orange-400 px-5 py-1.5 text-white transition-colors hover:bg-orange-500 disabled:cursor-not-allowed disabled:bg-gray-400 lg:ml-1 lg:rounded-2xl lg:px-6 lg:py-3"
             >
-              send
+              Send
             </button>
-          </>
-        )}
-      </div>
-
-      {}
-      <div className="flex w-full flex-col gap-3 lg:hidden">
-        {isSenior ? (
-          <div className="mb-3 flex w-full justify-start">
-            {isEditing ? (
-              <div className="ipadair-ml ml-4 flex gap-3">
-                <button
-                  onClick={onConfirm}
-                  className="min-w-[140px] rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500"
-                >
-                  Confirm
-                </button>
-                <button
-                  onClick={onCancel}
-                  className="min-w-[140px] rounded-xl border border-white bg-transparent px-6 py-3 text-base text-white transition-colors hover:bg-white/10"
-                >
-                  Cancel
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={onEditHints}
-                className="ipadair-ml ml-4 flex items-center gap-2 rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500"
-              >
-                <img src={EditIconW} alt="" className="h-5 w-5" />
-                Edit your hints
-              </button>
-            )}
           </div>
-        ) : (
-          <>
-            <input
-              type="text"
-              placeholder="ex. 880"
-              value={inputHint}
-              onChange={handleInputChange}
-              onKeyPress={handleKeyPress}
-              disabled={guessState !== 'n/a' || attempts >= maxAttempts}
-              className="min-h-12 w-full rounded-xl border-none bg-white px-4 py-3 text-base text-black placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:bg-gray-300"
-            />
-            <div className="flex gap-3">
-              <button
-                onClick={handleSubmit}
-                disabled={guessState !== 'n/a' || attempts >= maxAttempts}
-                className="self-start rounded-xl bg-orange-400 px-5 py-1.5 text-xl text-white transition-colors hover:bg-orange-500 disabled:cursor-not-allowed disabled:bg-gray-400"
-              >
-                send
-              </button>
-            </div>
-          </>
         )}
       </div>
     </div>

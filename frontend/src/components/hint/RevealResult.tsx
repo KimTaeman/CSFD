@@ -1,5 +1,4 @@
 import React from 'react';
-import SparkleImage from '@/assets/sparkle.png';
 
 interface RevealResultProps {
   state: 'success' | 'fail';
@@ -7,7 +6,6 @@ interface RevealResultProps {
 }
 
 const RevealResult: React.FC<RevealResultProps> = ({ state, outOfAttempts = false }) => {
-  console.log(state);
   return (
     <div className="relative flex h-[25vw] max-h-[350px] w-[98%] max-w-[1400px] flex-col items-center justify-start px-[1%] pt-[1%]">
       {/* Radial gradient background | radial-hint-bg is in index.css */}
@@ -15,7 +13,7 @@ const RevealResult: React.FC<RevealResultProps> = ({ state, outOfAttempts = fals
       {/* Sparkle image for success */}
       {state === 'success' && (
         <img
-          src={SparkleImage}
+          src="/assets/sparkle.png"
           alt=""
           className="pointer-events-none absolute inset-0 z-0 -mt-[12%] -ml-[1.5%] h-full w-full scale-[2.5] object-contain"
         />

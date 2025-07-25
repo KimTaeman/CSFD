@@ -1,12 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
-import ProfileIcon from '@/assets/profile-icon.png';
-import CovanIcon from '@/assets/covan-icon.svg';
-import HelpIcon from '@/assets/help-icon.svg';
-import LogoutIcon from '@/assets/logout-icon.png';
-import BackArrow from '@/assets/back-arrow.svg';
 import { NavLink } from 'react-router';
-import api from '@/api/axios';
-import { useQueryClient } from '@tanstack/react-query';
 import { useAuthContext } from '@/hooks/useAuthContext';
 
 interface MenuItem {
@@ -28,9 +21,9 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
 
   const menuItems: MenuItem[] = useMemo(
     () => [
-      { name: 'Profile', icon: ProfileIcon, route: '/profile' },
-      { name: 'Coven', icon: CovanIcon, route: '/coven/' },
-      { name: 'Hints', icon: HelpIcon, route: '/hints' },
+      { name: 'Profile', icon: '/assets/profile-icon.png', route: '/profile' },
+      { name: 'Coven', icon: '/assets/covan-icon.svg', route: '/coven/' },
+      { name: 'Hints', icon: '/assets/help-icon.svg', route: '/hints' },
     ],
     [],
   );
@@ -40,7 +33,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
       setActive(itemName);
       onNavigate?.(itemName);
       // Only close sidebar on mobile
-      if (window.innerWidth < 1024) {
+      if (window.innerWidth < 768) {
         onClose();
       }
     },
@@ -112,7 +105,12 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
                   className="mb-1 flex min-h-[42px] w-full items-center justify-between rounded-xl bg-[rgba(140,58,170,1)] px-6 py-3 font-medium text-white transition-all duration-200 hover:brightness-110 focus:ring-2 focus:ring-purple-400 focus:outline-none active:scale-95 active:brightness-90"
                 >
                   <span className="shadow-white-glow font-[Inter] text-sm">Logout</span>
-                  <img src={LogoutIcon} alt="" className="h-5 w-5" role="presentation" />
+                  <img
+                    src="/assets/logout-icon.png"
+                    alt=""
+                    className="h-5 w-5"
+                    role="presentation"
+                  />
                 </button>
               </div>
             </aside>
@@ -124,21 +122,21 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
       <div className="lg:hidden">
         {shouldShowMobile && (
           <aside
-            className="sidebar-dark-glow fixed top-14 left-14 z-50 flex w-70 flex-col rounded-4xl"
+            className="sidebar-dark-glow fixed top-4 left-16 z-[1000] flex max-w-70 flex-col rounded-2xl"
             role="navigation"
           >
             {/* Close button */}
             <button
-              className="absolute top-18 -right-3 h-6 w-6 transition-all duration-200 hover:scale-110 focus:ring-2 focus:ring-white/50 focus:outline-none active:scale-95"
+              className="absolute top-12 -right-3 h-6 w-6 transition-all duration-200 hover:scale-110 focus:ring-2 focus:ring-white/50 focus:outline-none active:scale-95"
               onClick={handleCollapse}
             >
-              <img src={BackArrow} alt="" className="h-6 w-6" role="presentation" />
+              <img src="/assets/back-arrow.svg" alt="" className="h-6 w-6" role="presentation" />
             </button>
 
             {/* Main content */}
             <div className="flex flex-1 flex-col">
               <div className="p-4">
-                <p className="mt-2 mb-2 ml-7 font-[Inter] text-xs text-white/32">MENU</p>
+                <p className="mt-2 mb-2 ml-2 font-[Inter] text-xs text-white/32">MENU</p>
                 <nav className="mr-2 ml-2 flex flex-col gap-4" role="menu">
                   {menuItems.map((item) => (
                     <NavLink
@@ -146,7 +144,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
                       to={item.route}
                       onClick={() => handleMenuClick(item.name)}
                       className={({ isActive }) =>
-                        `flex min-h-[58px] items-center gap-4 rounded-xl px-6 py-2 text-left transition-all duration-200 focus:ring-2 focus:ring-white/50 focus:outline-none ${
+                        `flex min-h-[58px] items-center gap-4 rounded-xl py-2 pl-4 text-left transition-all duration-200 focus:ring-2 focus:ring-white/50 focus:outline-none ${
                           isActive ? 'selected-glow text-white' : 'text-white/60 hover:bg-white/10'
                         }`
                       }
@@ -166,13 +164,18 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
             </div>
 
             {/* Logout button  */}
-            <div className="mt-auto p-6">
+            <div className="mt-auto p-6 pt-0">
               <button
                 onClick={handleLogout}
                 className="mb-1 flex min-h-[42px] w-full items-center justify-between rounded-xl bg-[rgba(140,58,170,1)] px-6 py-3 font-medium text-white transition-all duration-200 hover:brightness-110 focus:ring-2 focus:ring-purple-400 focus:outline-none active:scale-95 active:brightness-90"
               >
+                <img
+                  src="/assets/logout-icon.png"
+                  alt=""
+                  className="mr-2 h-5 w-5"
+                  role="presentation"
+                />
                 <span className="shadow-white-glow font-[Inter] text-sm">Logout</span>
-                <img src={LogoutIcon} alt="" className="h-5 w-5" role="presentation" />
               </button>
             </div>
           </aside>

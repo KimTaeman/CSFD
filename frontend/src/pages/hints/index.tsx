@@ -8,9 +8,6 @@ import HintCard from '@/components/hint/hint-card';
 import Guess from '@/components/hint/guess';
 import RevealResult from '@/components/hint/RevealResult';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import emptyHeart from '@/assets/filled-heart.svg';
-import filledHeart from '@/assets/empty-heart.svg';
-import { formatDistanceToNowStrict } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 
 function Page() {
@@ -29,13 +26,24 @@ function Page() {
       toZonedTime(new Date(2025, 7, 3, 0, 0, 0), 'Asia/Bangkok'),
     ];
 
+    const now = new Date();
+
     const newCountdown = hintReleaseDates.map((date) => {
-      const now = new Date();
       if (now < date) {
-        return formatDistanceToNowStrict(date, { addSuffix: true });
+        const totalSeconds = Math.floor((date.getTime() - now.getTime()) / 1000);
+        const days = Math.floor(totalSeconds / (24 * 3600));
+        const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        // Pad values to 2 digits
+        const pad = (n: number) => n.toString().padStart(2, '0');
+
+        return ` ${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
       }
       return '';
     });
+
     setCountdown(newCountdown);
   }, []);
 
@@ -66,9 +74,16 @@ function Page() {
       if (!isCorrect) setRevealedCount((prev) => prev + 1);
       return data;
     },
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries({ queryKey: ['authUser'] });
-    // },
+    onSuccess: (data) => {
+      if (!user) return;
+
+      const updatedLives = user.lives !== null ? user.lives - 1 : 2; // from 3 to 2/1/0
+      queryClient.setQueryData(['authUser'], {
+        ...user,
+        lives: data.info.isCorrect ? user.lives : updatedLives,
+        isFound: data.info.isCorrect ? true : user.isFound,
+      });
+    },
   });
 
   useEffect(() => {
@@ -107,7 +122,7 @@ function Page() {
     setDraftHints((prev) => prev.map((hint) => (hint.id === id ? { ...hint, content } : hint)));
   }, []);
 
-  if (!user) return <LoadingLayout />;
+  if (!user || user.isFound === undefined) return <LoadingLayout />;
 
   const isSenior = user.isSenior;
 
@@ -121,10 +136,13 @@ function Page() {
 
             return (
               <div key={mentee.id} className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
-                <div className="font-[Poppins] text-xl text-white">
-                  Junior: {mentee.displayName}
+                <div className="space-y-2 text-center font-[Poppins] text-xl text-white">
+                  <h1 className="font-semibold">
+                    Your Junior {user.mentees.length > 1 && '#' + (index + 1)}
+                  </h1>
+                  <span>{mentee.displayName}</span>
                 </div>
-                <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
+                <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
                   {menteeHints.map((hint) => (
                     <HintCard
                       key={hint.id}
@@ -157,13 +175,48 @@ function Page() {
 
         {!isSenior && (
           <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
-            <div className="ipadpro-pl-one-col mb-8 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16">
+            {user.isFound ? (
+              <div className="text-center text-white">
+                <h2 className="mb-4 text-3xl font-semibold">Congratulations!</h2>
+                <p className="mb-2 text-xl text-gray-300">You've already found your P'code.</p>
+                <sub className="text-gray-500">Now tell your P'Code to treat you lunch</sub>
+              </div>
+            ) : (
+              <div className="space-y-2 text-center font-[Poppins] text-white">
+                <h1 className="text-xl font-semibold">Guess Your P'Code</h1>
+                <div className="ml-3 flex items-center justify-center gap-1">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <img
+                      key={i}
+                      src={
+                        (user.lives ?? 3) > i
+                          ? '/assets/filled-heart.svg'
+                          : '/assets/empty-heart.svg'
+                      }
+                      alt="heart"
+                      className="size-8"
+                    />
+                  ))}
+                </div>
+                <span className="text-sm">{user.lives ?? 3} Live(s) Left</span>
+              </div>
+            )}
+            <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
               {[...Array(3)].map((_, i) => {
                 const hint = user.hints[i];
                 const displayTitle = '';
+                const hintCountdown = countdown[i];
                 const description =
                   user.hints[i]?.content ||
-                  (countdown[i] ? `Hint available ${countdown[i]}` : 'Hint not yet available');
+                  (hintCountdown ? (
+                    <>
+                      <p className="text-lg">Hint available in</p>
+                      <p className="font-mono text-2xl font-semibold">{hintCountdown}</p>
+                    </>
+                  ) : (
+                    'Nuh Uh'
+                  ));
+
                 return (
                   <HintCard
                     key={hint?.id || `placeholder-${i}`}
@@ -177,21 +230,8 @@ function Page() {
                 );
               })}
             </div>
-            {!user.isFound ? (
+            {!user.isFound && (
               <div className="mb-8 w-full">
-                <div className="mb-7 flex items-center gap-0 text-2xl text-white select-none">
-                  Guess your P'code
-                  <span className="ml-3 flex items-center gap-1">
-                    {Array.from({ length: 3 }).map((_, i) => (
-                      <img
-                        key={i}
-                        src={(user.lives ?? 3) > i ? emptyHeart : filledHeart}
-                        alt="heart"
-                        className="h-7 w-7"
-                      />
-                    ))}
-                  </span>
-                </div>
                 <Guess
                   onGuessSubmit={handleGuessSubmit}
                   guessState={guessState}
@@ -201,12 +241,6 @@ function Page() {
                   isSenior={isSenior}
                   isEditing={false}
                 />
-              </div>
-            ) : (
-              <div className="text-center text-white">
-                <h2 className="mb-4 text-3xl font-semibold">Congratulations!</h2>
-                <p className="mb-2 text-xl text-gray-300">You've already found your P'code.</p>
-                <sub className="text-gray-500">Now tell your P'Code to treat you lunch</sub>
               </div>
             )}
           </div>

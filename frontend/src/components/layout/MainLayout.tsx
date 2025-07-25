@@ -1,5 +1,4 @@
 import Sidebar from '@/components/sidebar';
-import HamburgerIcon from '@/assets/hamburger.svg';
 import { useProfileState } from '@/hooks/useProfileState';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
@@ -11,9 +10,8 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children, showSidebar = true }: MainLayoutProps) => {
   const { isSidebarOpen, openSidebar, closeSidebar } = useProfileState();
-  const location = useLocation(); // Get current route
+  const location = useLocation();
 
-  // add your custome tailwind class for pages here
   let ipadProPadding = '';
   if (location.pathname.includes('/profile/profile-page')) {
     ipadProPadding = 'ipadpro-pl-profile';
@@ -22,38 +20,45 @@ const MainLayout = ({ children, showSidebar = true }: MainLayoutProps) => {
   }
 
   return (
-    <div className="relative min-h-screen bg-[url('/src/assets/bg-1.svg')] bg-cover bg-center bg-no-repeat text-white">
-      {/* Overlay */}
-      <div className="pointer-events-none absolute inset-0 z-0 bg-black/15" />
-      {/* Layout */}
-      <div className="relative z-10 flex min-h-screen">
+    <div className="relative min-h-svh text-white">
+      {/* Background image layer */}
+      <div className="absolute inset-0 z-0 bg-[url('/assets/bg-magic.png')] bg-cover bg-fixed bg-top bg-no-repeat lg:bg-position-[left_calc(var(--spacing)+8vw)_top]" />
+
+      {/* Blur overlay layer */}
+      <div className="absolute inset-0 z-10 bg-black/20 backdrop-blur-md" />
+
+      {/* Content layer */}
+      <div className="relative z-20 flex">
         {/* Sidebar (Desktop) */}
         {showSidebar && (
-          <aside className="hidden lg:flex lg:min-h-screen lg:w-sm lg:flex-col lg:px-8 lg:pt-8">
+          <aside className="hidden lg:flex lg:min-h-svh lg:w-sm lg:flex-col lg:px-8 lg:pt-8">
             <Sidebar isOpen={true} onClose={closeSidebar} />
           </aside>
         )}
+
         {/* Hamburger (Mobile) */}
         {showSidebar && (
-          <div className="absolute top-4 left-4 z-20 lg:hidden xl:hidden">
+          <div className="absolute top-4 left-4 z-30 lg:hidden xl:hidden">
             <button
               onClick={openSidebar}
               className="rounded-lg p-2 transition-colors hover:bg-white/10"
               aria-label="Open menu"
             >
-              <img src={HamburgerIcon} alt="Menu" className="h-6 w-6" />
+              <img src="/assets/hamburger.svg" alt="Menu" className="h-6 w-6" />
             </button>
           </div>
         )}
+
         {/* Mobile Sidebar */}
         {showSidebar && isSidebarOpen && (
-          <div className="fixed inset-0 z-30 lg:hidden xl:hidden">
+          <div className="fixed inset-0 z-40 lg:hidden xl:hidden">
             <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
           </div>
         )}
+
         {/* Main Content */}
         <main
-          className={`flex flex-1 flex-col items-center justify-start px-4 py-20 xl:px-12 xl:py-15 xl:pr-20 ${ipadProPadding}`}
+          className={`flex flex-1 flex-col items-center justify-start py-20 xl:px-12 xl:py-10 xl:pr-20 ${ipadProPadding}`}
         >
           {children}
         </main>

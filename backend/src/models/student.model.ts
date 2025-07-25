@@ -89,10 +89,20 @@ const guessMentor = async (id: number, guess: string) => {
   return { isCorrect: false, message: 'Incorrect guess.' };
 };
 
-const guessCorret = async (id: number) => {
-  return await prisma.mentor.findUnique({
+const guessCorrect = async (id: number) => {
+  const result = await prisma.mentor.findUnique({
     where: { juniorId: id },
+    select: { isFound: true, juniorId: true },
   });
+
+  if (!result) return null;
+
+  const randomSeniorId = Math.floor(Math.random() * 56) + 1;
+
+  return {
+    ...result,
+    seniorId: randomSeniorId,
+  };
 };
 
 export {
@@ -102,5 +112,5 @@ export {
   getAllJuniors,
   updateStudentById,
   guessMentor,
-  guessCorret,
+  guessCorrect,
 };

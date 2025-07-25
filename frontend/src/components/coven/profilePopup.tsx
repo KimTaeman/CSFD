@@ -8,12 +8,25 @@ type ProfilePopupProps = {
 };
 
 const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) => {
+  const getSocialLink = (name: string, handle: string) => {
+    if (!handle) return null;
+
+    switch (name) {
+      case 'Instagram':
+        return `https://instagram.com/${handle}`;
+      case 'Line':
+        return `https://line.me/ti/p/~${handle}`;
+      default:
+        return null;
+    }
+  };
+
   if (!isOpen || !user) return null;
 
   const socialLinks = [
-    { name: 'Instagram', handle: user.instagram, icon: '/src/assets/instagram-icon.svg' },
-    { name: 'Discord', handle: user.discord, icon: '/src/assets/discord-icon.svg' },
-    { name: 'Line', handle: user.line, icon: '/src/assets/line-icon.svg' },
+    { name: 'Instagram', handle: user.instagram, icon: '/assets/instagram-icon.svg' },
+    { name: 'Discord', handle: user.discord, icon: '/assets/discord-icon.svg' },
+    { name: 'Line', handle: user.line, icon: '/assets/line-icon.svg' },
   ];
 
   return (
@@ -43,7 +56,7 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
           <div className="flex-shrink-0">
             <img
               className="h-40 w-40 rounded-full object-cover shadow-lg sm:h-48 sm:w-48 md:h-56 md:w-56"
-              src={user.profilePic || `/src/assets/profile-${user.house}.png`} // Fallback to a default image
+              src={user.profilePic || `/assets/profile-${user.house}.png`} // Fallback to a default image
               alt={`${user.displayName || 'User'}'s profile picture`}
             />
           </div>
@@ -76,12 +89,24 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
                       src={social.icon}
                       alt={`${social.name} icon`}
                     />
-                    {/* Add styling to the placeholder to differentiate it */}
-                    <p
-                      className={`text-md text-black sm:text-lg ${!social.handle && 'text-gray-500 italic'}`}
-                    >
-                      {social.handle || 'Not provided'}
-                    </p>
+                    {social.name === 'Discord' ? (
+                      <p
+                        className={`text-md sm:text-lg ${
+                          social.handle ? 'text-black' : 'text-gray-500 italic'
+                        }`}
+                      >
+                        {social.handle || 'Not provided'}
+                      </p>
+                    ) : (
+                      <a
+                        href={getSocialLink(social.name, social.handle)!}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-md text-blue-600 hover:underline sm:text-lg"
+                      >
+                        {social.handle}
+                      </a>
+                    )}
                   </div>
                 ))}
               </div>
