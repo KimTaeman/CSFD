@@ -13,7 +13,7 @@ const formatDate = (dateString: string | null | undefined): string | null => {
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-    timeZone: 'UTC',
+    // Use the user's system timezone by omitting the timeZone option
   });
 };
 
