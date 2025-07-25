@@ -57,7 +57,7 @@ const Page = () => {
   // Show welcome page
   if (showWelcome) {
     return (
-      <div className="bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-contain">
+      <div className="bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-cover">
         <div className="light-particle-colored">
           <div className="flex h-svh w-full flex-col items-center justify-center space-y-8 px-12">
             <div className="flex flex-col items-center justify-center text-center">
