@@ -9,7 +9,7 @@ type ProfilePopupProps = {
 
 const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) => {
   const getSocialLink = (name: string, handle: string) => {
-    if (!handle) return null;
+    if (!handle) return undefined;
 
     switch (name) {
       case 'Instagram':
@@ -17,7 +17,7 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
       case 'Line':
         return `https://line.me/ti/p/~${handle}`;
       default:
-        return null;
+        return undefined;
     }
   };
 
@@ -56,7 +56,7 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
           <div className="flex-shrink-0">
             <img
               className="h-40 w-40 rounded-full object-cover shadow-lg sm:h-48 sm:w-48 md:h-56 md:w-56"
-              src={user.profilePic || `/assets/profile-${user.house}.png`} // Fallback to a default image
+              src={user.profilePic || `/assets/profile-${user.house}.png`}
               alt={`${user.displayName || 'User'}'s profile picture`}
             />
           </div>
@@ -72,7 +72,6 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
 
             <div className="text-md grid grid-cols-2 gap-x-6 gap-y-2 text-left text-gray-800 sm:text-lg">
               <p className="font-semibold">Code:</p>
-              {/* Use logical OR (||) to provide a fallback value */}
               <p>{user.studentId.slice(-3) || 'N/A'}</p>
               <p className="font-semibold">Nationality:</p>
               <p>{user.nationality || 'N/A'}</p>
@@ -81,7 +80,6 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
             <div className="mt-6">
               <h3 className="text-md font-semibold text-gray-700 sm:text-lg">Social Media</h3>
               <div className="mt-2 flex flex-col space-y-2">
-                {/* Render all social links, showing a placeholder if the handle is missing */}
                 {socialLinks.map((social) => (
                   <div key={social.name} className="flex items-center space-x-3">
                     <img
@@ -89,23 +87,21 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
                       src={social.icon}
                       alt={`${social.name} icon`}
                     />
-                    {social.name === 'Discord' ? (
-                      <p
-                        className={`text-md sm:text-lg ${
-                          social.handle ? 'text-black' : 'text-gray-500 italic'
-                        }`}
-                      >
-                        {social.handle || 'Not provided'}
-                      </p>
+                    {social.handle ? (
+                      social.name === 'Discord' ? (
+                        <p className="text-md text-black sm:text-lg">{social.handle}</p>
+                      ) : (
+                        <a
+                          href={getSocialLink(social.name, social.handle)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-md text-blue-600 hover:underline sm:text-lg"
+                        >
+                          {social.handle}
+                        </a>
+                      )
                     ) : (
-                      <a
-                        href={getSocialLink(social.name, social.handle)!}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-md text-blue-600 hover:underline sm:text-lg"
-                      >
-                        {social.handle}
-                      </a>
+                      <p className="text-md text-gray-500 italic sm:text-lg">Not provided</p>
                     )}
                   </div>
                 ))}
