@@ -13,8 +13,8 @@ interface GuessProps {
   onConfirm?: () => void;
   onCancel?: () => void;
   isEditing: boolean;
-  inputHint: string;
-  setInputHint: (val: string) => void;
+  inputHint?: string;
+  setInputHint?: (val: string) => void;
 }
 
 function Guess({
