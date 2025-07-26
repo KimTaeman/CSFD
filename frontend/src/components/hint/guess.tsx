@@ -13,6 +13,8 @@ interface GuessProps {
   onConfirm?: () => void;
   onCancel?: () => void;
   isEditing: boolean;
+  inputHint: string;
+  setInputHint: (val: string) => void;
 }
 
 function Guess({
@@ -26,8 +28,9 @@ function Guess({
   onConfirm = () => {},
   onCancel = () => {},
   isEditing,
+  inputHint,
+  setInputHint,
 }: GuessProps) {
-  const [inputHint, setInputHint] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = () => {
     const isValid = /^[0-9]{3}$/.test(inputHint);
@@ -113,7 +116,7 @@ function Guess({
             <button
               onClick={handleSubmit}
               disabled={guessState !== 'n/a' || attempts >= maxAttempts}
-              className="w-full self-start rounded-xl bg-orange-400 px-5 py-1.5 text-white transition-colors hover:bg-orange-500 disabled:cursor-not-allowed disabled:bg-gray-400 lg:ml-1 lg:rounded-2xl lg:px-6 lg:py-3"
+              className="w-full self-start rounded-xl bg-orange-400 px-5 py-1.5 font-semibold text-white transition-colors hover:bg-orange-500 disabled:cursor-not-allowed disabled:bg-gray-400 lg:ml-1 lg:rounded-2xl lg:px-6 lg:py-3"
             >
               Send
             </button>
