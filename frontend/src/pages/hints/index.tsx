@@ -249,14 +249,7 @@ function Page() {
                 );
               })}
             </div>
-            {!user.isFound && (user.lives ?? 3) > 0 && (
-              <button
-                className="mb-4 rounded-2xl bg-purple-700/80 px-6 py-3 text-lg font-semibold text-white shadow-lg transition hover:scale-105"
-                onClick={handleLuckyDraw}
-              >
-                🕯️ Invoke the Prophecy
-              </button>
-            )}
+
             {!user.isFound && (
               <div className="mb-8 w-full">
                 <Guess
@@ -269,6 +262,9 @@ function Page() {
                   isEditing={false}
                   inputHint={guessInput}
                   setInputHint={setGuessInput}
+                  onLuckyDraw={handleLuckyDraw}
+                  luckyDrawDisabled={user.isFound || (user.lives ?? 3) <= 0}
+                  luckyDrawLabel="🕯️ Invoke the Prophecy"
                 />
               </div>
             )}
