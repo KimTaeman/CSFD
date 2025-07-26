@@ -7,20 +7,69 @@ import LoadingLayout from '@/components/layout/loading';
 import HintCard from '@/components/hint/hint-card';
 import Guess from '@/components/hint/guess';
 import RevealResult from '@/components/hint/RevealResult';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toZonedTime } from 'date-fns-tz';
 
 import { MenteeCard, type Mentee, type User } from '@/components/hint/MenteeCard';
-
+import { useFetch } from '@/hooks/useFetch';
+import type { StudentInfo } from '@/types/type';
+import Slot from '@/components/hint/Slot';
 function Page() {
   const { user, updateGuessStatus } = useAuthContext();
+
   const [guessState, setGuessState] = useState<GuessState>('n/a');
   const [revealedCount, setRevealedCount] = useState(0);
+  // Lucky draw
+  const [hasDrawnLucky, setHasDrawnLucky] = useState(false);
+  const [luckyCode, setLuckyCode] = useState<string | null>(null);
+  const [showLuckyModal, setShowLuckyModal] = useState(false);
+  const [guessInput, setGuessInput] = useState('');
+  const [reels, setReels] = useState(['-', '-', '-']);
+  const [isSpinning, setIsSpinning] = useState([false, false, false]);
+  const { fetchStudents } = useFetch();
+  const { data: students } = useQuery({
+    queryKey: ['students'],
+    queryFn: fetchStudents,
+  });
+  const listOfCodes = students
+    ? students
+        .filter(
+          (student: StudentInfo) =>
+            student?.house === user.house && student?.isSenior == true && student?.studentId,
+        )
+        .map((student: StudentInfo) => student.studentId.slice(-3))
+    : [];
 
   const [editingMenteeId, setEditingMenteeId] = useState<string | null>(null);
   const [draftHints, setDraftHints] = useState<Hint[]>([]);
   const [countdown, setCountdown] = useState<string[]>(['', '', '']);
 
+  const handleLuckyDraw = () => {
+    if (!listOfCodes.length) return;
+
+    const finalCode = listOfCodes[Math.floor(Math.random() * listOfCodes.length)];
+    const finalReels = finalCode.split('');
+
+    setShowLuckyModal(true);
+    setReels(['-', '-', '-']);
+    setIsSpinning([true, true, true]);
+    setLuckyCode(finalCode);
+    setTimeout(() => {
+      setIsSpinning((prev) => [false, prev[1], prev[2]]);
+      setReels((prev) => [finalReels[0], prev[1], prev[2]]);
+    }, 1500);
+
+    setTimeout(() => {
+      setIsSpinning((prev) => [prev[0], false, prev[2]]);
+      setReels((prev) => [prev[0], finalReels[1], prev[2]]);
+    }, 2500);
+
+    setTimeout(() => {
+      setIsSpinning((prev) => [prev[0], prev[1], false]);
+      setReels((prev) => [prev[0], prev[1], finalReels[2]]);
+      setHasDrawnLucky(true);
+    }, 3500);
+  };
   const updateCountdown = useCallback(() => {
     const hintReleaseDates = [
       toZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'),
@@ -37,8 +86,6 @@ function Page() {
         const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
         const minutes = Math.floor((totalSeconds % 3600) / 60);
         const seconds = totalSeconds % 60;
-
-        // Pad values to 2 digits
         const pad = (n: number) => n.toString().padStart(2, '0');
 
         return ` ${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
@@ -217,6 +264,14 @@ function Page() {
                 );
               })}
             </div>
+            {!hasDrawnLucky && !user.isFound && (user.lives ?? 3) > 0 && (
+              <button
+                className="mb-4 rounded-2xl bg-orange-400 px-6 py-3 text-lg font-semibold text-white shadow-lg transition hover:scale-105"
+                onClick={handleLuckyDraw}
+              >
+                🎰 Test Your Luck!
+              </button>
+            )}
             {!user.isFound && (
               <div className="mb-8 w-full">
                 <Guess
@@ -227,6 +282,8 @@ function Page() {
                   onReset={resetGuess}
                   isSenior={isSenior}
                   isEditing={false}
+                  inputHint={guessInput}
+                  setInputHint={setGuessInput}
                 />
               </div>
             )}
@@ -239,6 +296,54 @@ function Page() {
             onClick={resetGuess}
           >
             <RevealResult state={guessState} outOfAttempts={revealedCount >= 3} />
+          </div>
+        )}
+
+        {showLuckyModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md">
+            {/* New: A more thematic modal with a cosmic gradient and glowing ring */}
+            <div className="w-full max-w-lg scale-100 transform rounded-2xl bg-gradient-to-br from-indigo-950 via-gray-900 to-purple-950 p-8 shadow-2xl ring-1 shadow-purple-800/40 ring-purple-400/50">
+              <div className="mb-6 text-center">
+                {/* New: Thematic title and subtitle */}
+                <h2 className="bg-gradient-to-r from-purple-400 via-pink-500 to-orange-400 bg-clip-text text-5xl font-bold tracking-wider text-transparent drop-shadow-[0_2px_4px_rgba(236,72,153,0.4)]">
+                  FATE'S DRAW
+                </h2>
+                <p className="mt-2 text-purple-300/80">The runes are cast...</p>
+              </div>
+
+              {/* The Slot Machine Reels */}
+              <div className="mb-10 flex justify-center gap-4 font-mono">
+                {reels.map((number, index) => (
+                  <Slot
+                    key={index}
+                    finalNumber={number}
+                    isSpinning={isSpinning[index]}
+                    symbols={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                  />
+                ))}
+              </div>
+
+              <div className="flex flex-col items-center gap-4">
+                {/* New: Thematic "Accept Fate" button */}
+                <button
+                  className="w-full rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-3 text-lg font-bold text-white shadow-lg shadow-pink-500/20 transition-all hover:shadow-xl hover:shadow-pink-500/40 hover:brightness-110 disabled:cursor-not-allowed disabled:bg-gray-600 disabled:opacity-50 disabled:shadow-none"
+                  disabled={isSpinning.some((s) => s)}
+                  onClick={() => {
+                    setGuessInput(luckyCode ?? '');
+                    setShowLuckyModal(false);
+                  }}
+                >
+                  Accept Fate
+                </button>
+                {/* New: Ethereal "Close" button */}
+                <button
+                  className="rounded-lg px-5 py-2 font-semibold text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
+                  onClick={() => setShowLuckyModal(false)}
+                >
+                  Return to Mortal Realm
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </main>
