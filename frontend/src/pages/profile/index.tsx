@@ -47,7 +47,7 @@ function Page() {
         {/* Picture Upload Section */}
         <div className="flex w-full justify-center xl:justify-end xl:pr-8">
           <Picture
-            src={profilePic || user.profilePic || '/assets/img-placeholder.png'}
+            src={user.profilePic || profilePic || '/assets/img-placeholder.png'}
             alt="Profile"
             className="aspect-[5/7] w-[186px] rounded-3xl sm:w-[25rem] lg:w-[22rem] xl:w-[25rem]"
             darken={hovered}
