@@ -131,9 +131,9 @@ function Guess({
               {onLuckyDraw && (
                 <button
                   type="button"
-                  className="flex w-full flex-col items-center justify-center rounded-xl bg-purple-800 px-4 py-2 font-semibold text-white shadow-lg transition hover:scale-105 lg:w-auto lg:min-w-[250px] lg:rounded-2xl"
+                  disabled={luckyDrawDisabled || guessState !== 'n/a' || attempts >= maxAttempts}
+                  className="flex w-full flex-col items-center justify-center rounded-xl bg-purple-800 px-4 py-2 font-semibold text-white shadow-lg transition hover:scale-105 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:hover:scale-100 lg:w-auto lg:min-w-[250px] lg:rounded-2xl"
                   onClick={onLuckyDraw}
-                  disabled={luckyDrawDisabled}
                 >
                   {/* Structure to display icon and multi-line text from the image */}
                   <span className="text-xl">🕯️</span>

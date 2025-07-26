@@ -139,6 +139,9 @@ body {
 button {
   cursor: pointer;
 }
+button:disabled {
+  cursor: not-allowed;
+}
 
 .bg-fixed {
   background-attachment: fixed;
