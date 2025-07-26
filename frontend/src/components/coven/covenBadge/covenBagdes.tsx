@@ -56,7 +56,7 @@ const CombinedCoven: React.FC<CombinedCovenProps> = ({ covenType, onClick, class
   );
 
   const imageContent = (
-    <div className="flex w-full min-w-40 justify-center md:max-w-40">
+    <div className="animated-drift has-[+button:hover]:animate-wiggle-more flex w-full min-w-40 justify-center md:max-w-40">
       <img src={coven.image} alt={coven.name} className="pointer-events-none" />
     </div>
   );
