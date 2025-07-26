@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-import CombinedCoven from '@/components/coven/covenBadge/covenBagdes';
+import CombinedCoven from '@/components/coven/covenBadge/covenBadges';
 import ProfileModal from '@/components/coven/profileModal';
 import ProfilePopup from '@/components/coven/profilePopup';
 import type { StudentInfo } from '@/types/type';
-import MainLayout from '../layout';
+import MainLayout from '@/pages/layout';
 import LoadingLayout from '@/components/layout/loading';
 import { useAuthContext } from '@/hooks/useAuthContext';
 

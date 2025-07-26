@@ -470,3 +470,66 @@ button:disabled {
     }
   }
 }
+
+@keyframes subtle-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.subtle-float {
+  animation: subtle-float 6s ease-in-out infinite;
+}
+
+@keyframes glowing-border {
+  0% {
+    box-shadow:
+      0 0 5px var(--glow-color-start),
+      0 0 10px var(--glow-color-start),
+      0 0 15px var(--glow-color-start);
+  }
+  50% {
+    box-shadow:
+      0 0 20px var(--glow-color-end),
+      0 0 30px var(--glow-color-end),
+      0 0 40px var(--glow-color-end);
+  }
+  100% {
+    box-shadow:
+      0 0 5px var(--glow-color-start),
+      0 0 10px var(--glow-color-start),
+      0 0 15px var(--glow-color-start);
+  }
+}
+
+.glowing-border {
+  --glow-color-start: rgba(255, 255, 255, 0.2);
+  --glow-color-end: rgba(255, 255, 255, 0.5);
+  animation: glowing-border 4s ease-in-out infinite;
+  border-radius: 1.5rem; /* Corresponds to rounded-3xl */
+}
+
+.alchemire-glow {
+  --glow-color-start: rgba(59, 130, 246, 0.3);
+  --glow-color-end: rgba(37, 99, 235, 0.6);
+}
+
+.ethera-glow {
+  --glow-color-start: rgba(239, 68, 68, 0.3);
+  --glow-color-end: rgba(220, 38, 38, 0.6);
+}
+
+.zirelia-glow {
+  --glow-color-start: rgba(236, 72, 153, 0.3);
+  --glow-color-end: rgba(219, 39, 119, 0.6);
+}
+
+.isotar-glow {
+  --glow-color-start: rgba(168, 85, 247, 0.3);
+  --glow-color-end: rgba(147, 51, 234, 0.6);
+}
+
