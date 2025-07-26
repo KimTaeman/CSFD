@@ -136,9 +136,9 @@ function Guess({
                   onClick={onLuckyDraw}
                 >
                   {/* Structure to display icon and multi-line text from the image */}
-                  <span className="text-xl">🕯️</span>
+                  {/* <span className="text-xl"></span> */}
                   <div className="flex flex-col items-center leading-tight">
-                    <span>Invoke the Prophecy</span>
+                    <span>🕯️Invoke the Prophecy</span>
                   </div>
                 </button>
               )}

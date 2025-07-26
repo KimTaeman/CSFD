@@ -203,23 +203,47 @@ function Page() {
                 <sub className="text-gray-500">Now tell your P'Code to treat you to lunch</sub>
               </div>
             ) : (
-              <div className="space-y-2 text-center font-[Poppins] text-white">
-                <h1 className="text-xl font-semibold">Guess Your P'Code</h1>
-                <div className="ml-3 flex items-center justify-center gap-1">
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <img
-                      key={i}
-                      src={
-                        (user.lives ?? 3) > i
-                          ? '/assets/filled-heart.svg'
-                          : '/assets/empty-heart.svg'
-                      }
-                      alt="heart"
-                      className="size-8"
-                    />
-                  ))}
+              <div className="font-[Poppins] text-white">
+                <div className="mx-auto max-w-5xl rounded-xl border border-white/10 bg-gray-800/30 p-6 shadow-2xl backdrop-blur-lg sm:p-8">
+                  <div className="relative mb-6 pt-8 text-center md:pt-0 md:pr-0">
+                    <div className="absolute -top-2 -right-2 flex items-center gap-1.5 rounded-full bg-purple-500/20 px-3 py-1.5">
+                      {Array.from({ length: 3 }).map((_, i) => (
+                        <img
+                          key={i}
+                          src={
+                            (user.lives ?? 3) > i
+                              ? '/assets/filled-heart.svg'
+                              : '/assets/empty-heart.svg'
+                          }
+                          alt="Heart status"
+                          className="size-5"
+                        />
+                      ))}
+                    </div>
+
+                    <h1 className="text-3xl font-bold text-purple-300">Guess Your P'Code</h1>
+                  </div>
+                  <div className="space-y-4 text-left text-gray-200">
+                    <p>
+                      Welcome, junior! Your quest is to discover the identity of your senior
+                      mentor—your <strong className="font-semibold text-white">P'code</strong>. They
+                      will be your personal guide throughout your studies, helping with lectures,
+                      projects, and university life.
+                    </p>
+                    <p>
+                      Your P'code has left three secret hints below. Use them to deduce who they are
+                      before you run out of guesses!
+                    </p>
+                  </div>
+                  <hr className="my-6 border-white/10" />
+                  <div className="text-center">
+                    <p className="text-gray-300/90">
+                      If you're feeling lucky, you can{' '}
+                      <strong className="font-semibold text-purple-300">Invoke the Prophecy</strong>{' '}
+                      for a random guess!
+                    </p>
+                  </div>
                 </div>
-                <span className="text-sm">{user.lives ?? 3} Live(s) Left</span>
               </div>
             )}
             <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
