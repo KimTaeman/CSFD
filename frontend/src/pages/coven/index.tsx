@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import CombinedCoven from '@/components/coven/covenBadge/covenBagdes';
+import CombinedCoven from '@/components/coven/covenBadge/covenBadges';
 import DetailCoven from '@/components/coven/covenBadge/detailCoven';
 import MainLayout from '../layout';
 const Page = () => {

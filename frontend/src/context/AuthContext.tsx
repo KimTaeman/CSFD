@@ -7,8 +7,10 @@ import { useNavigate } from 'react-router-dom';
 
 interface IAuthContext {
   user: StudentInfo;
+  students: StudentInfo[];
   isAuthenticated: boolean;
   isLoading: boolean;
+  isFetchingStudents: boolean;
   updateGuessStatus: () => void;
   logout: () => void;
   isLoggingOut: boolean;
@@ -35,19 +37,22 @@ export const AuthContext = createContext<IAuthContext | null>(null);
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { fetchUserData } = useFetch();
+  const { fetchUserData, fetchStudents } = useFetch();
 
   const isAuthenticated = !!queryClient.getQueryData(['authUser']);
 
-  const {
-    data: user,
-    isPending,
-    isSuccess,
-  } = useQuery({
+  const { data: user, isPending } = useQuery({
     queryKey: ['authUser'],
     queryFn: fetchUserData,
     retry: false,
     staleTime: 5 * 60 * 1000,
+  });
+
+  const { data: students, isPending: isFetchingStudents } = useQuery({
+    queryKey: ['students'],
+    queryFn: fetchStudents,
+    staleTime: 5 * 60 * 1000,
+    enabled: isAuthenticated,
   });
 
   const guessMutation = useMutation({
@@ -85,8 +90,10 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext
       value={{
         user,
+        students,
         isAuthenticated,
         isLoading: isPending,
+        isFetchingStudents,
         updateGuessStatus,
         logout,
         isLoggingOut: logoutMutation.isPending,
