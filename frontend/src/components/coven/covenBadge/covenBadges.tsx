@@ -41,8 +41,16 @@ interface CombinedCovenProps extends CovenProps {
   covenType: keyof typeof covenData;
 }
 
+const covenGlowClasses: Record<CovenType, string> = {
+  alchemireCoven: 'alchemire-glow',
+  etheraCoven: 'ethera-glow',
+  isotarCoven: 'isotar-glow',
+  zireliaCoven: 'zirelia-glow',
+};
+
 const CombinedCoven: React.FC<CombinedCovenProps> = ({ covenType, onClick, className = '' }) => {
   const coven = covenData[covenType];
+  const glowClass = covenGlowClasses[covenType as CovenType];
 
   if (!coven) {
     return null;
@@ -56,14 +64,14 @@ const CombinedCoven: React.FC<CombinedCovenProps> = ({ covenType, onClick, class
   );
 
   const imageContent = (
-    <div className="animated-drift has-[+button:hover]:animate-wiggle-more flex w-full min-w-40 justify-center md:max-w-40">
+    <div className="subtle-float has-[+button:hover]:animate-wiggle-more flex w-full min-w-40 justify-center md:max-w-40">
       <img src={coven.image} alt={coven.name} className="pointer-events-none" />
     </div>
   );
 
   return (
     <div
-      className={`w-full max-w-85 transform rounded-3xl border border-white/30 bg-gradient-to-br from-black/50 to-purple-800/60 backdrop-blur-lg transition-all duration-500 ease-in-out select-none hover:scale-[1.02] ${onClick ? 'cursor-pointer' : ''} ${className}`}
+      className={`glowing-border ${glowClass} w-full max-w-85 transform rounded-3xl border border-white/30 bg-gradient-to-br from-black/50 to-purple-800/60 backdrop-blur-lg transition-all duration-500 ease-in-out select-none hover:scale-[1.02] ${onClick ? 'cursor-pointer' : ''} ${className}`}
       onClick={onClick}
     >
       <div
