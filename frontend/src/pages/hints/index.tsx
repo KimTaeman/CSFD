@@ -7,35 +7,28 @@ import LoadingLayout from '@/components/layout/loading';
 import HintCard from '@/components/hint/hint-card';
 import Guess from '@/components/hint/guess';
 import RevealResult from '@/components/hint/RevealResult';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toZonedTime } from 'date-fns-tz';
 
 import { MenteeCard, type Mentee, type User } from '@/components/hint/MenteeCard';
-import { useFetch } from '@/hooks/useFetch';
 import type { StudentInfo } from '@/types/type';
-import Slot from '@/components/hint/Slot';
+import MagicalOrb from '@/components/hint/Orb';
 function Page() {
-  const { user, updateGuessStatus } = useAuthContext();
+  const { user, students, updateGuessStatus } = useAuthContext();
 
   const [guessState, setGuessState] = useState<GuessState>('n/a');
   const [revealedCount, setRevealedCount] = useState(0);
-  // Lucky draw
-  const [hasDrawnLucky, setHasDrawnLucky] = useState(false);
   const [luckyCode, setLuckyCode] = useState<string | null>(null);
   const [showLuckyModal, setShowLuckyModal] = useState(false);
   const [guessInput, setGuessInput] = useState('');
-  const [reels, setReels] = useState(['-', '-', '-']);
-  const [isSpinning, setIsSpinning] = useState([false, false, false]);
-  const { fetchStudents } = useFetch();
-  const { data: students } = useQuery({
-    queryKey: ['students'],
-    queryFn: fetchStudents,
-  });
+  const [isRevealingCode, setIsRevealingCode] = useState(false);
+  const [isRevealComplete, setIsRevealComplete] = useState(false);
+
   const listOfCodes = students
     ? students
         .filter(
           (student: StudentInfo) =>
-            student?.house === user.house && student?.isSenior == true && student?.studentId,
+            student?.house === user?.house && student?.isSenior == true && student?.studentId,
         )
         .map((student: StudentInfo) => student.studentId.slice(-3))
     : [];
@@ -47,29 +40,20 @@ function Page() {
   const handleLuckyDraw = () => {
     if (!listOfCodes.length) return;
 
+    setIsRevealComplete(false);
     const finalCode = listOfCodes[Math.floor(Math.random() * listOfCodes.length)];
-    const finalReels = finalCode.split('');
-
-    setShowLuckyModal(true);
-    setReels(['-', '-', '-']);
-    setIsSpinning([true, true, true]);
     setLuckyCode(finalCode);
-    setTimeout(() => {
-      setIsSpinning((prev) => [false, prev[1], prev[2]]);
-      setReels((prev) => [finalReels[0], prev[1], prev[2]]);
-    }, 1500);
-
-    setTimeout(() => {
-      setIsSpinning((prev) => [prev[0], false, prev[2]]);
-      setReels((prev) => [prev[0], finalReels[1], prev[2]]);
-    }, 2500);
-
-    setTimeout(() => {
-      setIsSpinning((prev) => [prev[0], prev[1], false]);
-      setReels((prev) => [prev[0], prev[1], finalReels[2]]);
-      setHasDrawnLucky(true);
-    }, 3500);
+    setShowLuckyModal(true);
+    setIsRevealingCode(true);
   };
+
+  const closeModal = () => {
+    setShowLuckyModal(false);
+    setIsRevealingCode(false);
+
+    setLuckyCode(null);
+  };
+
   const updateCountdown = useCallback(() => {
     const hintReleaseDates = [
       toZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'),
@@ -163,7 +147,8 @@ function Page() {
     setDraftHints((prev) => prev.map((hint) => (hint.id === id ? { ...hint, content } : hint)));
   }, []);
 
-  if (!user || (!user.isSenior && user.isFound === undefined)) return <LoadingLayout />;
+  if (!user || !students || (!user.isSenior && user.isFound === undefined))
+    return <LoadingLayout />;
 
   const isSenior = user.isSenior;
 
@@ -264,12 +249,12 @@ function Page() {
                 );
               })}
             </div>
-            {!hasDrawnLucky && !user.isFound && (user.lives ?? 3) > 0 && (
+            {!user.isFound && (user.lives ?? 3) > 0 && (
               <button
-                className="mb-4 rounded-2xl bg-orange-400 px-6 py-3 text-lg font-semibold text-white shadow-lg transition hover:scale-105"
+                className="mb-4 rounded-2xl bg-purple-700/80 px-6 py-3 text-lg font-semibold text-white shadow-lg transition hover:scale-105"
                 onClick={handleLuckyDraw}
               >
-                🎰 Test Your Luck!
+                🕯️ Invoke the Prophecy
               </button>
             )}
             {!user.isFound && (
@@ -301,44 +286,42 @@ function Page() {
 
         {showLuckyModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md">
-            {/* New: A more thematic modal with a cosmic gradient and glowing ring */}
-            <div className="w-full max-w-lg scale-100 transform rounded-2xl bg-gradient-to-br from-indigo-950 via-gray-900 to-purple-950 p-8 shadow-2xl ring-1 shadow-purple-800/40 ring-purple-400/50">
+            <div className="w-full max-w-lg transform rounded-3xl bg-gradient-to-br from-indigo-950 via-gray-900 to-purple-950 p-8 shadow-2xl ring-1 shadow-purple-900/40 ring-purple-400/50">
               <div className="mb-6 text-center">
-                {/* New: Thematic title and subtitle */}
                 <h2 className="bg-gradient-to-r from-purple-400 via-pink-500 to-orange-400 bg-clip-text text-5xl font-bold tracking-wider text-transparent drop-shadow-[0_2px_4px_rgba(236,72,153,0.4)]">
-                  FATE'S DRAW
+                  THE ORACLE SPEAKS
                 </h2>
-                <p className="mt-2 text-purple-300/80">The runes are cast...</p>
+                <p className="mt-2 text-purple-300/80">The runes begin to whisper...</p>
               </div>
 
-              {/* The Slot Machine Reels */}
-              <div className="mb-10 flex justify-center gap-4 font-mono">
-                {reels.map((number, index) => (
-                  <Slot
-                    key={index}
-                    finalNumber={number}
-                    isSpinning={isSpinning[index]}
-                    symbols={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
-                  />
-                ))}
+              <div className="mb-10 flex justify-center">
+                <MagicalOrb
+                  code={luckyCode ?? ''}
+                  isRevealing={isRevealingCode}
+                  onRevealComplete={() => setIsRevealComplete(true)}
+                />
               </div>
 
-              <div className="flex flex-col items-center gap-4">
-                {/* New: Thematic "Accept Fate" button */}
+              {isRevealComplete && (
+                <div className="text-center text-purple-200/90 italic">
+                  The prophecy has been revealed...
+                </div>
+              )}
+
+              <div className="mt-8 flex flex-col items-center gap-4">
                 <button
                   className="w-full rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-3 text-lg font-bold text-white shadow-lg shadow-pink-500/20 transition-all hover:shadow-xl hover:shadow-pink-500/40 hover:brightness-110 disabled:cursor-not-allowed disabled:bg-gray-600 disabled:opacity-50 disabled:shadow-none"
-                  disabled={isSpinning.some((s) => s)}
+                  disabled={!isRevealComplete}
                   onClick={() => {
                     setGuessInput(luckyCode ?? '');
-                    setShowLuckyModal(false);
+                    closeModal();
                   }}
                 >
-                  Accept Fate
+                  Accept the Prophecy
                 </button>
-                {/* New: Ethereal "Close" button */}
                 <button
                   className="rounded-lg px-5 py-2 font-semibold text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
-                  onClick={() => setShowLuckyModal(false)}
+                  onClick={closeModal}
                 >
                   Return to Mortal Realm
                 </button>
