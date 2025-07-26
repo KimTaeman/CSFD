@@ -5,17 +5,13 @@ import ProfileModal from '@/components/coven/profileModal';
 import ProfilePopup from '@/components/coven/profilePopup';
 import type { StudentInfo } from '@/types/type';
 import MainLayout from '../layout';
-import { useAuthContext } from '@/hooks/useAuthContext';
-import { useFetch } from '@/hooks/useFetch';
-import { useQuery } from '@tanstack/react-query';
 import LoadingLayout from '@/components/layout/loading';
+import { useAuthContext } from '@/hooks/useAuthContext';
 
 const Page = () => {
   const { coven = '' } = useParams();
+  const { students, isFetchingStudents } = useAuthContext();
   const navigate = useNavigate();
-
-  const { isAuthenticated } = useAuthContext();
-  const { fetchStudents } = useFetch();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<StudentInfo | null>(null);
@@ -29,16 +25,6 @@ const Page = () => {
     }
   }, [coven, navigate]);
 
-  const {
-    data: students,
-    isPending,
-    error,
-  } = useQuery({
-    queryKey: ['students'],
-    queryFn: fetchStudents,
-    enabled: isAuthenticated,
-  });
-
   const handleOpenModal = (user: StudentInfo): void => {
     setSelectedUser(user);
     setIsModalOpen(true);
@@ -49,9 +35,7 @@ const Page = () => {
     setSelectedUser(null);
   };
 
-  if (isPending) return <LoadingLayout />;
-
-  if (error) return <div>An error occurred: {error.message}</div>;
+  if (isFetchingStudents) return <LoadingLayout />;
 
   return (
     <MainLayout>
