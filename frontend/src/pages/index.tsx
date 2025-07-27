@@ -11,6 +11,7 @@ function Page() {
     if (isAuthenticated) {
       navigate('/coven', { replace: true });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
   const handleLogin = () => {

@@ -529,6 +529,130 @@ button:disabled {
 }
 
 .isotar-glow {
-  --glow-color-start: rgba(168, 85, 247, 0.3);
-  --glow-color-end: rgba(147, 51, 234, 0.6);
+  --glow-color-start: rgba(85, 247, 136, 0.3);
+  --glow-color-end: rgba(32, 156, 90, 0.6);
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0.5;
+  }
+}
+
+@keyframes float-medium {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-15px) translateX(-8px);
+    opacity: 0.6;
+  }
+}
+
+@keyframes float-fast {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateY(-25px) translateX(15px);
+    opacity: 0.4;
+  }
+}
+
+@keyframes logo-glow-shadow {
+  0%,
+  100% {
+    filter: brightness(1) drop-shadow(0 0 12px rgba(147, 51, 234, 0.4))
+    drop-shadow(0 0 24px rgba(59, 130, 246, 0.2));
+  }
+  50% {
+    filter: brightness(1.1) drop-shadow(0 0 20px rgba(147, 51, 234, 0.6))
+    drop-shadow(0 0 40px rgba(59, 130, 246, 0.4));
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes text-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+  }
+  50% {
+    text-shadow:
+            0 0 20px rgba(147, 51, 234, 0.8),
+            0 0 30px rgba(59, 130, 246, 0.4);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loading-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 4s ease-in-out infinite 1s;
+}
+
+.animate-float-fast {
+  animation: float-fast 3s ease-in-out infinite 2s;
+}
+
+.animate-logo-glow-shadow {
+  animation: logo-glow-shadow 3s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 2s linear infinite;
+}
+
+.animate-text-glow {
+  animation: text-glow 2s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+.animate-loading-bar {
+  animation: loading-bar 2s ease-in-out infinite;
 }

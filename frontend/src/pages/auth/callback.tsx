@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/axios';
+import LoadingLayout from '@/components/layout/loading.tsx';
 
 function AuthCallback() {
   const navigate = useNavigate();
@@ -25,8 +26,7 @@ function AuthCallback() {
     checkUserStatus();
   }, [navigate]);
 
-  // TODO: add loading circle
-  return <div>Loading... Please wait.</div>;
+  return <LoadingLayout/>;
 }
 
 export default AuthCallback;
