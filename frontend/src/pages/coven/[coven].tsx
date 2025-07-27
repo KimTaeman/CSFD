@@ -23,6 +23,7 @@ const Page = () => {
       navigate('/coven');
       return;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coven, navigate]);
 
   const handleOpenModal = (user: StudentInfo): void => {

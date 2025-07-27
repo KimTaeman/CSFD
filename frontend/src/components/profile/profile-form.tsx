@@ -1,5 +1,5 @@
-import { useState, useCallback, useMemo, useEffect } from 'react';
-import type { ProfileData, FormField, SocialMediaField } from '@/types/profile.types';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { FormField, ProfileData, SocialMediaField } from '@/types/profile.types';
 import { useFormNavigation } from '@/hooks/useFormNavigation';
 import { useAuthContext } from '@/hooks/useAuthContext';
 
@@ -43,9 +43,7 @@ function ProfileForm({
 
   const formFields: FormField[] = useMemo(
     () => [
-      { key: 'displayName', label: 'Full Name', type: 'text' },
       { key: 'nickname', label: 'Nickname', type: 'text' },
-      { key: 'studentId', label: 'Student ID', type: 'text' },
       { key: 'nationality', label: 'Nationality', type: 'text' },
     ],
     [],
@@ -81,86 +79,84 @@ function ProfileForm({
     setFormData((prev) => ({ ...prev, [key]: value }));
   }, []);
 
-  // const inputClassName = useMemo(
-  //   () => (editing: boolean) =>
-  //     `w-full px-2 lg:px-6 py-2 lg:py-2 text-base lg:text-lg rounded-xl border-none outline-none h-10 lg:h-12 font-[Poppins] transition-colors ${
-  //       editing ? 'bg-white text-black' : 'bg-gray-300 text-gray-700 cursor-not-allowed'
-  //     }`,
-  //   [],
-  // );
-
   return (
-    <div className="w-full max-w-xl space-y-2 px-6 lg:col-span-8 lg:space-y-5 lg:px-0">
-      {formFields.map((field) => (
-        <div key={field.key} className="space-y-0.5 lg:space-y-1.5">
-          <label htmlFor={field.key} className="block font-[Poppins] text-xs lg:text-base">
-            {field.label}
-          </label>
-          <input
-            ref={(el) => setInputRef(field.key, el)}
-            id={field.key}
-            type={field.type}
-            value={formData[field.key] || ''}
-            onChange={(e) => handleInputChange(field.key, e.target.value)}
-            onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
-            disabled={!isEditing || field.key === 'studentId' || field.key === 'displayName'}
-            className={`h-10 w-full rounded-xl border-none px-2 py-2 font-[Poppins] text-base transition-colors outline-none lg:h-12 lg:px-6 lg:text-lg ${
-              !isEditing || field.key === 'studentId' || field.key === 'displayName'
-                ? 'cursor-not-allowed bg-gray-300 text-gray-700'
-                : 'bg-white text-black'
-            }`}
-          />
-        </div>
-      ))}
+    <div className="w-full space-y-2">
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="space-y-4 md:space-y-8 w-full flex-1/3">
+          {formFields.map((field) => (
+          <div key={field.key} className="space-y-0.5 lg:space-y-1.5">
+            <label
+              htmlFor={field.key}
+              className="font-poppins mb-2 block text-xs lg:mb-4 lg:text-base"
+            >
+              {field.label}
+            </label>
+            <input
+              ref={(el) => setInputRef(field.key, el)}
+              id={field.key}
+              type={field.type}
+              value={formData[field.key] || ''}
+              onChange={(e) => handleInputChange(field.key, e.target.value)}
+              onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
+              disabled={!isEditing || field.key === 'studentId' || field.key === 'displayName'}
+              className={`font-poppins h-10 w-full rounded-xl border-none px-2 py-2 text-base transition-colors outline-none lg:h-12 lg:px-6 lg:text-lg ${
+                !isEditing || field.key === 'studentId' || field.key === 'displayName'
+                  ? 'cursor-not-allowed bg-gray-900/50 text-gray-300'
+                  : 'border border-white/10 bg-gray-900/50'
+              }`}
+            />
+          </div>
+        ))}</div>
 
-      <div className="mt-6 lg:mt-12">
-        <p className="mb-2 font-[Poppins] text-xs lg:mb-4 lg:text-base">Social media (optional)</p>
-        <div className="space-y-2 lg:space-y-4">
-          {socialMediaFields.map((field) => (
-            <div key={field.key} className="relative">
-              <img
-                src={field.icon}
-                alt={`${field.label} icon`}
-                className="absolute top-1/2 left-3 h-6 w-6 -translate-y-1/2 transform"
-              />
-              <input
-                ref={(el) => setInputRef(field.key, el)}
-                id={field.key}
-                value={formData[field.key] || ''}
-                onChange={(e) => handleInputChange(field.key, e.target.value)}
-                onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
-                disabled={!isEditing}
-                className={`h-12 w-full rounded-xl border-none py-2 pr-2 pl-10 font-[Poppins] text-base transition-colors outline-none lg:h-12 lg:py-4 lg:pl-20 lg:text-lg ${
-                  !isEditing
-                    ? 'cursor-not-allowed bg-gray-300 text-gray-700'
-                    : 'bg-white text-black'
-                }`}
-                placeholder={field.label}
-              />
-            </div>
-          ))}
+        <div className="space-y-8 w-full flex-2/3">
+          <p className="font-poppins mb-2 text-xs lg:mb-4 lg:text-base">Social media</p>
+          <div className="space-y-4">
+            {socialMediaFields.map((field) => (
+              <div key={field.key} className="relative">
+                <img
+                  src={field.icon}
+                  alt={`${field.label} icon`}
+                  className="absolute top-1/2 left-3 h-6 w-6 -translate-y-1/2 transform lg:left-6"
+                />
+                <input
+                  ref={(el) => setInputRef(field.key, el)}
+                  id={field.key}
+                  value={formData[field.key] || ''}
+                  onChange={(e) => handleInputChange(field.key, e.target.value)}
+                  onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
+                  disabled={!isEditing}
+                  className={`font-poppins h-12 w-full rounded-xl border-none py-2 pr-2 pl-12 text-base transition-colors outline-none lg:h-12 lg:py-4 lg:pl-16 lg:text-lg ${
+                    !isEditing
+                      ? 'cursor-not-allowed bg-gray-900/50 text-gray-300'
+                      : 'border border-white/10 bg-gray-900/50'
+                  }`}
+                  placeholder={field.label}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="mt-4 flex justify-center lg:mt-8">
+      <div className="mt-4 flex w-full justify-center lg:mt-8">
         {!isEditing ? (
           <button
             onClick={onEditClick}
-            className="rounded-xl border border-white bg-transparent px-8 py-2 font-[Poppins] text-sm text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-16 lg:text-base"
+            className="font-poppins w-full flex-1 rounded-xl border border-white/10 bg-purple-900/60 px-8 py-2 text-sm text-white transition-colors hover:bg-purple-900/80 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-16 lg:text-base"
           >
-            Edit
+            Edit Information
           </button>
         ) : (
-          <div className="flex gap-4">
+          <div className="flex flex-wrap w-full gap-4">
             <button
               onClick={onConfirm}
-              className="rounded-xl border border-white bg-transparent px-6 py-2 font-[Poppins] text-sm text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-12 lg:text-base"
+              className="font-poppins w-full flex-1 rounded-xl border border-white/10 bg-purple-900/60 px-6 py-2 text-sm text-white transition-colors hover:bg-purple-900/80 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-12 lg:text-base"
             >
               Confirm
             </button>
             <button
               onClick={onCancel}
-              className="rounded-xl border border-white bg-transparent px-6 py-2 font-[Poppins] text-sm text-white transition-colors hover:bg-white/10 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-12 lg:text-base"
+              className="font-poppins w-full flex-1 rounded-xl border border-white/10 bg-gray-900/60 px-6 py-2 text-sm text-white transition-colors hover:bg-gray-900/80 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-12 lg:text-base"
             >
               Cancel
             </button>

@@ -62,14 +62,14 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
 
             {/* Sidebar */}
             <aside
-              className="glass-glow fixed top-14 bottom-14 left-14 z-50 flex w-70 flex-col rounded-4xl"
+              className="fixed top-14 bottom-14 left-14 z-50 flex w-70 flex-col rounded-4xl"
               role="navigation"
             >
               {/* Collapse button */}
               {/* Main content */}
               <div className="flex flex-1 flex-col">
                 <div className="p-4">
-                  <p className="mt-2 mb-2 ml-7 font-[Inter] text-xs text-white/32">MENU</p>
+                  <p className="mt-2 mb-4 ml-7 font-[Inter] text-xs text-white/32">MENU</p>
                   <nav className="mr-2 ml-2 flex flex-col gap-4" role="menu">
                     {menuItems.map((item) => (
                       <NavLink

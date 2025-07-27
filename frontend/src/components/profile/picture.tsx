@@ -21,30 +21,30 @@ function Picture({
 }: PictureProps) {
   return (
     <div
-      className="relative space-y-3"
+      className="relative aspect-[5/7] max-h-[175px] max-w-[20%] justify-center rounded-lg overflow-hidden max-sm:mx-auto max-sm:max-w-[50%]"
       style={{ cursor: onClick ? 'pointer' : undefined }}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       tabIndex={onClick ? 0 : undefined}
     >
-      <p className="font-[Poppins] text-sm text-white lg:pl-4 lg:text-base">Photo</p>
-      <div className={`relative aspect-[3/4] overflow-hidden rounded-2xl ${className || ''}`}>
+      <div className={`aspect-[5/7] justify-center rounded-lg overflow-hidden ${className || ''}`}>
         <img
           src={src}
           alt={alt || 'Image'}
-          className="h-full w-full"
+          className="w-full h-full object-cover"
           loading="lazy"
           decoding="async"
         />
-        {darken && (
-          <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/40">
-            {overlayText && (
-              <span className="text-lg font-semibold text-white select-none">{overlayText}</span>
-            )}
-          </div>
-        )}
       </div>
+
+      {darken && (
+        <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/40">
+          {overlayText && (
+            <span className="text-lg font-semibold text-white select-none">{overlayText}</span>
+          )}
+        </div>
+      )}
     </div>
   );
 }

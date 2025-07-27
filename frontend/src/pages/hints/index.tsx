@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import api from '@/api/axios';
 import type { GuessState, Hint } from '@/types/hint.types';
@@ -10,9 +10,10 @@ import RevealResult from '@/components/hint/RevealResult';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toZonedTime } from 'date-fns-tz';
 
-import { MenteeCard, type Mentee, type User } from '@/components/hint/MenteeCard';
+import { type Mentee, MenteeCard, type User } from '@/components/hint/MenteeCard';
 import type { StudentInfo } from '@/types/type';
 import MagicalOrb from '@/components/hint/Orb';
+
 function Page() {
   const { user, students, updateGuessStatus } = useAuthContext();
 
@@ -154,7 +155,7 @@ function Page() {
 
   return (
     <MainLayout>
-      <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-4">
+      <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0">
         {isSenior &&
           (user.mentees as Mentee[]).map((mentee, index) => {
             const menteeHints = draftHints.slice(index * 3, index * 3 + 3);
@@ -203,7 +204,7 @@ function Page() {
                 <sub className="text-gray-500">Now tell your P'Code to treat you to lunch</sub>
               </div>
             ) : (
-              <div className="font-[Poppins] text-white">
+              <div className="font-poppins text-white">
                 <div className="mx-auto max-w-5xl rounded-xl border border-white/10 bg-gray-800/30 p-6 shadow-2xl backdrop-blur-lg sm:p-8">
                   <div className="relative mb-6 pt-8 text-center md:pt-0 md:pr-0">
                     <div className="absolute -top-2 -right-2 flex items-center gap-1.5 rounded-full bg-purple-500/20 px-3 py-1.5">
