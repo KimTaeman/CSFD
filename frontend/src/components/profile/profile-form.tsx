@@ -81,34 +81,35 @@ function ProfileForm({
 
   return (
     <div className="w-full space-y-2">
-      <div className="flex flex-col md:flex-row gap-8">
-        <div className="space-y-4 md:space-y-8 w-full flex-1/3">
+      <div className="flex flex-col gap-8 md:flex-row">
+        <div className="w-full flex-1/3 space-y-4 md:space-y-8">
           {formFields.map((field) => (
-          <div key={field.key} className="space-y-0.5 lg:space-y-1.5">
-            <label
-              htmlFor={field.key}
-              className="font-poppins mb-2 block text-xs lg:mb-4 lg:text-base"
-            >
-              {field.label}
-            </label>
-            <input
-              ref={(el) => setInputRef(field.key, el)}
-              id={field.key}
-              type={field.type}
-              value={formData[field.key] || ''}
-              onChange={(e) => handleInputChange(field.key, e.target.value)}
-              onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
-              disabled={!isEditing || field.key === 'studentId' || field.key === 'displayName'}
-              className={`font-poppins h-10 w-full rounded-xl border-none px-2 py-2 text-base transition-colors outline-none lg:h-12 lg:px-6 lg:text-lg ${
-                !isEditing || field.key === 'studentId' || field.key === 'displayName'
-                  ? 'cursor-not-allowed bg-gray-900/50 text-gray-300'
-                  : 'border border-white/10 bg-gray-900/50'
-              }`}
-            />
-          </div>
-        ))}</div>
+            <div key={field.key} className="space-y-0.5 lg:space-y-1.5">
+              <label
+                htmlFor={field.key}
+                className="font-poppins mb-2 block text-xs lg:mb-4 lg:text-base"
+              >
+                {field.label}
+              </label>
+              <input
+                ref={(el) => setInputRef(field.key, el)}
+                id={field.key}
+                type={field.type}
+                value={formData[field.key] || ''}
+                onChange={(e) => handleInputChange(field.key, e.target.value)}
+                onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
+                disabled={!isEditing || field.key === 'studentId' || field.key === 'displayName'}
+                className={`font-poppins h-10 w-full rounded-xl border-none px-2 py-2 text-base transition-colors outline-none lg:h-12 lg:px-6 lg:text-lg ${
+                  !isEditing || field.key === 'studentId' || field.key === 'displayName'
+                    ? 'cursor-not-allowed bg-gray-900/50 text-gray-300'
+                    : 'border border-white/10 bg-gray-900/50'
+                }`}
+              />
+            </div>
+          ))}
+        </div>
 
-        <div className="space-y-8 w-full flex-2/3">
+        <div className="w-full flex-2/3 space-y-8">
           <p className="font-poppins mb-2 text-xs lg:mb-4 lg:text-base">Social media</p>
           <div className="space-y-4">
             {socialMediaFields.map((field) => (
@@ -147,7 +148,7 @@ function ProfileForm({
             Edit Information
           </button>
         ) : (
-          <div className="flex flex-wrap w-full gap-4">
+          <div className="flex w-full flex-wrap gap-4">
             <button
               onClick={onConfirm}
               className="font-poppins w-full flex-1 rounded-xl border border-white/10 bg-purple-900/60 px-6 py-2 text-sm text-white transition-colors hover:bg-purple-900/80 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-12 lg:text-base"

@@ -12,25 +12,19 @@ const Page = () => {
   return (
     //     {/* Main content */}
     <MainLayout>
-      <div className="px-4 mt-12">
+      <div className="mt-12 px-4">
         {/* Character cards grid - 2x2 on larger screens, single column on mobile */}
-        <div className="mb-8 grid grid-cols-1 justify-items-center gap-16 md:grid-cols-2 mx-auto max-w-3xl">
+        <div className="mx-auto mb-8 grid max-w-3xl grid-cols-1 justify-items-center gap-16 md:grid-cols-2">
           <CombinedCoven
             covenType="alchemireCoven"
             onClick={() => handleCovenClick('alchemireCoven')}
           />
-          <CombinedCoven
-            covenType="etheraCoven"
-            onClick={() => handleCovenClick('etheraCoven')}
-          />
+          <CombinedCoven covenType="etheraCoven" onClick={() => handleCovenClick('etheraCoven')} />
           <CombinedCoven
             covenType="zireliaCoven"
             onClick={() => handleCovenClick('zireliaCoven')}
           />
-          <CombinedCoven
-            covenType="isotarCoven"
-            onClick={() => handleCovenClick('isotarCoven')}
-          />
+          <CombinedCoven covenType="isotarCoven" onClick={() => handleCovenClick('isotarCoven')} />
         </div>
 
         {/* Detail section */}

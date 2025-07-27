@@ -49,7 +49,7 @@ function Page() {
 
   return (
     <MainLayout>
-      <div className="mt-4 w-full space-y-8 md:space-y-16 p-4 xl:px-0 max-w-5xl mx-auto">
+      <div className="mx-auto mt-4 w-full max-w-5xl space-y-8 p-4 md:space-y-16 xl:px-0">
         <div className="font-poppins flex w-full flex-col gap-4 rounded-2xl border border-white/10 bg-gray-900/50 p-6 shadow-lg backdrop-blur-lg sm:flex-row md:gap-8">
           <Picture
             src={user.profilePic || profilePic || '/assets/img-placeholder.png'}

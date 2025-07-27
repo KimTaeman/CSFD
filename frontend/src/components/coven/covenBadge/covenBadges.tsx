@@ -58,8 +58,8 @@ const CombinedCoven: React.FC<CombinedCovenProps> = ({ covenType, onClick, class
 
   const textContent = (
     <div className={`flex flex-1/2 flex-col items-start justify-start space-y-2 lg:text-center`}>
-      <h3 className="font-ribeye w-full text-md md:text-xl text-white xl:text-2xl">{coven.name}</h3>
-      <p className="font-inter w-full text-xs md:text-sm text-white/80 xl:text-lg">{coven.role}</p>
+      <h3 className="font-ribeye text-md w-full text-white md:text-xl xl:text-2xl">{coven.name}</h3>
+      <p className="font-inter w-full text-xs text-white/80 md:text-sm xl:text-lg">{coven.role}</p>
     </div>
   );
 

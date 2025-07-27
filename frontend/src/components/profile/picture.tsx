@@ -21,18 +21,18 @@ function Picture({
 }: PictureProps) {
   return (
     <div
-      className="relative aspect-[5/7] max-h-[175px] max-w-[20%] justify-center rounded-lg overflow-hidden max-sm:mx-auto max-sm:max-w-[50%]"
+      className="relative aspect-[5/7] max-h-[175px] max-w-[20%] justify-center overflow-hidden rounded-lg max-sm:mx-auto max-sm:max-w-[50%]"
       style={{ cursor: onClick ? 'pointer' : undefined }}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       tabIndex={onClick ? 0 : undefined}
     >
-      <div className={`aspect-[5/7] justify-center rounded-lg overflow-hidden ${className || ''}`}>
+      <div className={`aspect-[5/7] justify-center overflow-hidden rounded-lg ${className || ''}`}>
         <img
           src={src}
           alt={alt || 'Image'}
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
           loading="lazy"
           decoding="async"
         />

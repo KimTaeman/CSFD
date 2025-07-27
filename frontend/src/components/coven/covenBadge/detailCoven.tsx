@@ -15,8 +15,8 @@ const DetailCoven = () => {
           </p>
           <p>
             Some of us do more than just write code, we open doors to new possibilities. We don't
-            just analyze data, we start to see the future in it. And when we define variables,
-            we're not just holding values, we're capturing potential.
+            just analyze data, we start to see the future in it. And when we define variables, we're
+            not just holding values, we're capturing potential.
           </p>
           <p>
             You're not just learning logic. You're learning to shape the invisible rules that guide
