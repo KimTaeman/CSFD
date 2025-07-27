@@ -18,7 +18,7 @@ interface IAuthContext {
 
 const guessCorrect = async (id: number) => {
   const response = await api.get(`/students/${id}/isCorrect`);
-  return response.data.info.isFound;
+  return response.data.info;
 };
 
 const logoutUser = async () => {
@@ -57,12 +57,12 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const guessMutation = useMutation({
     mutationFn: guessCorrect,
-    onSuccess: (isFound) => {
+    onSuccess: (guessCheck) => {
       const oldData = queryClient.getQueryData(['authUser']);
       if (oldData) {
         queryClient.setQueryData(['authUser'], {
           ...oldData,
-          isFound,
+          guessCheck,
         });
       }
     },
