@@ -26,7 +26,6 @@ function Page() {
   const [isRevealingCode, setIsRevealingCode] = useState(false);
   const [isRevealComplete, setIsRevealComplete] = useState(false);
 
-
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<StudentInfo | null>(null);
 
@@ -161,7 +160,6 @@ function Page() {
   const handleHintChange = useCallback((id: string, content: string) => {
     setDraftHints((prev) => prev.map((hint) => (hint.id === id ? { ...hint, content } : hint)));
   }, []);
-
 
   if (!user || !students || (!user.isSenior && user.guessCheck?.isFound === undefined))
     return <LoadingLayout />;
