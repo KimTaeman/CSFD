@@ -26,7 +26,7 @@ function AuthCallback() {
     checkUserStatus();
   }, [navigate]);
 
-  return <LoadingLayout/>;
+  return <LoadingLayout />;
 }
 
 export default AuthCallback;
