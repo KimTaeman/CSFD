@@ -57,25 +57,25 @@ const CombinedCoven: React.FC<CombinedCovenProps> = ({ covenType, onClick, class
   }
 
   const textContent = (
-    <div className="flex flex-1 flex-col items-start justify-start space-y-2">
-      <h3 className="font-ribeye text-xl text-white xl:text-3xl">{coven.name}</h3>
-      <p className="font-inter text-sm text-white/80 xl:text-lg">{coven.role}</p>
+    <div className={`flex flex-col flex-1/2 items-start justify-start space-y-2 lg:text-center`}>
+      <h3 className="font-ribeye text-xl text-white xl:text-2xl w-full">{coven.name}</h3>
+      <p className="font-inter text-sm text-white/80 xl:text-lg w-full">{coven.role}</p>
     </div>
   );
 
   const imageContent = (
-    <div className="subtle-float has-[+button:hover]:animate-wiggle-more flex w-full min-w-40 justify-center md:max-w-40">
+    <div className="subtle-float has-[+button:hover]:animate-wiggle-more flex flex-1/2 w-auto lg:w-full max-lg:max-h-[10rem] lg:max-w-40 items-center-safe justify-center-safe">
       <img src={coven.image} alt={coven.name} className="pointer-events-none" />
     </div>
   );
 
   return (
     <div
-      className={`glowing-border ${glowClass} w-full max-w-85 transform rounded-3xl border border-white/30 bg-gradient-to-br from-black/50 to-purple-800/60 backdrop-blur-lg transition-all duration-500 ease-in-out select-none hover:scale-[1.02] ${onClick ? 'cursor-pointer' : ''} ${className}`}
+      className={`glowing-border ${glowClass} justify-enter px-4 w-full max-w-85 transform rounded-3xl border border-white/30 bg-gradient-to-br from-black/50 to-purple-800/60 backdrop-blur-lg transition-all duration-500 ease-in-out select-none hover:scale-[1.02] ${onClick ? 'cursor-pointer' : ''} ${className}`}
       onClick={onClick}
     >
       <div
-        className={`ipadpro-px-2 flex ${coven.imagePosition === 'left' ? 'flex-col-reverse' : 'flex-col'} items-center px-8 py-6 sm:flex-row md:px-4`}
+        className={`flex ${coven.imagePosition === 'left' ? 'flex-row-reverse' : 'flex-row'} items-center px-4 py-6 sm:flex-row gap-6`}
       >
         {coven.imagePosition === 'left' ? (
           <>

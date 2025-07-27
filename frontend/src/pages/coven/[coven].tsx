@@ -49,7 +49,7 @@ const Page = () => {
         </div>
 
         {/* Cards grid */}
-        <div className="mx-auto grid max-w-4xl grid-cols-1 items-center justify-center gap-8 sm:grid-cols-2">
+        <div className="px-4 sm:mx-auto flex flex-wrap sm:grid max-w-4xl grid-cols-1 items-center justify-center gap-8 sm:grid-cols-2">
           {students
             .filter((user: StudentInfo) => `${user?.house?.toLowerCase()}Coven` === coven)
             .filter((user: StudentInfo) => user.isHouseLeader === true)
@@ -62,7 +62,7 @@ const Page = () => {
             ))}
         </div>
 
-        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
+        <div className="px-4 mx-auto flex flex-wrap sm:grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
           {students
             .filter((user: StudentInfo) => `${user?.house?.toLowerCase()}Coven` === coven)
             .filter((user: StudentInfo) => user.isHouseLeader === false)

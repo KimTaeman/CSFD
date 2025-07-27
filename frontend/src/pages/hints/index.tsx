@@ -154,7 +154,7 @@ function Page() {
 
   return (
     <MainLayout>
-      <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-20">
+      <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-4">
         {isSenior &&
           (user.mentees as Mentee[]).map((mentee, index) => {
             const menteeHints = draftHints.slice(index * 3, index * 3 + 3);

@@ -495,8 +495,8 @@ button:disabled {
   50% {
     box-shadow:
       0 0 20px var(--glow-color-end),
-      0 0 30px var(--glow-color-end),
-      0 0 40px var(--glow-color-end);
+      0 0 25px var(--glow-color-end),
+      0 0 30px var(--glow-color-end);
   }
   100% {
     box-shadow:
