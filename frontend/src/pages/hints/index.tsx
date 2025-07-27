@@ -18,7 +18,6 @@ import ProfilePopup from '@/components/coven/profilePopup';
 
 function Page() {
   const { user, students, updateGuessStatus } = useAuthContext();
-  console.log(user.guessCheck?.isFound);
   const [guessState, setGuessState] = useState<GuessState>('n/a');
   const [revealedCount, setRevealedCount] = useState(0);
   const [luckyCode, setLuckyCode] = useState<string | null>(null);
@@ -26,6 +25,7 @@ function Page() {
   const [guessInput, setGuessInput] = useState('');
   const [isRevealingCode, setIsRevealingCode] = useState(false);
   const [isRevealComplete, setIsRevealComplete] = useState(false);
+
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<StudentInfo | null>(null);
@@ -39,7 +39,6 @@ function Page() {
     setIsModalOpen(false);
     setSelectedUser(null);
   };
-
   const listOfCodes = students
     ? students
         .filter(
@@ -163,12 +162,11 @@ function Page() {
     setDraftHints((prev) => prev.map((hint) => (hint.id === id ? { ...hint, content } : hint)));
   }, []);
 
+
   if (!user || !students || (!user.isSenior && user.guessCheck?.isFound === undefined))
     return <LoadingLayout />;
 
   const isSenior = user.isSenior;
-  console.log(user);
-  console.log(students);
   return (
     <MainLayout>
       <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0 xl:py-20">
@@ -176,7 +174,6 @@ function Page() {
           (user.mentees as Mentee[]).map((mentee, index) => {
             const menteeHints = draftHints.slice(index * 3, index * 3 + 3);
             const isEditingThisMentee = editingMenteeId === mentee.id;
-            console.log('menteeHints', menteeHints);
             return (
               <div key={mentee.id} className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
                 <MenteeCard mentee={mentee} user={user as User} index={index} />
