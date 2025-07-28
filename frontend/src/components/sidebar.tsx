@@ -144,71 +144,82 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
       {/* Mobile sidebar */}
       <div className="lg:hidden">
         {shouldShowMobile && (
-          <aside
-            className="sidebar-dark-glow fixed top-4 left-16 z-[1000] flex max-w-70 flex-col rounded-2xl"
-            role="navigation"
-          >
-            {/* Close button */}
-            <button
-              className="absolute top-12 -right-3 h-6 w-6 transition-all duration-200 hover:scale-110 focus:ring-2 focus:ring-white/50 focus:outline-none active:scale-95"
-              onClick={handleCollapse}
+          <>
+            {/* Mobile backdrop */}
+            <div className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-lg" onClick={onClose} />
+
+            <aside
+              className="sidebar-dark-glow xs:left-4 xs:right-4 fixed top-4 right-2 left-2 z-[1000] flex max-h-[calc(100vh-2rem)] flex-col rounded-2xl sm:right-8 sm:left-8 lg:mx-auto lg:max-w-sm"
+              role="navigation"
             >
-              <img src="/assets/back-arrow.svg" alt="" className="h-6 w-6" role="presentation" />
-            </button>
-
-            {/* Main content */}
-            <div className="flex flex-1 flex-col">
-              <div className="p-4">
-                <p className="mt-2 mb-2 ml-2 font-[Inter] text-xs text-white/32">MENU</p>
-                <nav className="mr-2 ml-2 flex flex-col gap-4" role="menu">
-                  {menuItems.map((item) => {
-                    if (typeof item.condition === 'boolean' && !item.condition) return;
-
-                    return (
-                      <NavLink
-                        key={item.name}
-                        to={item.route}
-                        onClick={() => handleMenuClick(item.name)}
-                        className={({ isActive }) =>
-                          `flex min-h-[58px] items-center gap-4 rounded-xl py-2 pl-4 text-left transition-all duration-200 focus:ring-2 focus:ring-white/50 focus:outline-none ${
-                            isActive
-                              ? 'selected-glow text-white'
-                              : 'text-white/60 hover:bg-white/10'
-                          }`
-                        }
-                        role="menuitem"
-                      >
-                        <img
-                          src={item.icon}
-                          alt=""
-                          className="shadow-white-glow h-6 w-6 opacity-70"
-                          role="presentation"
-                        />
-                        <span className="shadow-white-glow font-[Inter] text-sm">{item.name}</span>
-                      </NavLink>
-                    );
-                  })}
-                </nav>
-              </div>
-            </div>
-
-            {/* Logout button  */}
-            <div className="mt-auto p-6 pt-0">
-              <MusicControls />
+              {/* Close button */}
               <button
-                onClick={handleLogout}
-                className="mb-1 flex min-h-[42px] w-full items-center rounded-xl bg-[rgba(140,58,170,1)] px-6 py-3 font-medium text-white transition-all duration-200 hover:brightness-110 focus:ring-2 focus:ring-purple-400 focus:outline-none active:scale-95 active:brightness-90"
+                className="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/20 transition-all duration-200 hover:scale-110 focus:ring-2 focus:ring-white/50 focus:outline-none active:scale-95"
+                onClick={handleCollapse}
               >
-                <img
-                  src="/assets/logout-icon.png"
-                  alt=""
-                  className="mr-2 h-5 w-5"
-                  role="presentation"
-                />
-                <span className="shadow-white-glow font-[Inter] text-sm">Logout</span>
+                <img src="/assets/back-arrow.svg" alt="" className="h-5 w-5" role="presentation" />
               </button>
-            </div>
-          </aside>
+
+              {/* Main content */}
+              <div className="flex flex-1 flex-col overflow-hidden">
+                <div className="p-4 pt-12">
+                  <p className="mt-2 mb-2 ml-2 font-[Inter] text-xs text-white/32">MENU</p>
+                  <nav className="mr-2 ml-2 flex flex-col gap-3 sm:gap-4" role="menu">
+                    {menuItems.map((item) => {
+                      if (typeof item.condition === 'boolean' && !item.condition) return;
+
+                      return (
+                        <NavLink
+                          key={item.name}
+                          to={item.route}
+                          onClick={() => handleMenuClick(item.name)}
+                          className={({ isActive }) =>
+                            `flex min-h-[50px] items-center gap-3 rounded-xl py-2 pr-2 pl-3 text-left transition-all duration-200 focus:ring-2 focus:ring-white/50 focus:outline-none sm:min-h-[58px] sm:gap-4 sm:pl-4 ${
+                              isActive
+                                ? 'selected-glow text-white'
+                                : 'text-white/60 hover:bg-white/10'
+                            }`
+                          }
+                          role="menuitem"
+                        >
+                          <img
+                            src={item.icon}
+                            alt=""
+                            className="shadow-white-glow h-5 w-5 flex-shrink-0 opacity-70 sm:h-6 sm:w-6"
+                            role="presentation"
+                          />
+                          <span className="shadow-white-glow truncate font-[Inter] text-sm">
+                            {item.name}
+                          </span>
+                        </NavLink>
+                      );
+                    })}
+                  </nav>
+                </div>
+              </div>
+
+              {/* Logout button */}
+              <div className="mt-auto p-4 pt-0">
+                <div className="mb-4">
+                  <MusicControls />
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="mb-1 flex min-h-[42px] w-full items-center justify-center rounded-xl bg-[rgba(140,58,170,1)] px-4 py-3 font-medium text-white transition-all duration-200 hover:brightness-110 focus:ring-2 focus:ring-purple-400 focus:outline-none active:scale-95 active:brightness-90 sm:justify-start sm:px-6"
+                >
+                  <img
+                    src="/assets/logout-icon.png"
+                    alt=""
+                    className="h-5 w-5 sm:mr-2"
+                    role="presentation"
+                  />
+                  <span className="shadow-white-glow hidden font-[Inter] text-sm sm:inline">
+                    Logout
+                  </span>
+                </button>
+              </div>
+            </aside>
+          </>
         )}
       </div>
     </>
