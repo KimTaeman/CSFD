@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import type { FormField, ProfileData, SocialMediaField } from '@/types/profile.types';
 import { useFormNavigation } from '@/hooks/useFormNavigation';
 import { useAuthContext } from '@/hooks/useAuthContext';
+import { IconBrandDiscord, IconBrandInstagram, IconBrandLine } from '@tabler/icons-react';
 
 interface ProfileFormProps {
   isEditing: boolean;
@@ -54,16 +55,24 @@ function ProfileForm({
       {
         key: 'instagram',
         label: 'Instagram',
-        icon: '/assets/instagram-icon.svg',
-        iconColor: 'text-pink-500',
+        icon: (
+          <IconBrandInstagram className="absolute top-1/2 left-3 h-6 w-6 -translate-y-1/2 transform text-pink-500 lg:left-6" />
+        ),
       },
       {
         key: 'discord',
         label: 'Discord',
-        icon: '/assets/discord-icon.svg',
-        iconColor: 'text-indigo-400',
+        icon: (
+          <IconBrandDiscord className="absolute top-1/2 left-3 h-6 w-6 -translate-y-1/2 transform text-[#5865F2] lg:left-6" />
+        ),
       },
-      { key: 'line', label: 'LINE ID', icon: '/assets/line-icon.svg', iconColor: 'text-green-500' },
+      {
+        key: 'line',
+        label: 'LINE ID',
+        icon: (
+          <IconBrandLine className="absolute top-1/2 left-3 h-6 w-6 -translate-y-1/2 transform text-[#06C755] lg:left-6" />
+        ),
+      },
     ],
     [],
   );
@@ -82,13 +91,10 @@ function ProfileForm({
   return (
     <div className="w-full space-y-2">
       <div className="flex flex-col gap-8 md:flex-row">
-        <div className="w-full flex-1/3 space-y-4 md:space-y-8">
+        <div className="w-full flex-1/3 space-y-4">
           {formFields.map((field) => (
             <div key={field.key} className="space-y-0.5 lg:space-y-1.5">
-              <label
-                htmlFor={field.key}
-                className="font-poppins mb-2 block text-xs lg:mb-4 lg:text-base"
-              >
+              <label htmlFor={field.key} className="font-poppins mb-2 block text-xs lg:text-base">
                 {field.label}
               </label>
               <input
@@ -114,11 +120,7 @@ function ProfileForm({
           <div className="space-y-4">
             {socialMediaFields.map((field) => (
               <div key={field.key} className="relative">
-                <img
-                  src={field.icon}
-                  alt={`${field.label} icon`}
-                  className="absolute top-1/2 left-3 h-6 w-6 -translate-y-1/2 transform lg:left-6"
-                />
+                {field.icon}
                 <input
                   ref={(el) => setInputRef(field.key, el)}
                   id={field.key}
@@ -153,7 +155,7 @@ function ProfileForm({
               onClick={onConfirm}
               className="font-poppins w-full flex-1 rounded-xl border border-white/10 bg-purple-900/60 px-6 py-2 text-sm text-white transition-colors hover:bg-purple-900/80 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-12 lg:text-base"
             >
-              Confirm
+              Save
             </button>
             <button
               onClick={onCancel}

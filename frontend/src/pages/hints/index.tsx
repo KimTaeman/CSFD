@@ -186,7 +186,6 @@ function Page() {
 
                         <HintCard
                           key={hint.id}
-                          title={''}
                           description={hint.content}
                           stage={'shown'}
                           type={'senior'}
@@ -306,7 +305,6 @@ function Page() {
                 return (
                   <HintCard
                     key={hint?.id || `placeholder-${i}`}
-                    title={''}
                     description={description}
                     stage={'shown'}
                     type={'freshman'}

@@ -3,7 +3,7 @@ import ProfileForm from '@/components/profile/profile-form';
 import { useProfileState } from '@/hooks/useProfileState';
 import ProfilePicUpload from '@/components/profile/ProfilePicUpload';
 import { useProfilePicUpload } from '@/hooks/useProfilePicUpload';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainLayout from '../layout';
 import type { ProfileData } from '@/types/profile.types';
 import { useAuthContext } from '@/hooks/useAuthContext';
@@ -13,6 +13,7 @@ import {
   IdentificationIcon,
   LanguageIcon,
 } from '@heroicons/react/24/solid';
+import { IconCrown } from '@tabler/icons-react';
 
 function Page() {
   const { user } = useAuthContext();
@@ -81,9 +82,11 @@ function Page() {
 
             <div className="flex flex-row flex-wrap items-start gap-2">
               {user.house && (
-                <span className="inline-flex items-center gap-x-2 rounded-full bg-emerald-500/10 px-3 py-1 text-sm font-medium text-amber-400">
+                <span className="relative inline-flex items-center gap-x-2 rounded-full bg-emerald-500/10 px-3 py-1 text-sm font-medium text-amber-400">
                   <HomeIcon className="h-4 w-4 text-amber-500" />
                   {user.house}
+
+                  <IconCrown className="absolute -top-2 -right-1 size-4 rotate-20 fill-amber-500 text-amber-500" />
                 </span>
               )}
               {user.studentId && (
