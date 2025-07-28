@@ -1,21 +1,18 @@
-/* MusicControls.css */
-
-/* Define theme colors based on your UI screenshot */
 :root {
-  --glow-color: #a78bfa; /* A vibrant, light purple for glows and highlights */
-  --glow-color-faint: rgba(167, 139, 250, 0.5);
-  --thumb-color: #ddd6fe; /* A very light purple for the slider thumb */
-  --track-color: #3b2d70; /* A dark purple for the slider track */
-  --button-bg: #4c3d8e; /* Background for the button, slightly lighter than sidebar */
-  --icon-color: #e0e0e0; /* Off-white for the icons */
+  --glow-color: rgb(204, 139, 139);
+  --glow-color-faint: rgba(204, 139, 139, 0.4);
+  --thumb-color: rgb(230, 200, 200);
+  --track-color: rgba(255, 255, 255, 0.15);
+  --icon-color: #e0e0e0;
+  --hover-bg: rgba(255, 255, 255, 0.1);
 }
 
 .music-controls {
-  margin-top: 1.5rem; /* Equivalent to mt-6 */
   display: flex;
   align-items: center;
-  gap: 0.75rem; /* A bit more spacing */
-  padding-left: 0.5rem; /* Align with the logout button */
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
 }
 
 /* === Control Button Styling === */
@@ -25,31 +22,37 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  background-color: var(--button-bg);
+  background-color: transparent;
   color: var(--icon-color);
-  border: 1px solid var(--glow-color-faint);
-  border-radius: 50%; /* Make it circular */
+  border: 1px solid var(--hover-bg);
+  border-radius: 0.75rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  box-shadow: 0 0 5px transparent;
 }
 
 .control-button:hover {
-  border-color: var(--glow-color);
-  box-shadow: 0 0 8px var(--glow-color);
-  background-color: color-mix(in srgb, var(--button-bg) 85%, white);
+  background-color: var(--hover-bg);
+  border-color: var(--glow-color-faint);
+  box-shadow: 0 0 8px var(--glow-color-faint);
 }
 
 .control-button svg {
   color: var(--icon-color);
+  opacity: 0.8;
+  transition: all 0.2s ease-in-out;
+}
+
+.control-button:hover svg {
+  opacity: 1;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
 }
 
 /* === Volume Slider Styling === */
 .volume-slider {
-  -webkit-appearance: none; /* Hides the default slider */
+  -webkit-appearance: none;
   appearance: none;
-  width: 100px; /* Adjust width as needed */
-  height: 6px;
+  width: 150px;
+  height: 5px;
   background: var(--track-color);
   border-radius: 5px;
   outline: none;
@@ -57,52 +60,33 @@
 }
 
 /* --- Slider Thumb (the handle) --- */
-
-/* -webkit- (Chrome, Safari, Opera, Edge) */
 .volume-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   background: var(--thumb-color);
   border-radius: 50%;
   border: 1px solid var(--glow-color);
-  box-shadow: 0 0 8px var(--glow-color);
-  margin-top: -6px; /* Center thumb on the track */
+  box-shadow: 0 0 10px var(--glow-color);
+  margin-top: -5.5px;
   transition: transform 0.2s ease-in-out;
 }
 
 .volume-slider:hover::-webkit-slider-thumb {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
-/* -moz- (Firefox) */
 .volume-slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   background: var(--thumb-color);
   border-radius: 50%;
   border: 1px solid var(--glow-color);
-  box-shadow: 0 0 8px var(--glow-color);
+  box-shadow: 0 0 10px var(--glow-color);
   transition: transform 0.2s ease-in-out;
 }
 
 .volume-slider:hover::-moz-range-thumb {
-  transform: scale(1.1);
-}
-
-/* --- Slider Track (the bar) --- */
-
-.volume-slider::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 6px;
-  background: var(--track-color);
-  border-radius: 5px;
-}
-
-.volume-slider::-moz-range-track {
-  width: 100%;
-  height: 6px;
-  background: var(--track-color);
-  border-radius: 5px;
+  transform: scale(1.15);
 }
