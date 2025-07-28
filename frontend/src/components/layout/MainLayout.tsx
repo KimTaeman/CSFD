@@ -58,7 +58,7 @@ const MainLayout = ({ children, showSidebar = true }: MainLayoutProps) => {
 
         {/* Main Content */}
         <main
-          className={`flex flex-1 flex-col items-center justify-start py-20 xl:px-12 xl:py-10 xl:pr-20 ${ipadProPadding}`}
+          className={`flex flex-1 flex-col items-center justify-start py-20 xl:px-12 xl:py-14 xl:pr-20 ${ipadProPadding}`}
         >
           {children}
         </main>

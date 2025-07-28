@@ -23,6 +23,7 @@ const Page = () => {
       navigate('/coven');
       return;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coven, navigate]);
 
   const handleOpenModal = (user: StudentInfo): void => {
@@ -41,7 +42,7 @@ const Page = () => {
     <MainLayout>
       {/* <div className="flex"> */}
       {/* Main content area */}
-      <div className="flex w-full flex-col space-y-8">
+      <div className="flex w-full flex-col space-y-8 max-sm:overflow-x-clip">
         <div className="mb-16 flex items-center justify-center">
           <CombinedCoven
             covenType={coven as 'alchemireCoven' | 'etheraCoven' | 'isotarCoven' | 'zireliaCoven'}
@@ -49,7 +50,7 @@ const Page = () => {
         </div>
 
         {/* Cards grid */}
-        <div className="mx-auto grid max-w-4xl grid-cols-1 items-center justify-center gap-8 sm:grid-cols-2">
+        <div className="flex max-w-4xl grid-cols-1 flex-wrap items-center justify-center gap-8 px-4 sm:mx-auto sm:grid sm:grid-cols-2">
           {students
             .filter((user: StudentInfo) => `${user?.house?.toLowerCase()}Coven` === coven)
             .filter((user: StudentInfo) => user.isHouseLeader === true)
@@ -63,7 +64,7 @@ const Page = () => {
             ))}
         </div>
 
-        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
+        <div className="mx-auto flex max-w-4xl grid-cols-1 flex-wrap gap-8 px-4 sm:grid sm:grid-cols-2 md:grid-cols-3">
           {students
             .filter((user: StudentInfo) => `${user?.house?.toLowerCase()}Coven` === coven)
             .filter((user: StudentInfo) => user.isHouseLeader === false)
