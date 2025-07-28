@@ -161,6 +161,34 @@ function Page() {
     setDraftHints((prev) => prev.map((hint) => (hint.id === id ? { ...hint, content } : hint)));
   }, []);
 
+  function renderDescription(description: React.ReactNode) {
+    if (typeof description !== 'string') return description;
+
+    // Regex to match URLs
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = description.split(urlRegex);
+
+    return (
+      <>
+        {parts.map((part, i) =>
+          urlRegex.test(part) ? (
+            <a
+              key={i}
+              href={part}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 underline hover:text-blue-300"
+            >
+              {part}
+            </a>
+          ) : (
+            <span key={i}>{part}</span>
+          ),
+        )}
+      </>
+    );
+  }
+
   if (!user || !students || (!user.isSenior && user.guessCheck?.isFound === undefined))
     return <LoadingLayout />;
 
@@ -186,7 +214,9 @@ function Page() {
 
                         <HintCard
                           key={hint.id}
-                          description={hint.content}
+                          description={
+                            isEditingThisMentee ? hint.content : renderDescription(hint.content)
+                          }
                           stage={'shown'}
                           type={'senior'}
                           editable={isEditingThisMentee}
@@ -305,7 +335,7 @@ function Page() {
                 return (
                   <HintCard
                     key={hint?.id || `placeholder-${i}`}
-                    description={description}
+                    description={renderDescription(description)}
                     stage={'shown'}
                     type={'freshman'}
                     editable={false}
