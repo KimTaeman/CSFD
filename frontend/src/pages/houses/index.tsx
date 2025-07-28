@@ -59,6 +59,16 @@ const Page = () => {
   if (showWelcome) {
     return (
       <div className="relative bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-cover">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="fixed inset-0 z-0 h-[105%] w-[105%] object-cover"
+        >
+          <source src="/videos/magic-pot.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
         <div className="absolute top-10 left-10">
           <MusicControls />
         </div>
@@ -82,6 +92,13 @@ const Page = () => {
   // Show main page with magic pot
   return (
     <div className="relative min-h-svh bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-cover bg-center bg-no-repeat">
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="fixed inset-0 z-0 h-[105%] w-[105%] object-cover"
+      ></video>
       <div className="absolute top-10 left-10">
         <MusicControls />
       </div>
