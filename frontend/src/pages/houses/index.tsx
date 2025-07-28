@@ -6,7 +6,6 @@ import LoginSuccess from '@/components/layout/loginSucceed';
 import api from '@/api/axios';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import MusicControls from '@/components/music-controls';
 import LoadingLayout from '@/components/layout/loading.tsx';
 
 const Page = () => {
@@ -20,7 +19,7 @@ const Page = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user?.nickname) {
+    if (user?.nickname || !user?.studentId) {
       navigate('/coven', { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

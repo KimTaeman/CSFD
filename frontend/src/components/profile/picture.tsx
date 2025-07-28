@@ -31,7 +31,7 @@ function Picture({
       <div className={`aspect-[5/7] justify-center overflow-hidden rounded-lg ${className || ''}`}>
         <img
           src={src}
-          alt={alt || 'Image'}
+          alt={alt || 'Profile'}
           className="h-full w-full object-cover"
           loading="lazy"
           decoding="async"

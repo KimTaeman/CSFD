@@ -56,7 +56,9 @@ function Page() {
             src={user.profilePic || profilePic || '/assets/img-placeholder.png'}
             alt={user.displayName}
             darken={hovered}
-            overlayText={hovered ? 'Change' : undefined}
+            overlayText={
+              !hovered ? undefined : !user.profilePic && !profilePic ? 'Upload' : 'Change'
+            }
             onClick={picUpload.openFileDialog}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
@@ -80,7 +82,7 @@ function Page() {
 
             <div className="my-4 h-px bg-white/10" />
 
-            <div className="flex flex-row flex-wrap items-start gap-2">
+            <div className="flex flex-row flex-wrap items-start gap-2 max-md:place-content-center max-md:content-center">
               {user.house && (
                 <span className="relative inline-flex items-center gap-x-2 rounded-full bg-emerald-500/10 px-3 py-1 text-sm font-medium text-amber-400">
                   <HomeIcon className="h-4 w-4 text-amber-500" />

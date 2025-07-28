@@ -166,6 +166,10 @@ function ProfileForm({
           </div>
         )}
       </div>
+
+      <p className="text-xs sm:text-sm text-center">
+        <span className="font-bold">Tip</span>: Tap your current profile picture to change it.
+      </p>
     </div>
   );
 }
