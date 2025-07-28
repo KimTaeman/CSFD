@@ -33,7 +33,7 @@ export const MenteeCard: FC<MenteeCardProps> = ({ mentee, user, index }) => {
         </div>
       </div>
 
-      <p className="mt-3 text-3xl font-bold text-white">{mentee.displayName}</p>
+      <p className="mt-3 text-xl md:text-3xl font-bold text-white">{mentee.displayName}</p>
 
       <div className="my-4 h-px bg-white/10" />
 

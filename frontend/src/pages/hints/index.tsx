@@ -181,7 +181,7 @@ function Page() {
                     return (
                       <div key={hint.id}>
                         <p className="mb-2 text-center font-mono text-lg tracking-wider text-yellow-300/80">
-                          Reveal in: {hintCountdown ? hintCountdown : 'Nuh Uh'}
+                          Reveal in {hintCountdown ? hintCountdown : 'Nuh Uh'}
                         </p>
 
                         <HintCard
