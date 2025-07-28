@@ -70,7 +70,7 @@ function Page() {
 
   const updateCountdown = useCallback(() => {
     const hintReleaseDates = [
-      toZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'),
+      toZonedTime(new Date(2025, 5, 29, 0, 0, 0), 'Asia/Bangkok'),
       toZonedTime(new Date(2025, 7, 1, 0, 0, 0), 'Asia/Bangkok'),
       toZonedTime(new Date(2025, 7, 3, 0, 0, 0), 'Asia/Bangkok'),
     ];
@@ -181,7 +181,7 @@ function Page() {
                     return (
                       <div key={hint.id}>
                         <p className="mb-2 text-center font-mono text-lg tracking-wider text-yellow-300/80">
-                          Reveal in {hintCountdown ? hintCountdown : 'Nuh Uh'}
+                          Reveal in {hintCountdown}
                         </p>
 
                         <HintCard
@@ -291,6 +291,7 @@ function Page() {
             <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
               {[...Array(3)].map((_, i) => {
                 const hint = user.hints[i];
+                console.log('hint', user);
                 const hintCountdown = countdown[i];
                 const description =
                   user.hints[i]?.content ||
