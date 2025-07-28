@@ -49,7 +49,7 @@ function Page() {
   };
 
   if (isAuthLoading) {
-    return
+    return;
   }
 
   return (
