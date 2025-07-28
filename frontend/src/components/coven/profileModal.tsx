@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils.ts';
 type ProfileModalProps = {
   user: StudentInfo;
   onClick?: () => void;
-  className: string;
+  className?: string;
 };
 
 const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClick, className }) => {
