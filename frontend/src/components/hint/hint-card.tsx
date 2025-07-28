@@ -56,7 +56,7 @@ function HintCard({
           ) : (
             // 3. WRAPPED <p> and made IT scrollable
             <div className="flex h-full w-full flex-1 overflow-y-auto">
-              <p className="max-h-full w-full overflow-y-auto px-2 py-1 text-center text-lg break-words whitespace-pre-line text-white lg:text-xl">
+              <p className="max-h-full w-full px-2 py-1 text-center text-lg break-words whitespace-pre-line text-white lg:text-xl">
                 {description}
               </p>
             </div>
