@@ -4,9 +4,10 @@ import type { StudentInfo } from '@/types/type';
 type ProfileModalProps = {
   user: StudentInfo;
   onClick?: () => void;
+  className: string;
 };
 
-const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClick }) => {
+const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClick, className }) => {
   return (
     <div onClick={onClick} className="customized-cursor relative w-full">
       {user.isHouseLeader && (

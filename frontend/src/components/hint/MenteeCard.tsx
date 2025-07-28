@@ -22,7 +22,7 @@ export interface MenteeCardProps {
 
 export const MenteeCard: FC<MenteeCardProps> = ({ mentee, user, index }) => {
   return (
-    <div className="font-poppins rounded-2xl border border-white/10 bg-gray-900/50 p-6 shadow-lg backdrop-blur-lg">
+    <div className="rounded-2xl border border-white/10 bg-gray-800/30 p-6 font-[Poppins] shadow-lg backdrop-blur-lg">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold tracking-wider text-gray-400 uppercase">
           Your Junior {user.mentees.length > 1 && `#${index + 1}`}

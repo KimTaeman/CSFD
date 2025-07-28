@@ -13,10 +13,11 @@ import { toZonedTime } from 'date-fns-tz';
 import { type Mentee, MenteeCard, type User } from '@/components/hint/MenteeCard';
 import type { StudentInfo } from '@/types/type';
 import MagicalOrb from '@/components/hint/Orb';
+import ProfileModal from '@/components/coven/profileModal';
+import ProfilePopup from '@/components/coven/profilePopup';
 
 function Page() {
   const { user, students, updateGuessStatus } = useAuthContext();
-
   const [guessState, setGuessState] = useState<GuessState>('n/a');
   const [revealedCount, setRevealedCount] = useState(0);
   const [luckyCode, setLuckyCode] = useState<string | null>(null);
@@ -25,6 +26,18 @@ function Page() {
   const [isRevealingCode, setIsRevealingCode] = useState(false);
   const [isRevealComplete, setIsRevealComplete] = useState(false);
 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedUser, setSelectedUser] = useState<StudentInfo | null>(null);
+
+  const handleOpenModal = (user: StudentInfo): void => {
+    setSelectedUser(user);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = (): void => {
+    setIsModalOpen(false);
+    setSelectedUser(null);
+  };
   const listOfCodes = students
     ? students
         .filter(
@@ -115,7 +128,7 @@ function Page() {
       queryClient.setQueryData(['authUser'], {
         ...user,
         lives: data.info.isCorrect ? user.lives : updatedLives,
-        isFound: data.info.isCorrect ? true : user.isFound,
+        guessCheck: data.info.isCorrect ? true : user.guessCheck,
       });
     },
   });
@@ -148,11 +161,10 @@ function Page() {
     setDraftHints((prev) => prev.map((hint) => (hint.id === id ? { ...hint, content } : hint)));
   }, []);
 
-  if (!user || !students || (!user.isSenior && user.isFound === undefined))
+  if (!user || !students || (!user.isSenior && user.guessCheck?.isFound === undefined))
     return <LoadingLayout />;
 
   const isSenior = user.isSenior;
-
   return (
     <MainLayout>
       <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0">
@@ -160,22 +172,30 @@ function Page() {
           (user.mentees as Mentee[]).map((mentee, index) => {
             const menteeHints = draftHints.slice(index * 3, index * 3 + 3);
             const isEditingThisMentee = editingMenteeId === mentee.id;
-
             return (
               <div key={mentee.id} className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
                 <MenteeCard mentee={mentee} user={user as User} index={index} />
                 <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
-                  {menteeHints.map((hint) => (
-                    <HintCard
-                      key={hint.id}
-                      title={''}
-                      description={hint.content}
-                      stage={'shown'}
-                      type={'senior'}
-                      editable={isEditingThisMentee}
-                      onChange={(v) => handleHintChange(hint.id, v)}
-                    />
-                  ))}
+                  {menteeHints.map((hint, i) => {
+                    const hintCountdown = countdown[i];
+                    return (
+                      <div key={hint.id}>
+                        <p className="mb-2 text-center font-mono text-lg tracking-wider text-yellow-300/80">
+                          Reveal in: {hintCountdown ? hintCountdown : 'Nuh Uh'}
+                        </p>
+
+                        <HintCard
+                          key={hint.id}
+                          title={''}
+                          description={hint.content}
+                          stage={'shown'}
+                          type={'senior'}
+                          editable={isEditingThisMentee}
+                          onChange={(v) => handleHintChange(hint.id, v)}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
                 <div className="mb-8 w-full">
                   <Guess
@@ -197,11 +217,33 @@ function Page() {
 
         {!isSenior && (
           <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
-            {user.isFound ? (
-              <div className="text-center text-white">
-                <h2 className="mb-4 text-3xl font-semibold">Congratulations!</h2>
-                <p className="mb-2 text-xl text-gray-300">You've already found your P'code.</p>
-                <sub className="text-gray-500">Now tell your P'Code to treat you to lunch</sub>
+            {user.guessCheck?.isFound ? (
+              // This container centers the entire block on the page
+              <div className="flex w-full flex-col items-center justify-center">
+                <div className="w-full rounded-xl border border-white/10 bg-gray-800/30 p-8 text-center text-white shadow-2xl backdrop-blur-lg">
+                  <h2 className="text-3xl font-bold text-purple-300">Congratulations!</h2>
+                  <p className="mt-2 text-xl text-gray-300">
+                    You have successfully found your P'code!
+                  </p>
+                  <p className="mt-4 text-gray-400">Ask them to treat you pizzzzza!</p>
+
+                  <hr className="my-6 border-white/10" />
+
+                  {/* This container centers the ProfileModal card horizontally */}
+                  <div className="flex justify-center">
+                    {students
+                      .filter((student: StudentInfo) => student.id === user.guessCheck?.seniorId)
+                      .map((student: StudentInfo) => (
+                        <ProfileModal
+                          key={student.studentId}
+                          user={student}
+                          onClick={() => handleOpenModal(student)}
+                          className="w-full md:w-50"
+                        />
+                      ))}
+                  </div>
+                </div>
+                <ProfilePopup isOpen={isModalOpen} onClose={handleCloseModal} user={selectedUser} />
               </div>
             ) : (
               <div className="font-poppins text-white">
@@ -275,7 +317,7 @@ function Page() {
               })}
             </div>
 
-            {!user.isFound && (
+            {!user.guessCheck?.isFound && (
               <div className="mb-8 w-full">
                 <Guess
                   onGuessSubmit={handleGuessSubmit}
@@ -288,7 +330,7 @@ function Page() {
                   inputHint={guessInput}
                   setInputHint={setGuessInput}
                   onLuckyDraw={handleLuckyDraw}
-                  luckyDrawDisabled={user.isFound || (user.lives ?? 3) <= 0}
+                  luckyDrawDisabled={user.guessCheck?.isFound || (user.lives ?? 3) <= 0}
                   luckyDrawLabel="🕯️ Invoke the Prophecy"
                 />
               </div>

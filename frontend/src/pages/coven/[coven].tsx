@@ -59,6 +59,7 @@ const Page = () => {
                 key={user.studentId}
                 user={user}
                 onClick={() => handleOpenModal(user)}
+                className="w-full"
               />
             ))}
         </div>
