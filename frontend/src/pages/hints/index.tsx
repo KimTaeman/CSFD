@@ -15,9 +15,11 @@ import type { StudentInfo } from '@/types/type';
 import MagicalOrb from '@/components/hint/Orb';
 import ProfileModal from '@/components/coven/profileModal';
 import ProfilePopup from '@/components/coven/profilePopup';
+import { useNavigate } from 'react-router-dom';
 
 function Page() {
-  const { user, students, updateGuessStatus } = useAuthContext();
+  const navigate = useNavigate();
+  const { user, students, updateGuessStatus, isLoading: isAuthLoading } = useAuthContext();
   const [guessState, setGuessState] = useState<GuessState>('n/a');
   const [revealedCount, setRevealedCount] = useState(0);
   const [luckyCode, setLuckyCode] = useState<string | null>(null);
@@ -188,6 +190,12 @@ function Page() {
       </>
     );
   }
+  useEffect(() => {
+    if (!isAuthLoading && !user) {
+      navigate('/', { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthLoading, user]);
 
   if (!user || !students || (!user.isSenior && user.guessCheck?.isFound === undefined))
     return <LoadingLayout />;

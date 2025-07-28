@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import RandomButton from '@/components/house/RandomButton';
 import NickName from '@/components/house/NicknamePopup';
@@ -6,10 +6,10 @@ import LoginSuccess from '@/components/layout/loginSucceed';
 import api from '@/api/axios';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import MusicControls from '@/components/music-controls';
+import LoadingLayout from '@/components/layout/loading.tsx';
 
 const Page = () => {
-  const { user } = useAuthContext();
+  const { user, isLoading: isAuthLoading } = useAuthContext();
   const queryClient = useQueryClient();
 
   const [showWelcome, setShowWelcome] = useState(true);
@@ -17,6 +17,13 @@ const Page = () => {
   const [nickname, setNickname] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user?.nickname || !user?.studentId) {
+      navigate('/coven', { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const mutation = useMutation({
     mutationFn: async (userNickname: string) => {
@@ -55,23 +62,14 @@ const Page = () => {
     // Navigate to the user's house
   };
 
+  if (isAuthLoading) {
+    return <LoadingLayout />;
+  }
+
   // Show welcome page
   if (showWelcome) {
     return (
       <div className="relative bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-cover">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="fixed inset-0 z-0 h-[105%] w-[105%] object-cover"
-        >
-          <source src="/videos/magic-pot.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <div className="absolute top-10 left-10">
-          <MusicControls />
-        </div>
         <div className="light-particle-colored">
           <div className="flex h-svh w-full flex-col items-center justify-center space-y-8 px-12">
             <div className="flex flex-col items-center justify-center text-center">
@@ -91,17 +89,7 @@ const Page = () => {
 
   // Show main page with magic pot
   return (
-    <div className="relative min-h-svh bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-cover bg-center bg-no-repeat">
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="fixed inset-0 z-0 h-[105%] w-[105%] object-cover"
-      ></video>
-      <div className="absolute top-10 left-10">
-        <MusicControls />
-      </div>
+    <div className="relative min-h-svh bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-cover bg-fixed bg-top bg-no-repeat">
       {/* Login Success Notification */}
       {showLoginSuccess && (
         <div className="fixed top-8 left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300 ease-in-out">
@@ -111,7 +99,11 @@ const Page = () => {
 
       <div className="pot-light-particle-colored h-svh">
         <div className="flex h-svh flex-col items-center justify-center px-12 py-20">
-          <img className="pot-width w-full" src="/assets/magic-pot.png" alt="Magic Pot" />
+          <img
+            className="pot-width animated-drift pointer-events-none w-full select-none"
+            src="/assets/magic-pot.png"
+            alt="Magic Pot"
+          />
           <RandomButton onClick={handleRandomClick} isLoading={loading} />
         </div>
       </div>

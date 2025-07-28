@@ -12,7 +12,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClick, className })
   return (
     <div onClick={onClick} className={cn('customized-cursor relative w-full', className)}>
       {user.isHouseLeader && (
-        <div className="animate-wiggle absolute -top-10 -right-5 z-50 h-20 w-20 rotate-25 bg-cover">
+        <div className="animate-wiggle absolute -top-10 -right-5 z-10 h-20 w-20 rotate-25 bg-cover">
           <img src={`/assets/hat-${user.house}.png`} alt="house hat" />
         </div>
       )}
