@@ -23,9 +23,19 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
 
   const menuItems: MenuItem[] = useMemo(
     () => [
-      { name: 'Profile', icon: '/assets/profile-icon.png', route: '/profile', condition: !!user?.studentId },
+      {
+        name: 'Profile',
+        icon: '/assets/profile-icon.png',
+        route: '/profile',
+        condition: !!user?.studentId,
+      },
       { name: 'Coven', icon: '/assets/covan-icon.svg', route: '/coven' },
-      { name: 'Hints', icon: '/assets/help-icon.svg', route: '/hints', condition: !!user?.studentId },
+      {
+        name: 'Hints',
+        icon: '/assets/help-icon.svg',
+        route: '/hints',
+        condition: !!user?.studentId,
+      },
     ],
     [user],
   );
@@ -78,7 +88,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
                   <p className="mt-2 mb-4 ml-7 font-[Inter] text-xs text-white/32">MENU</p>
                   <nav className="mr-2 ml-2 flex flex-col gap-4" role="menu">
                     {menuItems.map((item) => {
-                      if (typeof item.condition === "boolean" && !item.condition) return;
+                      if (typeof item.condition === 'boolean' && !item.condition) return;
 
                       return (
                         <NavLink
@@ -152,7 +162,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
                 <p className="mt-2 mb-2 ml-2 font-[Inter] text-xs text-white/32">MENU</p>
                 <nav className="mr-2 ml-2 flex flex-col gap-4" role="menu">
                   {menuItems.map((item) => {
-                    if (typeof item.condition === "boolean" && !item.condition) return;
+                    if (typeof item.condition === 'boolean' && !item.condition) return;
 
                     return (
                       <NavLink
