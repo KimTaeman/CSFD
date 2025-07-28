@@ -103,7 +103,7 @@ const MusicControls = React.memo(() => {
         {playing ? <IconPlayerPause /> : <IconPlayerPlay />}
       </button>
 
-      <div className="volume-control" role="group" aria-label="Volume control">
+      <div className="volume-control w-full" role="group" aria-label="Volume control">
         <input
           ref={sliderRef}
           type="range"
@@ -112,7 +112,7 @@ const MusicControls = React.memo(() => {
           step={0.01}
           value={volume}
           onChange={handleVolumeChange}
-          className="volume-slider customized-cursor"
+          className="volume-slider customized-cursor flex-1"
           aria-label={volumeAriaLabel}
           aria-valuetext={`${volumePercentage}%`}
           title={`Volume: ${volumePercentage}% (Use arrow keys to adjust)`}
