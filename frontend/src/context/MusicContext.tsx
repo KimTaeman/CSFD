@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useRef, useState, useEffect, useCallback, useMemo } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from 'react';
 
 const MusicContext = createContext<{
   playing: boolean;
@@ -38,12 +46,15 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, []);
 
-  const contextValue = useMemo(() => ({
-    playing,
-    toggle,
-    setVolume,
-    volume
-  }), [playing, toggle, setVolume, volume]);
+  const contextValue = useMemo(
+    () => ({
+      playing,
+      toggle,
+      setVolume,
+      volume,
+    }),
+    [playing, toggle, setVolume, volume],
+  );
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -81,12 +92,12 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const events = ['click', 'keydown', 'touchstart'];
-    events.forEach(event => {
+    events.forEach((event) => {
       document.addEventListener(event, handleFirstInteraction, { once: true, passive: true });
     });
 
     return () => {
-      events.forEach(event => {
+      events.forEach((event) => {
         document.removeEventListener(event, handleFirstInteraction);
       });
     };
