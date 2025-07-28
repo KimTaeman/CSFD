@@ -8,7 +8,7 @@ const MusicControls = () => {
     <div className="music-controls">
       <button
         onClick={toggle}
-        className="control-button"
+        className="customized-cursor control-button"
         aria-label={playing ? 'Pause music' : 'Play music'}
       >
         {playing ? (
@@ -47,7 +47,7 @@ const MusicControls = () => {
         step={0.01}
         value={volume}
         onChange={(e) => setVolume(Number(e.target.value))}
-        className="volume-slider"
+        className="volume-slider customized-cursor"
         aria-label="Music volume"
       />
     </div>
