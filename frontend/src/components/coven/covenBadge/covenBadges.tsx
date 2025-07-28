@@ -8,7 +8,7 @@ interface CovenData {
   imagePosition: 'left' | 'right';
 }
 
-const covenData: Record<string, CovenData> = {
+export const covenData: Record<string, CovenData> = {
   alchemireCoven: {
     name: 'Alchemire',
     role: 'Potion Brewer',
@@ -35,7 +35,7 @@ const covenData: Record<string, CovenData> = {
   },
 };
 
-type CovenType = 'alchemireCoven' | 'etheraCoven' | 'isotarCoven' | 'zireliaCoven';
+export type CovenType = 'alchemireCoven' | 'etheraCoven' | 'isotarCoven' | 'zireliaCoven';
 
 interface CombinedCovenProps extends CovenProps {
   covenType: keyof typeof covenData;
