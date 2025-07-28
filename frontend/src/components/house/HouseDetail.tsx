@@ -1,4 +1,4 @@
-import { housesData, type HouseData } from '@/pages/houses/[house]';
+import type { HouseData } from '@/types/house.types';
 
 interface HouseDetailsProps {
   houseData: HouseData;

@@ -115,7 +115,9 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
                   <HomeIcon className="h-4 w-4 text-amber-500" />
                   {user.house}
 
-                  <IconCrown className="absolute -top-2 -right-1 size-4 rotate-20 fill-amber-500 text-amber-500" />
+                  {user.isHouseLeader && (
+                    <IconCrown className="absolute -top-2 -right-1 size-4 rotate-20 fill-amber-500 text-amber-500" />
+                  )}
                 </span>
               )}
               {user.studentId && (
