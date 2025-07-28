@@ -21,7 +21,7 @@ function Picture({
 }: PictureProps) {
   return (
     <div
-      className="relative aspect-[5/7] max-h-[175px] max-w-[20%] justify-center overflow-hidden rounded-lg max-sm:mx-auto max-sm:max-w-[50%]"
+      className="customized-cursor relative aspect-[5/7] max-h-[175px] max-w-[20%] justify-center overflow-hidden rounded-lg max-sm:mx-auto max-sm:max-w-[50%]"
       style={{ cursor: onClick ? 'customized-cursor' : undefined }}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
