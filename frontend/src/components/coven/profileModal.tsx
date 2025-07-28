@@ -4,11 +4,12 @@ import type { StudentInfo } from '@/types/type';
 type ProfileModalProps = {
   user: StudentInfo;
   onClick?: () => void;
+  className: string;
 };
 
-const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClick }) => {
+const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClick, className }) => {
   return (
-    <div onClick={onClick} className="relative w-full cursor-pointer">
+    <div onClick={onClick} className={`relative cursor-pointer ${className}`}>
       {user.isHouseLeader && (
         <div className="animate-wiggle absolute -top-10 -right-5 z-50 h-20 w-20 rotate-25 bg-cover">
           <img src={`/assets/hat-${user.house}.png`} alt="house hat" />

@@ -92,10 +92,14 @@ const guessMentor = async (id: number, guess: string) => {
 const guessCorrect = async (id: number) => {
   const result = await prisma.mentor.findUnique({
     where: { juniorId: id },
-    select: { isFound: true, juniorId: true },
+    select: { isFound: true, juniorId: true, seniorId: true },
   });
 
   if (!result) return null;
+
+  if (result.isFound) {
+    return result;
+  }
 
   const randomSeniorId = Math.floor(Math.random() * 56) + 1;
 
