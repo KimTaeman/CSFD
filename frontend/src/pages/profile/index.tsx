@@ -14,28 +14,31 @@ import {
   LanguageIcon,
 } from '@heroicons/react/24/solid';
 import { IconCrown } from '@tabler/icons-react';
+import LoadingLayout from '@/components/layout/loading.tsx';
+import { useNavigate } from 'react-router-dom';
 
 function Page() {
+  const navigate = useNavigate();
   const { user, isLoading: isAuthLoading } = useAuthContext();
   const { isEditing, handleEditClick, handleConfirm, handleCancel } = useProfileState();
   const [formData, setFormData] = useState<ProfileData | null>(null);
 
-  // Profile picture state
   const [profilePic, setProfilePic] = useState<string | null>(null);
-
-  // Profile pic upload modal state/logic
   const picUpload = useProfilePicUpload();
-
-  // Track hover
   const [hovered, setHovered] = useState(false);
 
-  // Load profilePic from localStorage on mount
+  useEffect(() => {
+    if (!isAuthLoading && !user) {
+      navigate('/', {replace: true})
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthLoading, user]);
+
   useEffect(() => {
     const storedPic = localStorage.getItem('profilePic');
     if (storedPic) setProfilePic(storedPic);
   }, []);
 
-  // Save profilePic to localStorage whenever it changes
   useEffect(() => {
     if (profilePic) {
       localStorage.setItem('profilePic', profilePic);
@@ -49,7 +52,7 @@ function Page() {
   };
 
   if (isAuthLoading) {
-    return;
+    return <LoadingLayout/>;
   }
 
   return (
