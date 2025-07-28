@@ -26,8 +26,9 @@ function HintCard({
   const descriptionAsString = typeof description === 'string' ? description : '';
 
   return (
-    <div className="font-poppins relative mx-auto flex h-32 w-full max-w-[94%] flex-col rounded-2xl border border-white/10 bg-gray-800/30 p-4 shadow-lg backdrop-blur-lg sm:h-32 md:h-48 lg:h-48 lg:max-w-110">
-      <div className="relative flex flex-1 flex-col justify-start">
+    // 1. REMOVED overflow-y-auto, ADDED overflow-hidden
+    <div className="font-poppins relative mx-auto flex h-32 w-full max-w-[94%] flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-800/30 p-4 shadow-lg backdrop-blur-lg sm:h-32 md:h-48 lg:h-48 lg:max-w-110">
+      <div className="relative flex h-25 flex-1 flex-col justify-start md:h-40">
         {stage === 'shown' ? (
           editable ? (
             <div className="relative h-full flex-1">
@@ -46,15 +47,16 @@ function HintCard({
                 value={descriptionAsString}
                 onChange={handleInputChange}
                 maxLength={MAX_LENGTH}
+                // 2. CHANGED fixed heights to h-full to be responsive to parent
                 className="h-full w-full resize-none rounded-lg bg-transparent p-2 text-lg text-white outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-500/80 lg:text-xl"
                 rows={3}
                 placeholder="Type your hint here..."
               />
             </div>
           ) : (
-            // Read-only view
-            <div className="flex h-full w-full flex-1 items-center justify-center overflow-hidden">
-              <p className="max-h-full w-full overflow-y-auto px-2 py-1 text-center text-lg break-words whitespace-pre-line text-white lg:text-xl">
+            // 3. WRAPPED <p> and made IT scrollable
+            <div className="flex h-full w-full flex-1 overflow-y-auto">
+              <p className="max-h-full w-full px-2 py-1 text-center text-lg break-words whitespace-pre-line text-white lg:text-xl">
                 {description}
               </p>
             </div>
