@@ -138,8 +138,9 @@ body {
   background-color: #1c0635;
 }
 
-.customized-cursor,
-button {
+a,
+button,
+.customized-cursor {
   cursor:
     url('/pointer-cursor.png') 0 0,
     pointer;

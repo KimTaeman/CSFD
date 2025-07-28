@@ -8,7 +8,7 @@ type ProfileModalProps = {
 
 const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClick }) => {
   return (
-    <div onClick={onClick} className="relative w-full cursor-pointer">
+    <div onClick={onClick} className="customized-cursor relative w-full">
       {user.isHouseLeader && (
         <div className="animate-wiggle absolute -top-10 -right-5 z-50 h-20 w-20 rotate-25 bg-cover">
           <img src={`/assets/hat-${user.house}.png`} alt="house hat" />
