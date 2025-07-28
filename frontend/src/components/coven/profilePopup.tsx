@@ -142,7 +142,7 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
                     {social.icon}
                     {social.handle ? (
                       social.name === 'Discord' ? (
-                        <p className="text-md text-black sm:text-lg">{social.handle}</p>
+                        <p className="text-md text-gray-300 sm:text-lg">{social.handle}</p>
                       ) : (
                         <a
                           href={getSocialLink(social.name, social.handle)}
