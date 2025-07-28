@@ -72,7 +72,7 @@ const Page = () => {
         <div className="flex min-h-svh flex-col items-center justify-center space-y-9 scroll-auto px-12 py-20">
           <div>
             <img
-              className="animated-drift has-[+button:hover]:animate-wiggle-more w-full max-w-[320px] select-none pointer-events-none"
+              className="animated-drift has-[+button:hover]:animate-wiggle-more pointer-events-none w-full max-w-[320px] select-none"
               src={houseInfo.img}
               alt={houseInfo.name}
             />

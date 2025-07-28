@@ -64,7 +64,7 @@ const Page = () => {
   };
 
   if (isAuthLoading) {
-    return <LoadingLayout/>;
+    return <LoadingLayout />;
   }
 
   // Show welcome page
@@ -100,7 +100,11 @@ const Page = () => {
 
       <div className="pot-light-particle-colored h-svh">
         <div className="flex h-svh flex-col items-center justify-center px-12 py-20">
-          <img className="pot-width w-full select-none pointer-events-none animated-drift" src="/assets/magic-pot.png" alt="Magic Pot" />
+          <img
+            className="pot-width animated-drift pointer-events-none w-full select-none"
+            src="/assets/magic-pot.png"
+            alt="Magic Pot"
+          />
           <RandomButton onClick={handleRandomClick} isLoading={loading} />
         </div>
       </div>
