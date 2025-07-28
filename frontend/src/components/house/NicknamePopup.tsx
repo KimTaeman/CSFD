@@ -22,8 +22,8 @@ const NickName: React.FC<NickNameProps> = ({ onSubmit }) => {
       <form onSubmit={handleSubmit} className="font-inter space-y-6 font-medium">
         <input
           type="text"
-          placeholder="Nickname (English)"
-          pattern="[A-Za-z]+"
+          placeholder="Nickname (letters, spaces, hyphens, apostrophes)"
+          pattern="^[A-Za-z][A-Za-z '-]*$"
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
           className="w-full rounded-xl border border-white/10 bg-gray-900/50 px-5 py-4 text-gray-300 placeholder-gray-400 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-orange-400 focus:outline-none"
