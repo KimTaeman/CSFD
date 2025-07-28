@@ -29,7 +29,7 @@ function Page() {
 
   useEffect(() => {
     if (!isAuthLoading && !user) {
-      navigate('/', {replace: true})
+      navigate('/', { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthLoading, user]);
@@ -52,7 +52,7 @@ function Page() {
   };
 
   if (isAuthLoading) {
-    return <LoadingLayout/>;
+    return <LoadingLayout />;
   }
 
   return (
