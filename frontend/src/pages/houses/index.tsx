@@ -6,6 +6,7 @@ import LoginSuccess from '@/components/layout/loginSucceed';
 import api from '@/api/axios';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import MusicControls from '@/components/music-controls';
 
 const Page = () => {
   const { user } = useAuthContext();
@@ -57,7 +58,10 @@ const Page = () => {
   // Show welcome page
   if (showWelcome) {
     return (
-      <div className="bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-cover">
+      <div className="relative bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-cover">
+        <div className="absolute top-10 left-10">
+          <MusicControls />
+        </div>
         <div className="light-particle-colored">
           <div className="flex h-svh w-full flex-col items-center justify-center space-y-8 px-12">
             <div className="flex flex-col items-center justify-center text-center">
@@ -77,7 +81,10 @@ const Page = () => {
 
   // Show main page with magic pot
   return (
-    <div className="min-h-svh bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-cover bg-center bg-no-repeat">
+    <div className="relative min-h-svh bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-cover bg-center bg-no-repeat">
+      <div className="absolute top-10 left-10">
+        <MusicControls />
+      </div>
       {/* Login Success Notification */}
       {showLoginSuccess && (
         <div className="fixed top-8 left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300 ease-in-out">
