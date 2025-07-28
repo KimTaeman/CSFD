@@ -13,9 +13,9 @@ const MainLayout = ({ children, showSidebar = true }: MainLayoutProps) => {
   const location = useLocation();
 
   let ipadProPadding = '';
-  if (location.pathname.includes('/profile/profile-page')) {
+  if (location.pathname.includes('/profile/')) {
     ipadProPadding = 'ipadpro-pl-profile';
-  } else if (location.pathname.includes('/hint/hint-page')) {
+  } else if (location.pathname.includes('/hint/')) {
     ipadProPadding = 'ipadpro-pl-hint';
   }
 

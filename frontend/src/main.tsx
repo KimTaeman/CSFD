@@ -7,6 +7,7 @@ import ErrorLayout from '@/components/layout/error.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthContextProvider } from './context/AuthContext';
 import { App } from './app';
+import { MusicProvider } from './context/MusicContext';
 
 const container = document.getElementById('root');
 
@@ -25,7 +26,9 @@ root.render(
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <AuthContextProvider>
-            <App />
+            <MusicProvider>
+              <App />
+            </MusicProvider>
           </AuthContextProvider>
         </BrowserRouter>
       </QueryClientProvider>

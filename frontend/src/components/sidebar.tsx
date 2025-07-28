@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { NavLink } from 'react-router';
 import { useAuthContext } from '@/hooks/useAuthContext';
+import MusicControls from './music-controls';
 
 interface MenuItem {
   name: string;
@@ -100,6 +101,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
 
               {/* Logout button  */}
               <div className="mt-auto p-6">
+                <MusicControls />
                 <button
                   onClick={handleLogout}
                   className="mb-1 flex min-h-[42px] w-full items-center justify-between rounded-xl bg-[rgba(140,58,170,1)] px-6 py-3 font-medium text-white transition-all duration-200 hover:brightness-110 focus:ring-2 focus:ring-purple-400 focus:outline-none active:scale-95 active:brightness-90"
@@ -165,6 +167,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
 
             {/* Logout button  */}
             <div className="mt-auto p-6 pt-0">
+              <MusicControls />
               <button
                 onClick={handleLogout}
                 className="mb-1 flex min-h-[42px] w-full items-center justify-between rounded-xl bg-[rgba(140,58,170,1)] px-6 py-3 font-medium text-white transition-all duration-200 hover:brightness-110 focus:ring-2 focus:ring-purple-400 focus:outline-none active:scale-95 active:brightness-90"
