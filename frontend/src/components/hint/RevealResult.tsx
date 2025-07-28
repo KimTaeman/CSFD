@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface RevealResultProps {
   state: 'success' | 'fail';
@@ -6,6 +6,17 @@ interface RevealResultProps {
 }
 
 const RevealResult: React.FC<RevealResultProps> = ({ state, outOfAttempts = false }) => {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {});
+    }
+  }, [state]);
+
+  const audioSrc = state === 'success' ? '/success-2.mp3' : '/fail.mp3';
+
   return (
     <div className="relative flex h-[25vw] max-h-[350px] w-[98%] max-w-[1400px] flex-col items-center justify-start px-[1%] pt-[1%]">
       {/* Radial gradient background | radial-hint-bg is in index.css */}
@@ -59,6 +70,7 @@ const RevealResult: React.FC<RevealResultProps> = ({ state, outOfAttempts = fals
           </svg>
         </div>
       </div>
+      <audio ref={audioRef} src={audioSrc} preload="auto" />
     </div>
   );
 };

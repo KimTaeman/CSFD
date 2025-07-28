@@ -64,7 +64,7 @@ function Page() {
           <div className="flex w-full flex-col">
             <div className="flex flex-wrap items-center justify-between">
               <h3 className="text-sm font-semibold tracking-wider text-gray-400 uppercase">
-                Your Profile {user.mentees.length > 1 && `#${1 + 1}`}
+                Your Profile {user.mentees?.length > 1 && `#${1 + 1}`}
               </h3>
               <div
                 className={`flex items-center gap-x-1.5 rounded-full ${user.isSenior ? 'bg-red-500/10 text-red-400' : 'bg-purple-500/10 text-purple-400'} px-2.5 py-1 text-sm font-medium`}
