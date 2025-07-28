@@ -126,7 +126,7 @@ html,
 body {
   min-height: 100svh;
   cursor:
-    url('/default-cursor.png') 0 0,
+    url('/cursor/default-cursor.png') 0 0,
     auto;
 }
 
@@ -142,7 +142,7 @@ a,
 button,
 .customized-cursor {
   cursor:
-    url('/pointer-cursor.png') 0 0,
+    url('/cursor/pointer-cursor.png') 0 0,
     pointer;
 }
 

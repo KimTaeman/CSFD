@@ -5,15 +5,18 @@ import { useAuthContext } from './hooks/useAuthContext';
 import LoadingLayout from '@/components/layout/loading';
 
 export const App = () => {
-  const { isAuthenticated } = useAuthContext();
+  const { isAuthenticated, isLoading } = useAuthContext();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
+    if (isLoading) return;
+
     if (!isAuthenticated && location.pathname !== '/' && !location.pathname.startsWith('/auth')) {
       navigate('/', { replace: true });
     }
-  }, [isAuthenticated, location.pathname, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, location.pathname, isLoading]);
 
   const pageContent = useRoutes(routes);
 
