@@ -24,7 +24,7 @@ export const App = () => {
   return (
     <>
       <UnauthorizedPopup />
-      <Suspense fallback={<LoadingLayout />}>{pageContent}</Suspense>;
+      <Suspense fallback={<LoadingLayout />}>{pageContent}</Suspense>
     </>
   );
 };
