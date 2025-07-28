@@ -79,6 +79,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     onSuccess: () => {
       queryClient.setQueryData(['authUser'], null);
       navigate('/');
+      navigate(0);
     },
   });
 

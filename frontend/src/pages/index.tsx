@@ -35,7 +35,7 @@ function Page() {
           <p className="animate-fade animate-once animate-delay-300 text-gray-200">
             Please sign in using your Microsoft account
             <br />
-            <span className="font-semibold text-white">(student-id@ad.sit.kmutt.ac.th)</span>
+            <span className="font-semibold text-white">(@ad.sit.kmutt.ac.th)</span>
           </p>
 
           {/* Login Button */}

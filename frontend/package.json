@@ -12,10 +12,11 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@tabler/icons-react": "^3.34.1",
     "@tailwindcss/vite": "^4.1.10",
     "@tanstack/react-query": "^5.83.0",
     "@vitejs/plugin-react-oxc": "^0.2.3",
-    "axios": "^1.10.0",
+    "axios": "^1.11.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",

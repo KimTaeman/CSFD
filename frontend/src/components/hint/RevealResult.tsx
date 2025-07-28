@@ -15,7 +15,7 @@ const RevealResult: React.FC<RevealResultProps> = ({ state, outOfAttempts = fals
     }
   }, [state]);
 
-  const audioSrc = state === 'success' ? '/success-2.mp3' : '/fail.mp3';
+  const audioSrc = state === 'success' ? '/sounds/success-2.mp3' : '/sounds/fail.mp3';
 
   return (
     <div className="relative flex h-[25vw] max-h-[350px] w-[98%] max-w-[1400px] flex-col items-center justify-start px-[1%] pt-[1%]">

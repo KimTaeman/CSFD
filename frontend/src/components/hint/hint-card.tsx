@@ -26,7 +26,7 @@ function HintCard({
   const descriptionAsString = typeof description === 'string' ? description : '';
 
   return (
-    <div className="relative mx-auto flex h-32 w-full max-w-[94%] flex-col rounded-2xl border border-white/10 bg-gray-800/30 p-4 font-[Poppins] shadow-lg backdrop-blur-lg sm:h-32 md:h-48 lg:h-48 lg:max-w-110">
+    <div className="font-poppins relative mx-auto flex h-32 w-full max-w-[94%] flex-col rounded-2xl border border-white/10 bg-gray-800/30 p-4 shadow-lg backdrop-blur-lg sm:h-32 md:h-48 lg:h-48 lg:max-w-110">
       <div className="relative flex flex-1 flex-col justify-start">
         {stage === 'shown' ? (
           editable ? (

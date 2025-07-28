@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 type GuessState = 'n/a' | 'success' | 'fail';
 
@@ -14,7 +14,7 @@ interface GuessProps {
   onCancel?: () => void;
   isEditing: boolean;
   inputHint?: string;
-  setInputHint?: (val: string) => void;
+  setInputHint?: React.Dispatch<React.SetStateAction<string>>;
   onLuckyDraw?: () => void;
   luckyDrawDisabled?: boolean;
   luckyDrawLabel?: string;
@@ -39,6 +39,8 @@ function Guess({
 }: GuessProps) {
   const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = () => {
+    if (!inputHint || !setInputHint) return;
+
     const isValid = /^[0-9]{3}$/.test(inputHint);
 
     if (!isValid) {
@@ -64,6 +66,7 @@ function Guess({
 
     // Allow only digits, and only up to 3 of them.
     if (/^[0-9]{0,3}$/.test(value)) {
+      if (!setInputHint) return;
       setInputHint(value);
     }
     if (errorMessage) {
@@ -81,9 +84,9 @@ function Guess({
       {/* Main container for inputs and buttons */}
       <div className="flex w-full flex-col gap-3 lg:flex-row lg:items-center lg:gap-4">
         {isSenior ? (
-          <div>
+          <div className="w-full">
             {isEditing ? (
-              <div className="flex w-full flex-col gap-3 lg:-mt-13 lg:mb-4 lg:flex-row lg:justify-start lg:gap-4">
+              <div className="flex w-full flex-col gap-3 lg:mb-4 lg:flex-row lg:justify-start lg:gap-4">
                 <button
                   onClick={onConfirm}
                   className="min-w-[140px] rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500 lg:flex-1 lg:rounded-2xl"
