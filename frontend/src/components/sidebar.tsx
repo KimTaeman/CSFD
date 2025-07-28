@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { NavLink } from 'react-router';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import MusicControls from './music-controls';
@@ -7,6 +7,7 @@ interface MenuItem {
   name: string;
   icon: string;
   route: string;
+  condition?: boolean;
 }
 
 interface SidebarProps {
@@ -17,16 +18,26 @@ interface SidebarProps {
 }
 
 function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
-  const { logout } = useAuthContext();
+  const { user, logout, isLoading: isAuthLoading } = useAuthContext();
   const [active, setActive] = useState('Profile');
 
   const menuItems: MenuItem[] = useMemo(
     () => [
-      { name: 'Profile', icon: '/assets/profile-icon.png', route: '/profile' },
+      {
+        name: 'Profile',
+        icon: '/assets/profile-icon.png',
+        route: '/profile',
+        condition: !!user?.studentId,
+      },
       { name: 'Coven', icon: '/assets/covan-icon.svg', route: '/coven' },
-      { name: 'Hints', icon: '/assets/help-icon.svg', route: '/hints' },
+      {
+        name: 'Hints',
+        icon: '/assets/help-icon.svg',
+        route: '/hints',
+        condition: !!user?.studentId,
+      },
     ],
-    [],
+    [user],
   );
 
   const handleMenuClick = useCallback(
@@ -52,6 +63,10 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
   const shouldShowDesktop = true;
   const shouldShowMobile = isOpen;
 
+  if (isAuthLoading) {
+    return null;
+  }
+
   return (
     <>
       {/* Desktop sidebar  */}
@@ -72,29 +87,35 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
                 <div className="p-4">
                   <p className="mt-2 mb-4 ml-7 font-[Inter] text-xs text-white/32">MENU</p>
                   <nav className="mr-2 ml-2 flex flex-col gap-4" role="menu">
-                    {menuItems.map((item) => (
-                      <NavLink
-                        key={item.name}
-                        to={item.route}
-                        onClick={() => handleMenuClick(item.name)}
-                        className={({ isActive }) =>
-                          `flex min-h-[58px] items-center gap-4 rounded-xl px-6 py-2 text-left transition-all duration-200 focus:ring-2 focus:ring-white/50 focus:outline-none ${
-                            isActive
-                              ? 'selected-glow text-white'
-                              : 'text-white/60 hover:bg-white/10'
-                          }`
-                        }
-                        role="menuitem"
-                      >
-                        <img
-                          src={item.icon}
-                          alt=""
-                          className="shadow-white-glow h-6 w-6 opacity-70"
-                          role="presentation"
-                        />
-                        <span className="shadow-white-glow font-[Inter] text-sm">{item.name}</span>
-                      </NavLink>
-                    ))}
+                    {menuItems.map((item) => {
+                      if (typeof item.condition === 'boolean' && !item.condition) return;
+
+                      return (
+                        <NavLink
+                          key={item.name}
+                          to={item.route}
+                          onClick={() => handleMenuClick(item.name)}
+                          className={({ isActive }) =>
+                            `flex min-h-[58px] items-center gap-4 rounded-xl px-6 py-2 text-left transition-all duration-200 focus:ring-2 focus:ring-white/50 focus:outline-none ${
+                              isActive
+                                ? 'selected-glow text-white'
+                                : 'text-white/60 hover:bg-white/10'
+                            }`
+                          }
+                          role="menuitem"
+                        >
+                          <img
+                            src={item.icon}
+                            alt=""
+                            className="shadow-white-glow h-6 w-6 opacity-70"
+                            role="presentation"
+                          />
+                          <span className="shadow-white-glow font-[Inter] text-sm">
+                            {item.name}
+                          </span>
+                        </NavLink>
+                      );
+                    })}
                   </nav>
                 </div>
               </div>
@@ -140,27 +161,33 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
               <div className="p-4">
                 <p className="mt-2 mb-2 ml-2 font-[Inter] text-xs text-white/32">MENU</p>
                 <nav className="mr-2 ml-2 flex flex-col gap-4" role="menu">
-                  {menuItems.map((item) => (
-                    <NavLink
-                      key={item.name}
-                      to={item.route}
-                      onClick={() => handleMenuClick(item.name)}
-                      className={({ isActive }) =>
-                        `flex min-h-[58px] items-center gap-4 rounded-xl py-2 pl-4 text-left transition-all duration-200 focus:ring-2 focus:ring-white/50 focus:outline-none ${
-                          isActive ? 'selected-glow text-white' : 'text-white/60 hover:bg-white/10'
-                        }`
-                      }
-                      role="menuitem"
-                    >
-                      <img
-                        src={item.icon}
-                        alt=""
-                        className="shadow-white-glow h-6 w-6 opacity-70"
-                        role="presentation"
-                      />
-                      <span className="shadow-white-glow font-[Inter] text-sm">{item.name}</span>
-                    </NavLink>
-                  ))}
+                  {menuItems.map((item) => {
+                    if (typeof item.condition === 'boolean' && !item.condition) return;
+
+                    return (
+                      <NavLink
+                        key={item.name}
+                        to={item.route}
+                        onClick={() => handleMenuClick(item.name)}
+                        className={({ isActive }) =>
+                          `flex min-h-[58px] items-center gap-4 rounded-xl py-2 pl-4 text-left transition-all duration-200 focus:ring-2 focus:ring-white/50 focus:outline-none ${
+                            isActive
+                              ? 'selected-glow text-white'
+                              : 'text-white/60 hover:bg-white/10'
+                          }`
+                        }
+                        role="menuitem"
+                      >
+                        <img
+                          src={item.icon}
+                          alt=""
+                          className="shadow-white-glow h-6 w-6 opacity-70"
+                          role="presentation"
+                        />
+                        <span className="shadow-white-glow font-[Inter] text-sm">{item.name}</span>
+                      </NavLink>
+                    );
+                  })}
                 </nav>
               </div>
             </div>
