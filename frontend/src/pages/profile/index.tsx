@@ -16,7 +16,7 @@ import {
 import { IconCrown } from '@tabler/icons-react';
 
 function Page() {
-  const { user } = useAuthContext();
+  const { user, isLoading: isAuthLoading } = useAuthContext();
   const { isEditing, handleEditClick, handleConfirm, handleCancel } = useProfileState();
   const [formData, setFormData] = useState<ProfileData | null>(null);
 
@@ -48,16 +48,20 @@ function Page() {
     }
   };
 
+  if (isAuthLoading) {
+    return;
+  }
+
   return (
     <MainLayout>
       <div className="mx-auto mt-4 w-full max-w-5xl space-y-8 p-4 md:space-y-16 xl:px-0">
         <div className="font-poppins flex w-full flex-col gap-4 rounded-2xl border border-white/10 bg-gray-900/50 p-6 shadow-lg backdrop-blur-lg sm:flex-row md:gap-8">
           <Picture
-            src={user.profilePic || profilePic || '/assets/img-placeholder.png'}
-            alt={user.displayName}
+            src={user?.profilePic || profilePic || '/assets/img-placeholder.png'}
+            alt={user?.displayName}
             darken={hovered}
             overlayText={
-              !hovered ? undefined : !user.profilePic && !profilePic ? 'Upload' : 'Change'
+              !hovered ? undefined : !user?.profilePic && !profilePic ? 'Upload' : 'Change'
             }
             onClick={picUpload.openFileDialog}
             onMouseEnter={() => setHovered(true)}
@@ -67,18 +71,18 @@ function Page() {
           <div className="flex w-full flex-col">
             <div className="flex flex-wrap items-center justify-between">
               <h3 className="text-sm font-semibold tracking-wider text-gray-400 uppercase">
-                Your Profile {user.mentees?.length > 1 && `#${1 + 1}`}
+                Your Profile
               </h3>
               <div
-                className={`flex items-center gap-x-1.5 rounded-full ${user.isSenior ? 'bg-red-500/10 text-red-400' : 'bg-purple-500/10 text-purple-400'} px-2.5 py-1 text-sm font-medium`}
+                className={`flex items-center gap-x-1.5 rounded-full ${user?.isSenior ? 'bg-red-500/10 text-red-400' : 'bg-purple-500/10 text-purple-400'} px-2.5 py-1 text-sm font-medium`}
               >
                 <AcademicCapIcon className="h-4 w-4" />
 
-                {user.isSenior ? 'Senior' : 'Junior'}
+                {user?.isSenior ? 'Senior' : 'Junior'}
               </div>
             </div>
 
-            <p className="mt-3 text-lg font-bold text-white sm:text-3xl">{user.displayName}</p>
+            <p className="mt-3 text-lg font-bold text-white sm:text-3xl">{user?.displayName}</p>
 
             <div className="my-4 h-px bg-white/10" />
 
