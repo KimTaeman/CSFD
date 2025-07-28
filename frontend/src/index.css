@@ -122,10 +122,12 @@
   }
 }
 
-/* for the hint page ._. */
 html,
 body {
   min-height: 100svh;
+  cursor:
+    url('/default-cursor.png') 0 0,
+    auto;
 }
 
 #root {
@@ -136,9 +138,13 @@ body {
   background-color: #1c0635;
 }
 
+.customized-cursor,
 button {
-  cursor: pointer;
+  cursor:
+    url('/pointer-cursor.png') 0 0,
+    pointer;
 }
+
 button:disabled {
   cursor: not-allowed;
 }

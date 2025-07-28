@@ -71,7 +71,7 @@ const CombinedCoven: React.FC<CombinedCovenProps> = ({ covenType, onClick, class
 
   return (
     <div
-      className={`glowing-border ${glowClass} w-full max-w-85 transform rounded-3xl border border-white/30 bg-gradient-to-br from-black/50 to-purple-800/60 px-4 backdrop-blur-lg transition-all duration-500 ease-in-out select-none hover:scale-[1.02] ${onClick ? 'cursor-pointer' : ''} ${className}`}
+      className={`glowing-border customized-cursor ${glowClass} w-full max-w-85 transform rounded-3xl border border-white/30 bg-gradient-to-br from-black/50 to-purple-800/60 px-4 backdrop-blur-lg transition-all duration-500 ease-in-out select-none hover:scale-[1.02] ${onClick ? 'customized-cursor' : ''} ${className}`}
       onClick={onClick}
     >
       <div
