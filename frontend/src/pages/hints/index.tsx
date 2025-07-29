@@ -43,22 +43,25 @@ function Page() {
 
   const listOfCodes = students
     ? students
-      .filter(
-        (student: StudentInfo) =>
-          student?.house === user?.house && student?.isSenior == true && student?.studentId,
-      )
-      .map((student: StudentInfo) => student.studentId.slice(-3))
+        .filter(
+          (student: StudentInfo) =>
+            student?.house === user?.house && student?.isSenior == true && student?.studentId,
+        )
+        .map((student: StudentInfo) => student.studentId.slice(-3))
     : [];
 
   const [editingMenteeId, setEditingMenteeId] = useState<string | null>(null);
   const [draftHints, setDraftHints] = useState<Hint[]>([]);
   const [countdown, setCountdown] = useState<string[]>(['', '', '']);
 
-  const hintReleaseDates = useMemo(() => [
-    toZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'),
-    toZonedTime(new Date(2025, 7, 6, 0, 0, 0), 'Asia/Bangkok'),
-    toZonedTime(new Date(2025, 7, 9, 10, 0, 0), 'Asia/Bangkok'),
-  ], []);
+  const hintReleaseDates = useMemo(
+    () => [
+      toZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'),
+      toZonedTime(new Date(2025, 7, 6, 0, 0, 0), 'Asia/Bangkok'),
+      toZonedTime(new Date(2025, 7, 9, 10, 0, 0), 'Asia/Bangkok'),
+    ],
+    [],
+  );
 
   const handleLuckyDraw = () => {
     if (!listOfCodes.length) return;
@@ -229,9 +232,7 @@ function Page() {
 
                         <HintCard
                           key={hint.id}
-                          description={
-                            canEdit ? hint.content : renderDescription(hint.content)
-                          }
+                          description={canEdit ? hint.content : renderDescription(hint.content)}
                           stage={'shown'}
                           type={'senior'}
                           editable={canEdit}

@@ -16,7 +16,7 @@ import {
 import { IconCrown, IconUserScan } from '@tabler/icons-react';
 import LoadingLayout from '@/components/layout/loading.tsx';
 import { useNavigate } from 'react-router-dom';
-import {cn} from "@/lib/utils.ts";
+import { cn } from '@/lib/utils.ts';
 
 interface ProfilePicState {
   src: string;
@@ -37,7 +37,7 @@ function Page() {
     src: '', // Empty string indicates no image (will show icon)
     isLoading: false,
     isOptimistic: false,
-    timestamp: Date.now()
+    timestamp: Date.now(),
   });
 
   const [imageError, setImageError] = useState(false);
@@ -47,11 +47,11 @@ function Page() {
   // Initialize profile picture when user data loads
   useEffect(() => {
     if (user?.profilePic) {
-      setProfilePicState(prev => ({
+      setProfilePicState((prev) => ({
         src: user.profilePic,
         isLoading: false,
         isOptimistic: false,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       }));
     }
   }, [user?.profilePic]);
@@ -100,25 +100,25 @@ function Page() {
   // Handle profile picture upload states
   useEffect(() => {
     if (picUpload.isPending && !profilePicState.isLoading) {
-      setProfilePicState(prev => ({
+      setProfilePicState((prev) => ({
         ...prev,
-        isLoading: true
+        isLoading: true,
       }));
     }
 
     if (picUpload.isSuccess && profilePicState.isLoading) {
-      setProfilePicState(prev => ({
+      setProfilePicState((prev) => ({
         ...prev,
         isLoading: false,
-        isOptimistic: false
+        isOptimistic: false,
       }));
     }
 
     if (picUpload.isError && profilePicState.isLoading) {
-      setProfilePicState(prev => ({
+      setProfilePicState((prev) => ({
         ...prev,
         isLoading: false,
-        isOptimistic: false
+        isOptimistic: false,
       }));
     }
   }, [picUpload.isPending, picUpload.isSuccess, picUpload.isError, profilePicState.isLoading]);
@@ -140,9 +140,9 @@ function Page() {
       if (!newImageSrc.match(/^data:image\/(jpeg|jpg|png|gif|webp);base64,/i)) {
         console.warn('Invalid base64 format, skipping update');
         // Show error feedback to user
-        setProfilePicState(prev => ({
+        setProfilePicState((prev) => ({
           ...prev,
-          isLoading: false
+          isLoading: false,
         }));
         return;
       }
@@ -157,9 +157,9 @@ function Page() {
         atob(base64Data.substring(0, 100)); // Test decode first 100 chars
       } catch (error) {
         console.warn('Base64 validation failed:', error);
-        setProfilePicState(prev => ({
+        setProfilePicState((prev) => ({
           ...prev,
-          isLoading: false
+          isLoading: false,
         }));
         return;
       }
@@ -170,7 +170,7 @@ function Page() {
       src: newImageSrc,
       isLoading: true,
       isOptimistic: true,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
 
     // Clear the upload modal
@@ -207,9 +207,9 @@ function Page() {
         <div className="font-poppins flex w-full flex-col gap-4 rounded-2xl border border-white/10 bg-gray-900/50 p-6 shadow-lg backdrop-blur-lg sm:flex-row md:gap-8">
           <div
             className={cn(
-                'customized-cursor relative flex aspect-[5/7] max-h-[175px] max-w-[20%] justify-center overflow-hidden rounded-lg border border-gray-700/50 bg-gray-800/50 max-sm:mx-auto max-sm:max-w-[50%]',
-                shouldShowIcon || imageError || !finalImageUrl ? 'flex px-8' : null
-                )}
+              'customized-cursor relative flex aspect-[5/7] max-h-[175px] max-w-[20%] justify-center overflow-hidden rounded-lg border border-gray-700/50 bg-gray-800/50 max-sm:mx-auto max-sm:max-w-[50%]',
+              shouldShowIcon || imageError || !finalImageUrl ? 'flex px-8' : null,
+            )}
             style={{ cursor: profilePicState.isLoading ? 'not-allowed' : 'pointer' }}
             onClick={handlePictureClick}
             onMouseEnter={() => setHovered(true)}

@@ -10,7 +10,7 @@ import { useAuthContext } from '@/hooks/useAuthContext';
 
 const VALID_COVENS = ['alchemireCoven', 'etheraCoven', 'isotarCoven', 'zireliaCoven'] as const;
 
-type CovenType = typeof VALID_COVENS[number];
+type CovenType = (typeof VALID_COVENS)[number];
 
 const Page = () => {
   const { coven = '' } = useParams();
@@ -71,14 +71,17 @@ const Page = () => {
     setSelectedUser(null);
   }, []);
 
-  const renderProfileModal = useCallback((user: StudentInfo, className?: string) => (
-    <ProfileModal
-      key={user.studentId || `user-${user.displayName}-${Math.random()}`}
-      user={user}
-      onClick={() => handleOpenModal(user)}
-      className={className}
-    />
-  ), [handleOpenModal]);
+  const renderProfileModal = useCallback(
+    (user: StudentInfo, className?: string) => (
+      <ProfileModal
+        key={user.studentId || `user-${user.displayName}-${Math.random()}`}
+        user={user}
+        onClick={() => handleOpenModal(user)}
+        className={className}
+      />
+    ),
+    [handleOpenModal],
+  );
 
   if (isFetchingStudents) return <LoadingLayout />;
 
@@ -87,15 +90,13 @@ const Page = () => {
       <div className="flex w-full flex-col space-y-8 max-sm:overflow-x-clip">
         {/* Coven Header */}
         <div className="mb-16 flex items-center justify-center px-4">
-          <CombinedCoven
-            covenType={coven as CovenType}
-          />
+          <CombinedCoven covenType={coven as CovenType} />
         </div>
 
         {/* House Leaders Section */}
         {leaders.length > 0 && (
           <div className="flex max-w-4xl grid-cols-1 flex-wrap items-center justify-center gap-8 px-4 sm:mx-auto sm:grid sm:grid-cols-2">
-            {leaders.map((user) => renderProfileModal(user, "w-full"))}
+            {leaders.map((user) => renderProfileModal(user, 'w-full'))}
           </div>
         )}
 
@@ -111,18 +112,16 @@ const Page = () => {
           <div className="flex items-center justify-center py-16">
             <div className="text-center">
               <p className="text-lg text-gray-400">No wizard found in this coven</p>
-              <p className="text-sm text-gray-500 mt-2">Check back later or try a different coven</p>
+              <p className="mt-2 text-sm text-gray-500">
+                Check back later or try a different coven
+              </p>
             </div>
           </div>
         )}
       </div>
 
       {/* Profile Modal */}
-      <ProfilePopup
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        user={selectedUser}
-      />
+      <ProfilePopup isOpen={isModalOpen} onClose={handleCloseModal} user={selectedUser} />
     </MainLayout>
   );
 };

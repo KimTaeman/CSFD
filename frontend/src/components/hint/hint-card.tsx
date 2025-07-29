@@ -39,7 +39,7 @@ function HintCard({
         }, 150); // 150ms debounce
       };
     })(),
-    [onChange]
+    [onChange],
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -102,7 +102,7 @@ function HintCard({
 
       {type === 'senior' && isRevealed && !editable && (
         <div className="absolute top-2 right-2 z-10">
-          <div className="rounded-full bg-red-500/20 px-2 py-1 text-xs text-red-400 border border-red-500/30">
+          <div className="rounded-full border border-red-500/30 bg-red-500/20 px-2 py-1 text-xs text-red-400">
             Locked
           </div>
         </div>

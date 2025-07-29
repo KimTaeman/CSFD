@@ -57,37 +57,37 @@ const CombinedCoven: React.FC<CombinedCovenProps> = ({ covenType, onClick, class
   }
 
   const textContent = (
-    <div className="flex flex-1 flex-col items-center justify-center text-center lg:items-start lg:text-left min-w-0">
-      <h3 className="font-ribeye text-xl sm:text-2xl md:text-3xl text-white leading-tight">
+    <div className="flex min-w-0 flex-1 flex-col items-center justify-center text-center lg:items-start lg:text-left">
+      <h3 className="font-ribeye text-xl leading-tight text-white sm:text-2xl md:text-3xl">
         {coven.name}
       </h3>
-      <p className="font-inter text-sm sm:text-base md:text-lg text-white/80 mt-1 sm:mt-2">
+      <p className="font-inter mt-1 text-sm text-white/80 sm:mt-2 sm:text-base md:text-lg">
         {coven.role}
       </p>
     </div>
   );
 
   const imageContent = (
-    <div className="flex flex-shrink-0 items-center justify-center w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32">
+    <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-32 lg:w-32">
       <img
         src={coven.image}
         alt={coven.name}
-        className="w-full h-full object-contain pointer-events-none subtle-float hover:animate-wiggle-more transition-transform duration-300"
+        className="subtle-float hover:animate-wiggle-more pointer-events-none h-full w-full object-contain transition-transform duration-300"
       />
     </div>
   );
 
   // Determine layout: mobile is always column, desktop follows imagePosition
-  const desktopLayout = coven.imagePosition === 'left'
-    ? 'lg:flex-row-reverse'
-    : 'lg:flex-row';
+  const desktopLayout = coven.imagePosition === 'left' ? 'lg:flex-row-reverse' : 'lg:flex-row';
 
   return (
     <div
-      className={`glowing-border ${glowClass} w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto transform rounded-2xl sm:rounded-3xl border border-white/30 bg-gradient-to-br from-black/50 to-purple-800/60 backdrop-blur-lg transition-all duration-500 ease-in-out select-none hover:scale-[1.02] ${onClick ? 'cursor-pointer' : 'cursor-default'} ${className}`}
+      className={`glowing-border ${glowClass} mx-auto w-full max-w-sm transform rounded-2xl border border-white/30 bg-gradient-to-br from-black/50 to-purple-800/60 backdrop-blur-lg transition-all duration-500 ease-in-out select-none hover:scale-[1.02] sm:max-w-md sm:rounded-3xl md:max-w-lg ${onClick ? 'cursor-pointer' : 'cursor-default'} ${className}`}
       onClick={onClick}
     >
-      <div className={`flex flex-col ${desktopLayout} items-center gap-3 sm:gap-4 md:gap-6 p-4 sm:p-6 md:p-7`}>
+      <div
+        className={`flex flex-col ${desktopLayout} items-center gap-3 p-4 sm:gap-4 sm:p-6 md:gap-6 md:p-7`}
+      >
         {/* Image */}
         {imageContent}
 

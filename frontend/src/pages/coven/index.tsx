@@ -19,22 +19,22 @@ const Page = () => {
 
   return (
     <MainLayout>
-      <div className="w-full min-h-screen overflow-x-hidden">
+      <div className="min-h-screen w-full overflow-x-hidden">
         {/* Hero Section with Coven Grid */}
-        <div className="w-full px-4 py-6 sm:px-6 lg:px-8 sm:py-8">
+        <div className="w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
           <div className="mx-auto max-w-5xl">
             {/* Page Title */}
-            <div className="text-center mb-6 sm:mb-8 md:mb-10">
-              <h1 className="font-ribeye text-2xl sm:text-3xl md:text-4xl text-white mb-2">
+            <div className="mb-6 text-center sm:mb-8 md:mb-10">
+              <h1 className="font-ribeye mb-2 text-2xl text-white sm:text-3xl md:text-4xl">
                 Covens Directory
               </h1>
-              <p className="font-inter text-sm sm:text-base text-white/80">
+              <p className="font-inter text-sm text-white/80 sm:text-base">
                 Explore each coven and discover the wizards who belong to them
               </p>
             </div>
 
             {/* Coven Cards Grid */}
-            <div className="grid grid-cols-1 gap-5 sm:gap-6 min-[1240px]:grid-cols-2 min-[1240px]:gap-8 justify-items-center">
+            <div className="grid grid-cols-1 justify-items-center gap-5 min-[1240px]:grid-cols-2 min-[1240px]:gap-8 sm:gap-6">
               {covens.map((coven) => (
                 <div key={coven.type} className="w-full max-w-md">
                   <CombinedCoven
@@ -48,7 +48,7 @@ const Page = () => {
         </div>
 
         {/* Detail Section */}
-        <div className="w-full px-4 py-6 sm:px-6 lg:px-8 sm:py-8">
+        <div className="w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
           <div className="mx-auto max-w-5xl">
             <DetailCoven />
           </div>
