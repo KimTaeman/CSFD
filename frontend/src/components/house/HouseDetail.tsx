@@ -1,4 +1,4 @@
-import { housesData, type HouseData } from '@/pages/houses/[house]';
+import type { HouseData } from '@/types/house.types';
 
 interface HouseDetailsProps {
   houseData: HouseData;
@@ -7,16 +7,15 @@ interface HouseDetailsProps {
 const HouseDetail = ({ houseData }: HouseDetailsProps) => {
   return (
     <div className="detail-box-border-glow detail-box-particles detail-box-shimmer font-inter w-full max-w-5xl transform rounded-3xl bg-black/20 backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02]">
-      <div className="relative z-10 flex flex-col items-start justify-start space-y-6 p-7">
+      <div className="relative z-10 flex flex-col items-start justify-start space-y-2 p-6">
+        {/* Decorative Elements */}
+        <div className="mb-6 flex w-full justify-center" />
+
         {/* Detail Paragraphs */}
-        <div className="space-y-4">
-          <p className="font-inter text-left text-lg leading-relaxed font-medium break-words hyphens-auto text-white">
-            {houseData.detail1}
-          </p>
-          <p className="font-inter text-left text-lg leading-relaxed font-medium break-words hyphens-auto text-white">
-            {houseData.detail2}
-          </p>
-        </div>
+        <blockquote className="space-y-4 text-pretty break-words hyphens-auto text-white md:text-lg [&>p]:indent-4 md:[&>p]:indent-8">
+          <p>{houseData.detail1}</p>
+          <p>{houseData.detail2}</p>
+        </blockquote>
 
         {/* Decorative Elements */}
         <div className="mt-6 flex w-full justify-center">

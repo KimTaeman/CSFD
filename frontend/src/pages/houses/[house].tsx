@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import HousesButton from '@/components/house/HouseButton';
 import HouseDetail from '@/components/house/HouseDetail';
 import type { HouseData } from '@/types/house.types';
+import { covenData, type CovenType } from '@/components/coven/covenBadge/covenBadges.tsx';
 
 export const housesData: Record<string, HouseData> = {
   ethera: {
@@ -50,7 +51,7 @@ const Page = () => {
 
   useEffect(() => {
     if (!validHouse.includes(house)) {
-      navigate('/houses');
+      navigate('/houses', { replace: true });
       return;
     }
 
@@ -58,7 +59,8 @@ const Page = () => {
     if (currentHouseData) {
       setHouseInfo(currentHouseData);
     }
-  }, [house, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [house]);
 
   if (!houseInfo) {
     return <div>Loading...</div>;
@@ -68,11 +70,21 @@ const Page = () => {
     <div className="min-h-svh bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-cover bg-center bg-no-repeat">
       <div className="light-particle-colored dust-mote">
         <div className="flex min-h-svh flex-col items-center justify-center space-y-9 scroll-auto px-12 py-20">
-          <img
-            className="animated-drift has-[+button:hover]:animate-wiggle-more -ml-8 w-full max-w-[420px]"
-            src={houseInfo.img}
-            alt={houseInfo.name}
-          />
+          <div>
+            <img
+              className="animated-drift has-[+button:hover]:animate-wiggle-more pointer-events-none w-full max-w-[320px] select-none"
+              src={houseInfo.img}
+              alt={houseInfo.name}
+            />
+            <div className="flex flex-1/2 flex-col items-start justify-start space-y-2 text-center">
+              <h3 className="font-ribeye text-md w-full text-white md:text-xl xl:text-2xl">
+                {houseInfo.name}
+              </h3>
+              <p className="font-inter w-full text-xs text-white/80 md:text-sm xl:text-lg">
+                {covenData[`${houseInfo.name.toLowerCase()}Coven` as CovenType].role}
+              </p>
+            </div>
+          </div>
           <HousesButton houseData={houseInfo} />
           <HouseDetail houseData={houseInfo} />
         </div>

@@ -13,10 +13,7 @@ const RandomButton: React.FC<RandomButtonProps> = ({ onClick, isLoading }) => {
       <div className="detail-box-text flex flex-col px-5 py-2">
         {!isLoading ? (
           <div>
-            <span>Random your </span>
-            <div className="flex items-center">
-              <span>destiny coven</span>
-            </div>
+            <span>Random Your Destiny</span>
           </div>
         ) : (
           <span>Choosing Your Destiny...</span>

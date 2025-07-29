@@ -130,6 +130,8 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
             instagram: mentee.junior.instagram,
             discord: mentee.junior.discord,
             line: mentee.junior.line,
+            isFound: mentee.isFound,
+            foundAt: mentee.foundAt,
           }))
         : null,
       hints: isSenior ? student.givenHints : student.receivedHints,
@@ -139,7 +141,6 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
       line: student.line,
       lives: isSenior ? null : student.lives,
     };
-
     res.status(200).json(responseData);
   } catch (error) {
     next(error);

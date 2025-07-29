@@ -17,7 +17,11 @@ export interface StudentInfo {
   instagram: string;
   discord: string;
   line: string;
-  isFound?: boolean;
+  guessCheck?: {
+    isFound: boolean;
+    juniorId: number;
+    seniorId: number;
+  } | null;
   email: string;
   role: string;
   isHouseLeader: boolean | null;
@@ -31,6 +35,8 @@ export interface StudentInfo {
     discord: string | null;
     line: string | null;
     lives: number | null;
+    isFound: boolean | null;
+    foundAt: Date | null;
   }>;
   mentor?: {
     id: string;

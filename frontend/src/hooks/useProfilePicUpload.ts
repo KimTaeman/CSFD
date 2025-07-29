@@ -2,6 +2,7 @@ import api from '@/api/axios';
 import { useState, useCallback, useRef } from 'react';
 import { useAuthContext } from './useAuthContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 interface CropArea {
   x: number;
@@ -40,6 +41,7 @@ function getCroppedImg(imageSrc: string, crop: CropArea): Promise<string> {
 export function useProfilePicUpload() {
   const { user } = useAuthContext();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -86,6 +88,7 @@ export function useProfilePicUpload() {
       queryClient.invalidateQueries({ queryKey: ['authUser'] });
       setImageSrc(data.profilePic);
       close();
+      navigate(0);
     },
     onError: (e) => {
       console.error('Error uploading profile picture:', e);
@@ -100,6 +103,7 @@ export function useProfilePicUpload() {
       onSave(cropped);
       close();
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [imageSrc, croppedArea, uploadMutation],
   );
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 type GuessState = 'n/a' | 'success' | 'fail';
 
@@ -13,6 +13,11 @@ interface GuessProps {
   onConfirm?: () => void;
   onCancel?: () => void;
   isEditing: boolean;
+  inputHint?: string;
+  setInputHint?: React.Dispatch<React.SetStateAction<string>>;
+  onLuckyDraw?: () => void;
+  luckyDrawDisabled?: boolean;
+  luckyDrawLabel?: string;
 }
 
 function Guess({
@@ -26,10 +31,16 @@ function Guess({
   onConfirm = () => {},
   onCancel = () => {},
   isEditing,
+  inputHint,
+  setInputHint,
+  onLuckyDraw = () => {},
+  luckyDrawDisabled,
+  luckyDrawLabel,
 }: GuessProps) {
-  const [inputHint, setInputHint] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = () => {
+    if (!inputHint || !setInputHint) return;
+
     const isValid = /^[0-9]{3}$/.test(inputHint);
 
     if (!isValid) {
@@ -55,6 +66,7 @@ function Guess({
 
     // Allow only digits, and only up to 3 of them.
     if (/^[0-9]{0,3}$/.test(value)) {
+      if (!setInputHint) return;
       setInputHint(value);
     }
     if (errorMessage) {
@@ -69,12 +81,12 @@ function Guess({
         <div className="mb-2 text-sm text-red-400 lg:text-base">{errorMessage}</div>
       )}
 
-      {/* Shared input/button layout for all screen sizes */}
+      {/* Main container for inputs and buttons */}
       <div className="flex w-full flex-col gap-3 lg:flex-row lg:items-center lg:gap-4">
         {isSenior ? (
-          <div className="flex w-full flex-col gap-3 lg:-mt-13 lg:mb-4 lg:flex-row lg:justify-start lg:gap-4">
+          <div className="w-full">
             {isEditing ? (
-              <>
+              <div className="flex w-full flex-col gap-3 lg:mb-4 lg:flex-row lg:justify-start lg:gap-4">
                 <button
                   onClick={onConfirm}
                   className="min-w-[140px] rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500 lg:flex-1 lg:rounded-2xl"
@@ -87,11 +99,11 @@ function Guess({
                 >
                   Cancel
                 </button>
-              </>
+              </div>
             ) : (
               <button
                 onClick={onEditHints}
-                className="flex items-center gap-2 rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500 lg:flex-1 lg:gap-3 lg:rounded-2xl"
+                className="flex w-full items-center gap-2 rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500 lg:flex-1 lg:gap-3 lg:rounded-2xl"
               >
                 <img src="/assets/edit-w.svg" alt="" className="h-5 w-5 lg:h-6 lg:w-6" />
                 Edit your hints
@@ -99,7 +111,8 @@ function Guess({
             )}
           </div>
         ) : (
-          <div className="flex w-full flex-col gap-3 lg:flex-row lg:items-center">
+          /* This is the section with corrected styles */
+          <div className="flex w-full flex-col justify-between gap-3 lg:flex-row lg:items-stretch lg:gap-5">
             <input
               type="text"
               inputMode="numeric"
@@ -108,15 +121,31 @@ function Guess({
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               disabled={guessState !== 'n/a' || attempts >= maxAttempts}
-              className="min-h-12 w-full rounded-xl border-none bg-white px-4 py-3 text-base text-black placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:bg-gray-300 lg:rounded-2xl"
+              className="w-full rounded-xl border-none bg-white px-6 py-3 text-base text-black placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:bg-gray-300 lg:rounded-2xl"
             />
-            <button
-              onClick={handleSubmit}
-              disabled={guessState !== 'n/a' || attempts >= maxAttempts}
-              className="w-full self-start rounded-xl bg-orange-400 px-5 py-1.5 text-white transition-colors hover:bg-orange-500 disabled:cursor-not-allowed disabled:bg-gray-400 lg:ml-1 lg:rounded-2xl lg:px-6 lg:py-3"
-            >
-              Send
-            </button>
+            <div className="flex w-full flex-col justify-end gap-3 lg:flex-row lg:gap-4">
+              <button
+                onClick={handleSubmit}
+                disabled={guessState !== 'n/a' || attempts >= maxAttempts}
+                className="w-full rounded-xl bg-orange-500 px-10 py-3 font-semibold text-white transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:bg-gray-400 lg:rounded-2xl"
+              >
+                Send
+              </button>
+              {onLuckyDraw && (
+                <button
+                  type="button"
+                  disabled={luckyDrawDisabled || guessState !== 'n/a' || attempts >= maxAttempts}
+                  className="flex w-full flex-col items-center justify-center rounded-xl bg-purple-800 px-4 py-2 font-semibold text-white shadow-lg transition hover:scale-105 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:hover:scale-100 lg:w-auto lg:min-w-[250px] lg:rounded-2xl"
+                  onClick={onLuckyDraw}
+                >
+                  {/* Structure to display icon and multi-line text from the image */}
+                  {/* <span className="text-xl"></span> */}
+                  <div className="flex flex-col items-center leading-tight">
+                    <span>🕯️Invoke the Prophecy</span>
+                  </div>
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>

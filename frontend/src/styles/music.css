@@ -1,0 +1,106 @@
+:root {
+  --glow-color: rgb(204, 139, 139);
+  --glow-color-faint: rgba(204, 139, 139, 0.4);
+  --thumb-color: rgb(230, 200, 200);
+  --track-color: rgba(255, 255, 255, 0.15);
+  --icon-color: #e0e0e0;
+  --hover-bg: rgba(255, 255, 255, 0.1);
+}
+
+.music-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
+}
+
+/* === Control Button Styling === */
+.control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  color: var(--icon-color);
+  border: 1px solid var(--hover-bg);
+  border-radius: 0.75rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.control-button:hover {
+  background-color: var(--hover-bg);
+  border-color: var(--glow-color-faint);
+  box-shadow: 0 0 8px var(--glow-color-faint);
+}
+
+.control-button svg {
+  color: var(--icon-color);
+  opacity: 0.8;
+  transition: all 0.2s ease-in-out;
+}
+
+.control-button:hover svg {
+  opacity: 1;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 100px;
+}
+
+.volume-display {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  min-width: 32px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* === Volume Slider Styling === */
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 150px;
+  height: 5px;
+  background: var(--track-color);
+  border-radius: 5px;
+  outline: none;
+}
+
+/* --- Slider Thumb (the handle) --- */
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--thumb-color);
+  border-radius: 50%;
+  border: 1px solid var(--glow-color);
+  box-shadow: 0 0 10px var(--glow-color);
+  transition: transform 0.2s ease-in-out;
+}
+
+.volume-slider:hover::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--thumb-color);
+  border-radius: 50%;
+  border: 1px solid var(--glow-color);
+  box-shadow: 0 0 10px var(--glow-color);
+  transition: transform 0.2s ease-in-out;
+}
+
+.volume-slider:hover::-moz-range-thumb {
+  transform: scale(1.15);
+}

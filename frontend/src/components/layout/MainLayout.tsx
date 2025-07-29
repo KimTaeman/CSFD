@@ -13,9 +13,9 @@ const MainLayout = ({ children, showSidebar = true }: MainLayoutProps) => {
   const location = useLocation();
 
   let ipadProPadding = '';
-  if (location.pathname.includes('/profile/profile-page')) {
+  if (location.pathname.includes('/profile/')) {
     ipadProPadding = 'ipadpro-pl-profile';
-  } else if (location.pathname.includes('/hint/hint-page')) {
+  } else if (location.pathname.includes('/hint/')) {
     ipadProPadding = 'ipadpro-pl-hint';
   }
 
@@ -58,7 +58,7 @@ const MainLayout = ({ children, showSidebar = true }: MainLayoutProps) => {
 
         {/* Main Content */}
         <main
-          className={`flex flex-1 flex-col items-center justify-start py-20 xl:px-12 xl:py-10 xl:pr-20 ${ipadProPadding}`}
+          className={`flex flex-1 flex-col items-center justify-start py-20 xl:px-12 xl:py-14 xl:pr-20 ${ipadProPadding}`}
         >
           {children}
         </main>

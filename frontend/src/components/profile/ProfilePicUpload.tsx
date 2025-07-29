@@ -43,7 +43,7 @@ const ProfilePicUpload: React.FC<ProfilePicUploadProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
       <div className="relative flex flex-col items-center overflow-hidden rounded-2xl p-4">
-        <div className="relative aspect-[3/4] min-h-[400px] w-full max-w-4xl overflow-hidden rounded-2xl bg-black sm:min-h-[500px]">
+        <div className="relative h-[400px] min-h-[400px] w-[300px] w-full max-w-4xl overflow-hidden rounded-2xl bg-black sm:min-h-[500px]">
           {imageSrc ? (
             <Cropper
               image={imageSrc}

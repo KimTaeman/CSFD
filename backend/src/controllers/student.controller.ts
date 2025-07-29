@@ -128,6 +128,10 @@ export const updateStudentById = async (
     if (dataUri) {
       const uploaded = await cloudinary.uploader.upload(dataUri, {
         folder: 'csfd/profiles',
+        transformation: [
+          { width: 500, height: 667, crop: 'fill' },
+          { quality: 'auto', fetch_format: 'auto' },
+        ],
       });
       data.profilePic = uploaded.secure_url;
     } else {

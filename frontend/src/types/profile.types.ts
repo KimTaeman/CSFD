@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface ProfileData {
   displayName: string;
   nickname: string;
@@ -17,6 +19,5 @@ export interface FormField {
 export interface SocialMediaField {
   key: keyof Pick<ProfileData, 'instagram' | 'discord' | 'line'>;
   label: string;
-  icon: string;
-  iconColor: string;
+  icon: React.ReactNode;
 }
