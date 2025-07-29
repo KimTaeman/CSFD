@@ -18,13 +18,6 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user?.nickname || !user?.studentId) {
-      navigate('/coven', { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
-
   const mutation = useMutation({
     mutationFn: async (userNickname: string) => {
       await api.put(`/students/${user.id}`, {
