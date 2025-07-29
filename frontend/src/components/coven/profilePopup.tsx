@@ -74,7 +74,7 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-center sm:gap-8">
           {/* Profile Image */}
           <div className="space-y-4">
-            <div className="aspect-[5/7] max-h-80 flex-shrink-0 overflow-hidden rounded-lg shadow-lg max-md:max-h-80">
+            <div className="h-80 w-56 flex-shrink-0 overflow-hidden rounded-lg shadow-lg max-md:max-h-80">
               <img
                 className="h-full w-full object-cover"
                 src={user.profilePic || `/assets/profile-${user.house}.png`}
