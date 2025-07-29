@@ -111,7 +111,6 @@ function Guess({
             )}
           </div>
         ) : (
-          /* This is the section with corrected styles */
           <div className="flex w-full flex-col justify-between gap-3 lg:flex-row lg:items-stretch lg:gap-5">
             <input
               type="text"
@@ -138,8 +137,6 @@ function Guess({
                   className="flex w-full flex-col items-center justify-center rounded-xl bg-purple-800 px-4 py-2 font-semibold text-white shadow-lg transition hover:scale-105 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:hover:scale-100 lg:w-auto lg:min-w-[250px] lg:rounded-2xl"
                   onClick={onLuckyDraw}
                 >
-                  {/* Structure to display icon and multi-line text from the image */}
-                  {/* <span className="text-xl"></span> */}
                   <div className="flex flex-col items-center leading-tight">
                     <span>🕯️Invoke the Prophecy</span>
                   </div>

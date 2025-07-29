@@ -1,37 +1,40 @@
 const DetailCoven = () => {
   return (
-    <div className="font-inter group w-full max-w-5xl transform rounded-3xl bg-black/10 backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02]">
-      <div className="relative z-10 flex flex-col items-start justify-start space-y-2 p-6">
-        {/* Decorative Elements */}
-        <div className="mb-4" />
+    <div className="font-inter group w-full max-w-4xl mx-auto transform rounded-2xl sm:rounded-3xl bg-black/20 border border-white/10 backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.01]">
+      <div className="relative z-10 flex flex-col items-center justify-center space-y-4 sm:space-y-5 p-6 sm:p-7 md:p-8">
+        {/* Header */}
+        <div className="text-center mb-2 sm:mb-3">
+          <h2 className="font-ribeye text-xl sm:text-2xl md:text-3xl text-white mb-2">
+            The Four Covens
+          </h2>
+          <div className="h-0.5 w-16 sm:w-20 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto opacity-60"></div>
+        </div>
 
-        {/* Detail Paragraphs */}
-        <blockquote className="font-inter md:text-md space-y-4 text-left text-sm leading-relaxed font-medium text-pretty break-words hyphens-auto text-white md:text-lg [&>p]:indent-4 md:[&>p]:indent-8">
+        {/* Main Content */}
+        <blockquote className="font-inter text-sm sm:text-base space-y-3 sm:space-y-4 text-center leading-relaxed font-medium text-white/90 max-w-3xl">
           <p>
-            In Computer Science, we're taught to think logically. We work with clear inputs, follow
-            structured flows, and expect predictable outcomes. But beneath every system, there's a
-            layer you can't debug or compile. Something that doesn't follow instructions. That's
-            where the real magic begins.
+            Each coven represents a unique path in the magical arts of technology. From the meticulous
+            <span className="text-blue-400 font-semibold"> Alchemire Potion Brewers</span> who craft perfect code solutions,
+            to the visionary <span className="text-green-400 font-semibold">Isotar Seers</span> who peer into future possibilities.
           </p>
           <p>
-            Some of us do more than just write code, we open doors to new possibilities. We don't
-            just analyze data, we start to see the future in it. And when we define variables, we're
-            not just holding values, we're capturing potential.
+            The mystical <span className="text-red-400 font-semibold">Ethera Summoners</span> bring
+            digital creations to life, while the powerful <span className="text-pink-400 font-semibold">Zirelia Sorcerers</span>{' '}
+            command the very foundations of computational magic.
           </p>
-          <p>
-            You're not just learning logic. You're learning to shape the invisible rules that guide
-            everything around us.
+          <p className="text-white/80 text-sm italic">
+            Click any coven above to discover its members and meet the wizards who call it home.
           </p>
         </blockquote>
 
         {/* Decorative Elements */}
-        <div className="mt-4 flex w-full justify-center">
-          <div className="flex items-center space-x-4 select-none">
-            <div className="h-0.5 w-12 bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-60 transition-all duration-500 group-hover:w-20"></div>
-            <div className="pulse-custom text-2xl text-yellow-400 transition-all duration-500 group-hover:text-3xl">
+        <div className="mt-2 sm:mt-4 flex w-full justify-center">
+          <div className="flex items-center space-x-3 sm:space-x-4 select-none">
+            <div className="h-0.5 w-8 sm:w-12 bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-60 transition-all duration-500 group-hover:w-12 sm:group-hover:w-16"></div>
+            <div className="pulse-custom text-xl sm:text-2xl text-yellow-400 transition-all duration-500 group-hover:text-2xl">
               ✦
             </div>
-            <div className="h-0.5 w-12 bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-60 transition-all duration-500 group-hover:w-20"></div>
+            <div className="h-0.5 w-8 sm:w-12 bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-60 transition-all duration-500 group-hover:w-12 sm:group-hover:w-16"></div>
           </div>
         </div>
       </div>

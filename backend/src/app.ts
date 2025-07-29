@@ -43,7 +43,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 15 * 60 * 1000,
-      httpOnly: true,
+      httpOnly: false,
       secure: false, // SSL is not enabled on the reverse proxy; only HTTP is currently supported.
       sameSite: 'lax',
     },

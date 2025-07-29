@@ -29,7 +29,7 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
         route: '/profile',
         condition: !!user?.studentId,
       },
-      { name: 'Coven', icon: '/assets/covan-icon.svg', route: '/coven' },
+      { name: 'Covens', icon: '/assets/covan-icon.svg', route: '/coven' },
       {
         name: 'Hints',
         icon: '/assets/help-icon.svg',

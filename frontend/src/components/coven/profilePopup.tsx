@@ -111,7 +111,7 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
 
             <div className="flex flex-row flex-wrap place-content-center content-center items-start gap-2">
               {user.house && (
-                <span className="relative inline-flex items-center gap-x-2 rounded-full bg-emerald-500/10 px-3 py-1 text-sm font-medium text-amber-400">
+                <span className="relative inline-flex items-center gap-x-2 rounded-full bg-amber-500/10 px-3 py-1 text-sm font-medium text-amber-400">
                   <HomeIcon className="h-4 w-4 text-amber-500" />
                   {user.house}
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import api from '@/api/axios';
 import type { GuessState, Hint } from '@/types/hint.types';
@@ -40,18 +40,25 @@ function Page() {
     setIsModalOpen(false);
     setSelectedUser(null);
   };
+
   const listOfCodes = students
     ? students
-        .filter(
-          (student: StudentInfo) =>
-            student?.house === user?.house && student?.isSenior == true && student?.studentId,
-        )
-        .map((student: StudentInfo) => student.studentId.slice(-3))
+      .filter(
+        (student: StudentInfo) =>
+          student?.house === user?.house && student?.isSenior == true && student?.studentId,
+      )
+      .map((student: StudentInfo) => student.studentId.slice(-3))
     : [];
 
   const [editingMenteeId, setEditingMenteeId] = useState<string | null>(null);
   const [draftHints, setDraftHints] = useState<Hint[]>([]);
   const [countdown, setCountdown] = useState<string[]>(['', '', '']);
+
+  const hintReleaseDates = useMemo(() => [
+    toZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'),
+    toZonedTime(new Date(2025, 7, 6, 0, 0, 0), 'Asia/Bangkok'),
+    toZonedTime(new Date(2025, 7, 9, 10, 0, 0), 'Asia/Bangkok'),
+  ], []);
 
   const handleLuckyDraw = () => {
     if (!listOfCodes.length) return;
@@ -66,17 +73,10 @@ function Page() {
   const closeModal = () => {
     setShowLuckyModal(false);
     setIsRevealingCode(false);
-
     setLuckyCode(null);
   };
 
   const updateCountdown = useCallback(() => {
-    const hintReleaseDates = [
-      toZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'),
-      toZonedTime(new Date(2025, 7, 1, 0, 0, 0), 'Asia/Bangkok'),
-      toZonedTime(new Date(2025, 7, 3, 0, 0, 0), 'Asia/Bangkok'),
-    ];
-
     const now = new Date();
 
     const newCountdown = hintReleaseDates.map((date) => {
@@ -94,11 +94,10 @@ function Page() {
     });
 
     setCountdown(newCountdown);
-  }, []);
+  }, [hintReleaseDates]);
 
   useEffect(() => {
     updateCountdown();
-
     const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
   }, [updateCountdown]);
@@ -142,7 +141,6 @@ function Page() {
   useEffect(() => {
     if (user) {
       setDraftHints(user.hints);
-
       setRevealedCount(3 - (user.lives ?? 3));
     }
   }, [user]);
@@ -159,6 +157,7 @@ function Page() {
     updateHint(draftHints);
     setEditingMenteeId(null);
   }, [draftHints, updateHint]);
+
   const handleHintChange = useCallback((id: string, content: string) => {
     setDraftHints((prev) => prev.map((hint) => (hint.id === id ? { ...hint, content } : hint)));
   }, []);
@@ -190,17 +189,18 @@ function Page() {
       </>
     );
   }
+
   useEffect(() => {
     if (!isAuthLoading && !user) {
       navigate('/', { replace: true });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthLoading, user]);
 
   if (!user || !students || (!user.isSenior && user.guessCheck?.isFound === undefined))
     return <LoadingLayout />;
 
   const isSenior = user.isSenior;
+
   return (
     <MainLayout>
       <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0">
@@ -214,6 +214,9 @@ function Page() {
                 <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
                   {menteeHints.map((hint, i) => {
                     const hintCountdown = countdown[i];
+                    const isHintRevealed = !hintCountdown;
+                    const canEdit = isEditingThisMentee && !isHintRevealed;
+
                     return (
                       <div key={hint.id}>
                         <p className="mb-2 text-center font-mono text-lg tracking-wider text-yellow-300/80">
@@ -227,12 +230,13 @@ function Page() {
                         <HintCard
                           key={hint.id}
                           description={
-                            isEditingThisMentee ? hint.content : renderDescription(hint.content)
+                            canEdit ? hint.content : renderDescription(hint.content)
                           }
                           stage={'shown'}
                           type={'senior'}
-                          editable={isEditingThisMentee}
+                          editable={canEdit}
                           onChange={(v) => handleHintChange(hint.id, v)}
+                          isRevealed={isHintRevealed}
                         />
                       </div>
                     );
@@ -259,7 +263,6 @@ function Page() {
         {!isSenior && (
           <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
             {user.guessCheck?.isFound ? (
-              // This container centers the entire block on the page
               <div className="flex w-full flex-col items-center justify-center">
                 <div className="w-full rounded-xl border border-white/10 bg-gray-800/30 p-8 text-center text-white shadow-2xl backdrop-blur-lg">
                   <h2 className="text-3xl font-bold text-purple-300">Congratulations!</h2>
@@ -270,7 +273,6 @@ function Page() {
 
                   <hr className="my-6 border-white/10" />
 
-                  {/* This container centers the ProfileModal card horizontally */}
                   <div className="flex justify-center">
                     {students
                       .filter((student: StudentInfo) => student.id === user.guessCheck?.seniorId)
