@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import api from '@/api/axios';
 import type { GuessState, Hint } from '@/types/hint.types';
@@ -40,6 +40,7 @@ function Page() {
     setIsModalOpen(false);
     setSelectedUser(null);
   };
+
   const listOfCodes = students
     ? students
         .filter(
@@ -52,6 +53,15 @@ function Page() {
   const [editingMenteeId, setEditingMenteeId] = useState<string | null>(null);
   const [draftHints, setDraftHints] = useState<Hint[]>([]);
   const [countdown, setCountdown] = useState<string[]>(['', '', '']);
+
+  const hintReleaseDates = useMemo(
+    () => [
+      toZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'),
+      toZonedTime(new Date(2025, 7, 6, 0, 0, 0), 'Asia/Bangkok'),
+      toZonedTime(new Date(2025, 7, 9, 10, 0, 0), 'Asia/Bangkok'),
+    ],
+    [],
+  );
 
   const handleLuckyDraw = () => {
     if (!listOfCodes.length) return;
@@ -66,17 +76,10 @@ function Page() {
   const closeModal = () => {
     setShowLuckyModal(false);
     setIsRevealingCode(false);
-
     setLuckyCode(null);
   };
 
   const updateCountdown = useCallback(() => {
-    const hintReleaseDates = [
-      toZonedTime(new Date(2025, 6, 29, 0, 0, 0), 'Asia/Bangkok'),
-      toZonedTime(new Date(2025, 7, 1, 0, 0, 0), 'Asia/Bangkok'),
-      toZonedTime(new Date(2025, 7, 3, 0, 0, 0), 'Asia/Bangkok'),
-    ];
-
     const now = new Date();
 
     const newCountdown = hintReleaseDates.map((date) => {
@@ -86,19 +89,23 @@ function Page() {
         const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
         const minutes = Math.floor((totalSeconds % 3600) / 60);
         const seconds = totalSeconds % 60;
-        const pad = (n: number) => n.toString().padStart(2, '0');
 
-        return ` ${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+        const parts = [];
+        if (days > 0) parts.push(`${days}d`);
+        if (hours > 0) parts.push(`${hours}h`);
+        if (minutes > 0) parts.push(`${minutes}m`);
+        if (seconds > 0 || parts.length === 0) parts.push(`${seconds}s`);
+
+        return parts.join(' ');
       }
       return '';
     });
 
     setCountdown(newCountdown);
-  }, []);
+  }, [hintReleaseDates]);
 
   useEffect(() => {
     updateCountdown();
-
     const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
   }, [updateCountdown]);
@@ -142,7 +149,6 @@ function Page() {
   useEffect(() => {
     if (user) {
       setDraftHints(user.hints);
-
       setRevealedCount(3 - (user.lives ?? 3));
     }
   }, [user]);
@@ -159,6 +165,7 @@ function Page() {
     updateHint(draftHints);
     setEditingMenteeId(null);
   }, [draftHints, updateHint]);
+
   const handleHintChange = useCallback((id: string, content: string) => {
     setDraftHints((prev) => prev.map((hint) => (hint.id === id ? { ...hint, content } : hint)));
   }, []);
@@ -190,17 +197,18 @@ function Page() {
       </>
     );
   }
+
   useEffect(() => {
     if (!isAuthLoading && !user) {
       navigate('/', { replace: true });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthLoading, user]);
 
   if (!user || !students || (!user.isSenior && user.guessCheck?.isFound === undefined))
     return <LoadingLayout />;
 
   const isSenior = user.isSenior;
+
   return (
     <MainLayout>
       <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-start gap-y-10 p-4 xl:px-0">
@@ -214,25 +222,29 @@ function Page() {
                 <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
                   {menteeHints.map((hint, i) => {
                     const hintCountdown = countdown[i];
+                    const isHintRevealed = !hintCountdown;
+                    const canEdit = isEditingThisMentee && !isHintRevealed;
+
                     return (
                       <div key={hint.id}>
-                        <p className="mb-2 text-center font-mono text-lg tracking-wider text-yellow-300/80">
-                          {hintCountdown
-                            ? `Reveal in ${hintCountdown}`
-                            : hint.content
-                              ? 'Revealed'
-                              : 'Nuh Uh'}
-                        </p>
+                        <div className="mx-auto mb-2 h-fit w-fit rounded border border-white/10 bg-gray-800/30 px-4 py-2 shadow-lg backdrop-blur-lg">
+                          <p className="text-center font-mono text-lg tracking-wider text-yellow-300/80">
+                            {hintCountdown
+                              ? `Reveal in ${hintCountdown}`
+                              : hint.content
+                                ? 'Revealed'
+                                : 'Nuh Uh'}
+                          </p>
+                        </div>
 
                         <HintCard
                           key={hint.id}
-                          description={
-                            isEditingThisMentee ? hint.content : renderDescription(hint.content)
-                          }
+                          description={canEdit ? hint.content : renderDescription(hint.content)}
                           stage={'shown'}
                           type={'senior'}
-                          editable={isEditingThisMentee}
+                          editable={canEdit}
                           onChange={(v) => handleHintChange(hint.id, v)}
+                          isRevealed={isHintRevealed}
                         />
                       </div>
                     );
@@ -259,7 +271,6 @@ function Page() {
         {!isSenior && (
           <div className="flex w-full flex-col gap-y-10 sm:w-[70%] lg:w-full">
             {user.guessCheck?.isFound ? (
-              // This container centers the entire block on the page
               <div className="flex w-full flex-col items-center justify-center">
                 <div className="w-full rounded-xl border border-white/10 bg-gray-800/30 p-8 text-center text-white shadow-2xl backdrop-blur-lg">
                   <h2 className="text-3xl font-bold text-purple-300">Congratulations!</h2>
@@ -270,7 +281,6 @@ function Page() {
 
                   <hr className="my-6 border-white/10" />
 
-                  {/* This container centers the ProfileModal card horizontally */}
                   <div className="flex justify-center">
                     {students
                       .filter((student: StudentInfo) => student.id === user.guessCheck?.seniorId)
@@ -310,13 +320,21 @@ function Page() {
                   <div className="space-y-4 text-left text-gray-200">
                     <p>
                       Welcome, junior! Your quest is to discover the identity of your senior
-                      mentor—your <strong className="font-semibold text-white">P'code</strong>. They
-                      will be your personal guide throughout your studies, helping with lectures,
-                      projects, and university life.
+                      mentor—your <strong className="font-semibold text-purple-300">P'code</strong>.
+                      They will be your personal guide throughout your studies, helping with
+                      lectures, projects, and university life.
                     </p>
                     <p>
-                      Your P'code has left three secret hints below. Use them to deduce who they are
-                      before you run out of guesses!
+                      Your P'code has left three secret hints below. Remember this crucial rule:{' '}
+                      <strong className="font-semibold text-red-400">
+                        your P'code is in the same coven as you!{' '}
+                      </strong>
+                      Use the hints to deduce who they are before you run out of guesses.
+                    </p>
+                    <p>
+                      Be sure to choose wisely, as a fun{' '}
+                      <strong className="font-semibold text-red-400">'punishment'</strong> awaits on
+                      the event day for those who can't solve the mystery.
                     </p>
                   </div>
                   <hr className="my-6 border-white/10" />

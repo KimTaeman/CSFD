@@ -3,7 +3,7 @@ import { Suspense, useEffect } from 'react';
 import { useRoutes, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from './hooks/useAuthContext';
 import LoadingLayout from '@/components/layout/loading';
-import UnauthorizedPopup from './components/UnauthorizedPopup';
+import SessionExpiredPopup from '@/components/session';
 
 export const App = () => {
   const { isAuthenticated, isLoading } = useAuthContext();
@@ -22,9 +22,9 @@ export const App = () => {
   const pageContent = useRoutes(routes);
 
   return (
-    <>
-      <UnauthorizedPopup />
-      <Suspense fallback={<LoadingLayout />}>{pageContent}</Suspense>
-    </>
+    <Suspense fallback={<LoadingLayout />}>
+      {pageContent}
+      <SessionExpiredPopup />
+    </Suspense>
   );
 };

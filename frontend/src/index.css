@@ -663,3 +663,15 @@ button:disabled {
 .animate-loading-bar {
   animation: loading-bar 2s ease-in-out infinite;
 }
+
+@keyframes shrink-width {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+.animate-shrink-width {
+  animation: shrink-width 7s linear forwards;
+}

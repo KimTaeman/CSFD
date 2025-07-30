@@ -89,13 +89,13 @@ function Guess({
               <div className="flex w-full flex-col gap-3 lg:mb-4 lg:flex-row lg:justify-start lg:gap-4">
                 <button
                   onClick={onConfirm}
-                  className="min-w-[140px] rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500 lg:flex-1 lg:rounded-2xl"
+                  className="font-poppins w-full flex-1 rounded-xl border border-white/10 bg-purple-900/60 px-8 py-2 text-sm text-white transition-colors hover:bg-purple-900/80 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-16 lg:text-base"
                 >
                   Confirm
                 </button>
                 <button
                   onClick={onCancel}
-                  className="min-w-[140px] rounded-xl border border-white bg-transparent px-6 py-3 text-base text-white transition-colors hover:bg-white/10 lg:flex-1 lg:rounded-2xl"
+                  className="font-poppins w-full flex-1 rounded-xl border border-white/10 bg-gray-900/60 px-6 py-2 text-sm text-white transition-colors hover:bg-gray-900/80 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-12 lg:text-base"
                 >
                   Cancel
                 </button>
@@ -103,49 +103,49 @@ function Guess({
             ) : (
               <button
                 onClick={onEditHints}
-                className="flex w-full items-center gap-2 rounded-xl bg-orange-400 px-6 py-3 text-base text-white transition-colors hover:bg-orange-500 lg:flex-1 lg:gap-3 lg:rounded-2xl"
+                className="font-poppins w-full flex-1 rounded-xl border border-white/10 bg-purple-900/60 px-8 py-2 text-sm text-white transition-colors hover:bg-purple-900/80 focus:ring-2 focus:ring-white/50 focus:outline-none lg:px-16 lg:text-base"
               >
-                <img src="/assets/edit-w.svg" alt="" className="h-5 w-5 lg:h-6 lg:w-6" />
                 Edit your hints
               </button>
             )}
           </div>
         ) : (
-          /* This is the section with corrected styles */
-          <div className="flex w-full flex-col justify-between gap-3 lg:flex-row lg:items-stretch lg:gap-5">
-            <input
-              type="text"
-              inputMode="numeric"
-              placeholder="ex. 880"
-              value={inputHint}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              disabled={guessState !== 'n/a' || attempts >= maxAttempts}
-              className="w-full rounded-xl border-none bg-white px-6 py-3 text-base text-black placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:bg-gray-300 lg:rounded-2xl"
-            />
-            <div className="flex w-full flex-col justify-end gap-3 lg:flex-row lg:gap-4">
-              <button
-                onClick={handleSubmit}
+          <div className="w-full space-y-4">
+            <div className="flex w-full flex-col justify-between gap-3 lg:items-stretch lg:gap-5">
+              <input
+                type="text"
+                inputMode="numeric"
+                placeholder="Enter a number (e.g., 880)"
+                value={inputHint}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
                 disabled={guessState !== 'n/a' || attempts >= maxAttempts}
-                className="w-full rounded-xl bg-orange-500 px-10 py-3 font-semibold text-white transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:bg-gray-400 lg:rounded-2xl"
-              >
-                Send
-              </button>
-              {onLuckyDraw && (
+                className={`font-poppins h-10 w-full rounded-xl border-none px-2 py-2 text-base transition-colors outline-none not-disabled:border not-disabled:border-white/10 not-disabled:bg-gray-900/50 disabled:cursor-not-allowed disabled:bg-gray-900/50 disabled:text-gray-300 lg:h-12 lg:px-6 lg:text-lg`}
+              />
+              <div className="flex w-full flex-col justify-end gap-3 lg:flex-row lg:gap-4">
                 <button
-                  type="button"
-                  disabled={luckyDrawDisabled || guessState !== 'n/a' || attempts >= maxAttempts}
-                  className="flex w-full flex-col items-center justify-center rounded-xl bg-purple-800 px-4 py-2 font-semibold text-white shadow-lg transition hover:scale-105 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:hover:scale-100 lg:w-auto lg:min-w-[250px] lg:rounded-2xl"
-                  onClick={onLuckyDraw}
+                  onClick={handleSubmit}
+                  disabled={guessState !== 'n/a' || attempts >= maxAttempts}
+                  className="font-poppins w-full flex-1 rounded-xl border border-white/10 bg-purple-900/60 px-8 py-2 text-sm text-white transition-colors not-disabled:hover:bg-purple-900/80 focus:ring-2 focus:ring-white/50 focus:outline-none disabled:text-gray-400/80 lg:px-8 lg:text-base"
                 >
-                  {/* Structure to display icon and multi-line text from the image */}
-                  {/* <span className="text-xl"></span> */}
-                  <div className="flex flex-col items-center leading-tight">
-                    <span>🕯️Invoke the Prophecy</span>
-                  </div>
+                  Confirm Guess
                 </button>
-              )}
+                {onLuckyDraw && (
+                  <button
+                    type="button"
+                    disabled={luckyDrawDisabled || guessState !== 'n/a' || attempts >= maxAttempts}
+                    className="font-poppins w-full flex-1 rounded-xl border border-white/10 bg-orange-900/60 px-8 py-2 text-sm text-white transition-colors not-disabled:hover:bg-orange-900/80 focus:ring-2 focus:ring-white/50 focus:outline-none disabled:text-gray-400/80 lg:px-8 lg:text-base"
+                    onClick={onLuckyDraw}
+                  >
+                    Invoke the Prophecy
+                  </button>
+                )}
+              </div>
             </div>
+            <p className="text-center text-sm text-gray-400">
+              Enter a last 3 digits student ID code to make your guess. Use the prophecy for a
+              random suggestion.
+            </p>
           </div>
         )}
       </div>
