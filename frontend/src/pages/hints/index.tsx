@@ -313,13 +313,21 @@ function Page() {
                   <div className="space-y-4 text-left text-gray-200">
                     <p>
                       Welcome, junior! Your quest is to discover the identity of your senior
-                      mentor—your <strong className="font-semibold text-white">P'code</strong>. They
-                      will be your personal guide throughout your studies, helping with lectures,
-                      projects, and university life.
+                      mentor—your <strong className="font-semibold text-purple-300">P'code</strong>.
+                      They will be your personal guide throughout your studies, helping with
+                      lectures, projects, and university life.
                     </p>
                     <p>
-                      Your P'code has left three secret hints below. Use them to deduce who they are
-                      before you run out of guesses!
+                      Your P'code has left three secret hints below. Remember this crucial rule:{' '}
+                      <strong className="font-semibold text-red-400">
+                        your P'code is in the same coven as you!{' '}
+                      </strong>
+                      Use the hints to deduce who they are before you run out of guesses.
+                    </p>
+                    <p>
+                      Be sure to choose wisely, as a fun{' '}
+                      <strong className="font-semibold text-red-400">'punishment'</strong> awaits on
+                      the event day for those who can't solve the mystery.
                     </p>
                   </div>
                   <hr className="my-6 border-white/10" />
