@@ -236,7 +236,7 @@ function Page() {
             )}
 
             {(hovered || profilePicState.isLoading) && (
-              <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/40">
+              <div className="customized-cursor absolute inset-0 flex items-center justify-center rounded-lg bg-black/40">
                 <span className="text-lg font-semibold text-white select-none">
                   {getOverlayText()}
                 </span>
