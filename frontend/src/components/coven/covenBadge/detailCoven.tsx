@@ -10,24 +10,26 @@ const DetailCoven = () => {
           <div className="mx-auto h-0.5 w-16 bg-gradient-to-r from-transparent via-purple-400 to-transparent opacity-60 sm:w-20"></div>
         </div>
 
-        {/* Main Content */}
-        <blockquote className="font-inter max-w-3xl space-y-3 text-center text-sm leading-relaxed font-medium text-white/90 sm:space-y-4 sm:text-base">
+        <p className="text-center text-sm text-white/80 italic">
+          Click any coven above to discover its members and meet the wizards who call it home.
+        </p>
+
+        {/* Detail Paragraphs */}
+        <blockquote className="font-inter md:text-md space-y-4 text-center text-sm leading-relaxed font-medium text-pretty break-words hyphens-auto text-white [&>p]:indent-4 md:[&>p]:indent-8">
           <p>
-            Each coven represents a unique path in the magical arts of technology. From the
-            meticulous
-            <span className="font-semibold text-blue-400"> Alchemire Potion Brewers</span> who craft
-            perfect code solutions, to the visionary{' '}
-            <span className="font-semibold text-green-400">Isotar Seers</span> who peer into future
-            possibilities.
+            In Computer Science, we're taught to think logically. We work with clear inputs, follow
+            structured flows, and expect predictable outcomes. But beneath every system, there's a
+            layer you can't debug or compile. Something that doesn't follow instructions. That's
+            where the real magic begins.
           </p>
           <p>
-            The mystical <span className="font-semibold text-red-400">Ethera Summoners</span> bring
-            digital creations to life, while the powerful{' '}
-            <span className="font-semibold text-pink-400">Zirelia Sorcerers</span> command the very
-            foundations of computational magic.
+            Some of us do more than just write code, we open doors to new possibilities. We don't
+            just analyze data, we start to see the future in it. And when we define variables, we're
+            not just holding values, we're capturing potential.
           </p>
-          <p className="text-sm text-white/80 italic">
-            Click any coven above to discover its members and meet the wizards who call it home.
+          <p>
+            You're not just learning logic. You're learning to shape the invisible rules that guide
+            everything around us.
           </p>
         </blockquote>
 

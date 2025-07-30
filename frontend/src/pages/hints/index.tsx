@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import api from '@/api/axios';
 import type { GuessState, Hint } from '@/types/hint.types';
@@ -89,9 +89,14 @@ function Page() {
         const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
         const minutes = Math.floor((totalSeconds % 3600) / 60);
         const seconds = totalSeconds % 60;
-        const pad = (n: number) => n.toString().padStart(2, '0');
 
-        return ` ${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+        const parts = [];
+        if (days > 0) parts.push(`${days}d`);
+        if (hours > 0) parts.push(`${hours}h`);
+        if (minutes > 0) parts.push(`${minutes}m`);
+        if (seconds > 0 || parts.length === 0) parts.push(`${seconds}s`);
+
+        return parts.join(' ');
       }
       return '';
     });
@@ -222,13 +227,15 @@ function Page() {
 
                     return (
                       <div key={hint.id}>
-                        <p className="mb-2 text-center font-mono text-lg tracking-wider text-yellow-300/80">
-                          {hintCountdown
-                            ? `Reveal in ${hintCountdown}`
-                            : hint.content
-                              ? 'Revealed'
-                              : 'Nuh Uh'}
-                        </p>
+                        <div className="mx-auto mb-2 h-fit w-fit rounded border border-white/10 bg-gray-800/30 px-4 py-2 shadow-lg backdrop-blur-lg">
+                          <p className="text-center font-mono text-lg tracking-wider text-yellow-300/80">
+                            {hintCountdown
+                              ? `Reveal in ${hintCountdown}`
+                              : hint.content
+                                ? 'Revealed'
+                                : 'Nuh Uh'}
+                          </p>
+                        </div>
 
                         <HintCard
                           key={hint.id}

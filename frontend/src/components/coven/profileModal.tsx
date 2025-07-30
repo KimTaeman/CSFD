@@ -28,17 +28,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClick, className })
 
   return (
     <div onClick={onClick} className={cn('customized-cursor relative w-full', className)}>
-      {user.isHouseLeader && (
-        <div className="animate-wiggle absolute -top-8 -right-4 z-10 h-16 w-16 sm:-top-10 sm:-right-5 sm:h-20 sm:w-20">
-          <img
-            src={`/assets/hat-${user.house}.png`}
-            alt="house hat"
-            className="h-full w-full rotate-25 object-contain"
-          />
-        </div>
-      )}
-
-      <div className="mx-auto w-full max-w-sm transform rounded-2xl border border-white/10 bg-gray-900/30 text-white shadow-lg backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02]">
+      <div className="relative mx-auto w-full max-w-sm transform rounded-2xl border border-white/10 bg-gray-900/30 text-white shadow-lg backdrop-blur-lg transition-all duration-500 ease-in-out hover:scale-[1.02]">
         <div className="flex w-full flex-row items-center gap-3 p-4 sm:gap-4 md:p-2">
           {/* Profile Image Container */}
           <div className="relative flex-shrink-0">
@@ -87,6 +77,16 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClick, className })
             </p>
           </div>
         </div>
+
+        {user.isHouseLeader && (
+          <div className="animate-wiggle absolute -top-8 -right-6 z-10 h-16 w-16 sm:-top-10 sm:-right-8 sm:h-20 sm:w-20">
+            <img
+              src={`/assets/hat-${user.house}.png`}
+              alt="house hat"
+              className="h-full w-full rotate-25 object-contain"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -42,7 +42,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 15 * 60 * 1000,
+      maxAge: 30 * 60 * 1000,
       httpOnly: false,
       secure: false, // SSL is not enabled on the reverse proxy; only HTTP is currently supported.
       sameSite: 'lax',

@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { IconAlertTriangle, IconX } from '@tabler/icons-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 interface NotificationState {
   show: boolean;

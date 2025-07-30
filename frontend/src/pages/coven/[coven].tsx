@@ -90,7 +90,7 @@ const Page = () => {
       <div className="flex w-full flex-col space-y-8 max-sm:overflow-x-clip">
         {/* Coven Header */}
         <div className="mb-16 flex items-center justify-center px-4">
-          <CombinedCoven covenType={coven as CovenType} />
+          <CombinedCoven covenType={coven as CovenType} showDescription={true} />
         </div>
 
         {/* House Leaders Section */}

@@ -207,8 +207,10 @@ function Page() {
         <div className="font-poppins flex w-full flex-col gap-4 rounded-2xl border border-white/10 bg-gray-900/50 p-6 shadow-lg backdrop-blur-lg sm:flex-row md:gap-8">
           <div
             className={cn(
-              'customized-cursor relative flex aspect-[5/7] max-h-[175px] max-w-[20%] justify-center overflow-hidden rounded-lg border border-gray-700/50 bg-gray-800/50 max-sm:mx-auto max-sm:max-w-[50%]',
-              shouldShowIcon || imageError || !finalImageUrl ? 'flex px-8' : null,
+              'customized-cursor relative aspect-[5/7] max-h-[175px] max-w-[20%] overflow-hidden rounded-lg border border-gray-700/50 bg-gray-800/50 max-sm:mx-auto max-sm:max-w-[50%]',
+              shouldShowIcon || imageError || !finalImageUrl
+                ? 'flex items-center justify-center px-8'
+                : null,
             )}
             style={{ cursor: profilePicState.isLoading ? 'not-allowed' : 'pointer' }}
             onClick={handlePictureClick}
@@ -216,24 +218,22 @@ function Page() {
             onMouseLeave={() => setHovered(false)}
             tabIndex={0}
           >
-            <div className="flex aspect-[5/7] items-center justify-center overflow-hidden rounded-lg">
-              {shouldShowIcon || imageError || !finalImageUrl ? (
-                <IconUserScan size={48} className="text-gray-400" strokeWidth={1.5} />
-              ) : (
-                <img
-                  src={finalImageUrl}
-                  alt={user?.displayName || 'Profile'}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                  onError={() => {
-                    console.warn('Image failed to load:', finalImageUrl);
-                    setImageError(true);
-                  }}
-                  onLoad={() => setImageError(false)}
-                />
-              )}
-            </div>
+            {shouldShowIcon || imageError || !finalImageUrl ? (
+              <IconUserScan size={48} className="text-gray-400" strokeWidth={1.5} />
+            ) : (
+              <img
+                src={finalImageUrl}
+                alt={user?.displayName || 'Profile'}
+                className="h-full w-full object-cover"
+                loading="lazy"
+                decoding="async"
+                onError={() => {
+                  console.warn('Image failed to load:', finalImageUrl);
+                  setImageError(true);
+                }}
+                onLoad={() => setImageError(false)}
+              />
+            )}
 
             {(hovered || profilePicState.isLoading) && (
               <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/40">
@@ -248,9 +248,6 @@ function Page() {
             <div className="flex flex-wrap items-center justify-between gap-4 max-sm:place-content-center">
               <h3 className="text-sm font-semibold tracking-wider text-gray-400 uppercase">
                 Your Profile
-                {profilePicState.isOptimistic && (
-                  <span className="ml-2 text-xs text-amber-400">(Saving...)</span>
-                )}
               </h3>
               <div
                 className={`flex items-center gap-x-1.5 rounded-full ${user?.isSenior ? 'bg-red-500/10 text-red-400' : 'bg-purple-500/10 text-purple-400'} px-2.5 py-1 text-sm font-medium`}

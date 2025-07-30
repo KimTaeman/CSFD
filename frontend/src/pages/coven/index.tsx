@@ -34,7 +34,7 @@ const Page = () => {
             </div>
 
             {/* Coven Cards Grid */}
-            <div className="grid grid-cols-1 justify-items-center gap-5 min-[1240px]:grid-cols-2 min-[1240px]:gap-8 sm:gap-6">
+            <div className="grid grid-cols-1 justify-items-center gap-5 min-[1380px]:grid-cols-2 min-[1380px]:gap-8 sm:gap-6">
               {covens.map((coven) => (
                 <div key={coven.type} className="w-full max-w-md">
                   <CombinedCoven
