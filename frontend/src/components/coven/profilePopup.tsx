@@ -143,10 +143,10 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
                     className="flex w-full items-center space-x-3 overflow-hidden"
                   >
                     {social.icon}
-                    <div className="truncate w-0 flex-1">
+                    <div className="w-0 flex-1 truncate">
                       {social.handle ? (
                         social.name === 'Discord' ? (
-                          <p className="truncate text-md text-gray-300 sm:text-lg">
+                          <p className="text-md truncate text-gray-300 sm:text-lg">
                             {social.handle}
                           </p>
                         ) : (
@@ -154,7 +154,7 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
                             href={getSocialLink(social.name, social.handle)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="truncate text-md text-blue-400 hover:underline sm:text-lg"
+                            className="text-md truncate text-blue-400 hover:underline sm:text-lg"
                           >
                             {social.handle}
                           </a>
@@ -167,9 +167,6 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
                 ))}
               </div>
             </div>
-
-
-
           </div>
         </div>
       </div>

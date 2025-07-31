@@ -71,17 +71,17 @@ function Page() {
                   {countdown.split(':').map((unit, index) => {
                     const labels = ['DAYS', 'HRS', 'MIN', 'SEC'];
                     return (
-                        <div
-                            key={index}
-                            className="flex flex-col items-center rounded-lg border-2 border-cyan-400/50 bg-black/50 px-3 py-2 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
-                        >
-                          <div className="font-mono text-xl font-bold leading-none tracking-wider tabular-nums text-cyan-300 drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] min-w-[3ch] text-center">
-                            {unit}
-                          </div>
-                          <div className="mt-1 text-xs font-semibold tracking-widest text-cyan-200">
-                            {labels[index]}
-                          </div>
+                      <div
+                        key={index}
+                        className="flex flex-col items-center rounded-lg border-2 border-cyan-400/50 bg-black/50 px-3 py-2 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+                      >
+                        <div className="min-w-[3ch] text-center font-mono text-xl leading-none font-bold tracking-wider text-cyan-300 tabular-nums drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]">
+                          {unit}
                         </div>
+                        <div className="mt-1 text-xs font-semibold tracking-widest text-cyan-200">
+                          {labels[index]}
+                        </div>
+                      </div>
                     );
                   })}
                 </div>
