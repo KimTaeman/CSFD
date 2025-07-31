@@ -7,6 +7,7 @@ import type { StudentInfo } from '@/types/type';
 import MainLayout from '@/pages/layout';
 import LoadingLayout from '@/components/layout/loading';
 import { useAuthContext } from '@/hooks/useAuthContext';
+import { useQueryClient } from '@tanstack/react-query';
 
 const VALID_COVENS = ['alchemireCoven', 'etheraCoven', 'isotarCoven', 'zireliaCoven'] as const;
 
@@ -15,6 +16,7 @@ type CovenType = (typeof VALID_COVENS)[number];
 const Page = () => {
   const { coven = '' } = useParams();
   const { students, isFetchingStudents } = useAuthContext();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -22,10 +24,14 @@ const Page = () => {
 
   useEffect(() => {
     if (coven && !VALID_COVENS.includes(coven as CovenType)) {
-      navigate('/coven');
+      navigate('/coven', { replace: true });
       return;
     }
   }, [coven, navigate]);
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ['students'] });
+  }, [queryClient]);
 
   const sortByStudentId = useCallback((a: StudentInfo, b: StudentInfo): number => {
     const aId = a.studentId;
