@@ -51,7 +51,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const { data: students, isPending: isFetchingStudents } = useQuery({
     queryKey: ['students'],
     queryFn: fetchStudents,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 2 * 60 * 1000,
     enabled: isAuthenticated,
   });
 

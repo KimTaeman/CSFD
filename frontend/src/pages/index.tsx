@@ -63,8 +63,8 @@ function Page() {
           <div className="animate-fade animate-once animate-delay-200 w-full">
             {!isLive ? (
               <div className="w-full">
-                <p className="mb-4 text-center text-lg font-semibold tracking-wider text-cyan-300">
-                  EVENT STARTS IN
+                <p className="mb-4 text-center text-lg font-semibold tracking-wider text-cyan-300 uppercase">
+                  Event starts in
                 </p>
 
                 <div className="flex justify-center gap-2">
@@ -75,7 +75,7 @@ function Page() {
                         key={index}
                         className="flex flex-col items-center rounded-lg border-2 border-cyan-400/50 bg-black/50 px-3 py-2 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
                       >
-                        <div className="font-mono text-xl leading-none font-bold tracking-wider text-cyan-300 drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]">
+                        <div className="min-w-[3ch] text-center font-mono text-xl leading-none font-bold tracking-wider text-cyan-300 tabular-nums drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]">
                           {unit}
                         </div>
                         <div className="mt-1 text-xs font-semibold tracking-widest text-cyan-200">

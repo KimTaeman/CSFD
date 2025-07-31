@@ -134,28 +134,35 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose, user }) =>
               )}
             </div>
 
-            <div className="mt-6">
+            <div className="mt-6 w-full">
               <h3 className="text-md font-semibold text-gray-300 sm:text-lg">Social Media</h3>
               <div className="mt-2 flex flex-col space-y-2">
                 {socialLinks.map((social) => (
-                  <div key={social.name} className="flex items-center space-x-3">
+                  <div
+                    key={social.name}
+                    className="flex w-full items-center space-x-3 overflow-hidden"
+                  >
                     {social.icon}
-                    {social.handle ? (
-                      social.name === 'Discord' ? (
-                        <p className="text-md text-gray-300 sm:text-lg">{social.handle}</p>
+                    <div className="w-0 flex-1 truncate">
+                      {social.handle ? (
+                        social.name === 'Discord' ? (
+                          <p className="text-md truncate text-gray-300 sm:text-lg">
+                            {social.handle}
+                          </p>
+                        ) : (
+                          <a
+                            href={getSocialLink(social.name, social.handle)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-md truncate text-blue-400 hover:underline sm:text-lg"
+                          >
+                            {social.handle}
+                          </a>
+                        )
                       ) : (
-                        <a
-                          href={getSocialLink(social.name, social.handle)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-md text-blue-400 hover:underline sm:text-lg"
-                        >
-                          {social.handle}
-                        </a>
-                      )
-                    ) : (
-                      <p className="text-md text-gray-400 italic sm:text-lg">Not provided</p>
-                    )}
+                        <p className="text-md text-gray-400 italic sm:text-lg">Not provided</p>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
