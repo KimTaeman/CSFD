@@ -19,5 +19,10 @@ export const useFetch = () => {
     }
   };
 
-  return { fetchUserData, fetchStudents };
+  const fetchFoundPairs = async () => {
+    const { data } = await api.get('/students/admin/found');
+    return data;
+  };
+
+  return { fetchUserData, fetchStudents, fetchFoundPairs };
 };
