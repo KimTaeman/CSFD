@@ -25,8 +25,8 @@ const config: Config = {
   clientRedirectURL: process.env.CLIENT_REDIRECT_URL || '/',
   adminIds: process.env.ADMIN_IDS
     ? process.env.ADMIN_IDS.split(',')
-        .map(id => parseInt(id.trim(), 10))
-        .filter(id => !isNaN(id))
+        .map((id) => parseInt(id.trim(), 10))
+        .filter((id) => !isNaN(id))
     : [24, 31, 38],
 };
 
