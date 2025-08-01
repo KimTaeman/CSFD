@@ -145,3 +145,19 @@ export const updateStudentById = async (
     next(error);
   }
 };
+
+export const getFoundPairs = async (req: Request, res: Response, next: NextFunction) => {
+  const adminIds = [24, 31, 38];
+  const userId = req.session.user?.id;
+
+  if (!userId || !adminIds.includes(userId)) {
+    throw new UnauthorizedError('Access Forbidden');
+  }
+
+  try {
+    const foundPairs = await Models.getFoundPairs();
+    res.json(foundPairs);
+  } catch (error) {
+    next(error);
+  }
+};
