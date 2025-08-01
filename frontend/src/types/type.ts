@@ -27,6 +27,7 @@ export interface StudentInfo {
   isHouseLeader: boolean | null;
   lives: number | null;
   isSenior: boolean | null;
+  isAdmin: boolean;
   mentees: Array<{
     id: string;
     displayName: string;

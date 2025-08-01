@@ -36,6 +36,12 @@ function Sidebar({ isOpen, onClose, onNavigate, onLogout }: SidebarProps) {
         route: '/hints',
         condition: !!user?.studentId,
       },
+      {
+        name: 'Admin',
+        icon: '/assets/admin-icon.svg',
+        route: '/admin/dashboard',
+        condition: !!user?.isAdmin,
+      },
     ],
     [user],
   );
