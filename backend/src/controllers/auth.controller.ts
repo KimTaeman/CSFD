@@ -101,6 +101,11 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
     throw new UnauthorizedError('Not authenticated.');
   }
 
+  const user = req.session.user;
+
+  const adminIds = config.adminIds;
+  const isAdmin = adminIds.includes(user.id);
+
   try {
     const student = await authModel.getStudentInfo(req.session.user.id);
 
@@ -140,6 +145,7 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
       discord: student.discord,
       line: student.line,
       lives: isSenior ? null : student.lives,
+      isAdmin: isAdmin,
     };
     res.status(200).json(responseData);
   } catch (error) {
