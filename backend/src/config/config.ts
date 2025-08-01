@@ -11,6 +11,7 @@ interface Config {
   clientSecret: string;
   redirectUri: string;
   clientRedirectURL: string;
+  adminIds: number[];
 }
 
 const config: Config = {
@@ -22,6 +23,7 @@ const config: Config = {
   clientSecret: process.env.MICROSOFT_CLIENT_SECRET || '',
   redirectUri: process.env.BACKEND_REDIRECT_URI || '',
   clientRedirectURL: process.env.CLIENT_REDIRECT_URL || '/',
+  adminIds: [24, 31, 38],
 };
 
 export default config;

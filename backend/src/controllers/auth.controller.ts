@@ -103,7 +103,7 @@ export const getInfo = async (req: Request, res: Response, next: NextFunction) =
 
   const user = req.session.user;
 
-  const adminIds = [24, 31, 38];
+  const adminIds = config.adminIds;
   const isAdmin = adminIds.includes(user.id);
 
   try {

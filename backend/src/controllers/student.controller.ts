@@ -3,6 +3,7 @@ import * as Models from '@/models';
 import { NotFoundError } from '@/errors/not-found-error';
 import { UnauthorizedError } from '@/errors/not-authorized-error';
 import { cloudinary } from '@/utils/cloudinary';
+import config from '@/config/config';
 
 export const getStudentById = async (
   req: Request,
@@ -147,7 +148,7 @@ export const updateStudentById = async (
 };
 
 export const getFoundPairs = async (req: Request, res: Response, next: NextFunction) => {
-  const adminIds = [24, 31, 38];
+  const adminIds = config.adminIds;
   const userId = req.session.user?.id;
 
   if (!userId || !adminIds.includes(userId)) {
