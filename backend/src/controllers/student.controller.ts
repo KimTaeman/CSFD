@@ -3,6 +3,7 @@ import * as Models from '@/models';
 import { NotFoundError } from '@/errors/not-found-error';
 import { UnauthorizedError } from '@/errors/not-authorized-error';
 import { cloudinary } from '@/utils/cloudinary';
+import config from '@/config/config';
 
 export const getStudentById = async (
   req: Request,
@@ -141,6 +142,24 @@ export const updateStudentById = async (
     const updated = await Models.updateStudentById(id, data);
 
     res.status(200).json({ data: updated });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getMentorPairs = async (req: Request, res: Response, next: NextFunction) => {
+  const adminIds = config.adminIds;
+  const userId = req.session.user?.id;
+
+  if (!userId || !adminIds.includes(userId)) {
+    throw new UnauthorizedError('Access Forbidden');
+  }
+
+  try {
+    const status = req.query.status as string | undefined;
+
+    const pairs = await Models.getMentorPairs(status);
+    res.json(pairs);
   } catch (error) {
     next(error);
   }

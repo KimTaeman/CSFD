@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import HousesButton from '@/components/house/HouseButton';
 import HouseDetail from '@/components/house/HouseDetail';
 import type { HouseData } from '@/types/house.types';
-import { covenData, type CovenType } from '@/components/coven/covenBadge/covenBadges.tsx';
+import { type CovenType } from '@/components/coven/covenBadge/covenBadges.tsx';
+import covenData from '@/constants/coven.ts';
 
 export const housesData: Record<string, HouseData> = {
   ethera: {

@@ -109,6 +109,38 @@ const guessCorrect = async (id: number) => {
   };
 };
 
+const getMentorPairs = async (status?: string) => {
+  const whereClause: { isFound?: boolean } = {};
+
+  if (status === 'found') {
+    whereClause.isFound = true;
+  } else if (status === 'not_found') {
+    whereClause.isFound = false;
+  }
+
+  return prisma.mentor.findMany({
+    where: whereClause,
+    select: {
+      foundAt: true,
+      senior: {
+        select: {
+          displayName: true,
+          nickname: true,
+        },
+      },
+      junior: {
+        select: {
+          displayName: true,
+          nickname: true,
+        },
+      },
+    },
+    orderBy: {
+      foundAt: 'desc',
+    },
+  });
+};
+
 export {
   getStudentById,
   getAllStudents,
@@ -117,4 +149,5 @@ export {
   updateStudentById,
   guessMentor,
   guessCorrect,
+  getMentorPairs,
 };
