@@ -147,7 +147,7 @@ export const updateStudentById = async (
   }
 };
 
-export const getFoundPairs = async (req: Request, res: Response, next: NextFunction) => {
+export const getMentorPairs = async (req: Request, res: Response, next: NextFunction) => {
   const adminIds = config.adminIds;
   const userId = req.session.user?.id;
 
@@ -156,8 +156,10 @@ export const getFoundPairs = async (req: Request, res: Response, next: NextFunct
   }
 
   try {
-    const foundPairs = await Models.getFoundPairs();
-    res.json(foundPairs);
+    const status = req.query.status as string | undefined;
+
+    const pairs = await Models.getMentorPairs(status);
+    res.json(pairs);
   } catch (error) {
     next(error);
   }

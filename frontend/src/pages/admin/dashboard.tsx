@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useFetch } from '@/hooks/useFetch';
 import MainLayout from '../layout';
 import LoadingLayout from '@/components/layout/loading';
+import { useFetch } from '@/hooks/useFetch';
 
 interface ApiError {
   response?: {
@@ -12,7 +12,7 @@ interface ApiError {
 }
 
 interface FoundPair {
-  foundAt: string;
+  foundAt: string | null;
   junior: {
     displayName: string;
     nickname: string;
@@ -23,8 +23,11 @@ interface FoundPair {
   };
 }
 
+type FilterStatus = 'found' | 'not_found' | 'all';
+
 const AdminDashboard: React.FC = () => {
-  const { fetchFoundPairs } = useFetch();
+  const [filter, setFilter] = useState<FilterStatus>('found');
+  const { fetchMentorPairs } = useFetch();
 
   const {
     data: pairs,
@@ -32,8 +35,8 @@ const AdminDashboard: React.FC = () => {
     isError,
     error,
   } = useQuery<FoundPair[], ApiError>({
-    queryKey: ['foundPairs'],
-    queryFn: fetchFoundPairs,
+    queryKey: ['mentorPairs', filter],
+    queryFn: () => fetchMentorPairs(filter),
     retry: (failureCount, error: ApiError) => {
       if (error.response?.status === 403) {
         return false;
@@ -62,6 +65,12 @@ const AdminDashboard: React.FC = () => {
       );
     }
 
+    const emptyMessages = {
+      found: 'No pairs have been found yet.',
+      not_found: 'All pairs have been found!',
+      all: 'No pairs exist in the system.',
+    };
+
     return (
       <div className="overflow-hidden rounded-xl border border-slate-700 bg-slate-900 shadow-2xl shadow-black/20">
         <div className="overflow-x-auto">
@@ -72,64 +81,54 @@ const AdminDashboard: React.FC = () => {
                   scope="col"
                   className="px-6 py-4 text-left text-xs font-semibold tracking-wider text-slate-400 uppercase"
                 >
-                  Junior Nickname
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-4 text-left text-xs font-semibold tracking-wider text-slate-400 uppercase"
-                >
                   Junior
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-4 text-left text-xs font-semibold tracking-wider text-slate-400 uppercase"
                 >
-                  Senior Nickname
-                </th>
-
-                <th
-                  scope="col"
-                  className="px-6 py-4 text-left text-xs font-semibold tracking-wider text-slate-400 uppercase"
-                >
                   Senior
                 </th>
-                <th
-                  scope="col"
-                  className="px-6 py-4 text-left text-xs font-semibold tracking-wider text-slate-400 uppercase"
-                >
-                  Date Found
-                </th>
+                {filter !== 'not_found' && (
+                  <th
+                    scope="col"
+                    className="px-6 py-4 text-left text-xs font-semibold tracking-wider text-slate-400 uppercase"
+                  >
+                    Date Found
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
               {pairs && pairs.length > 0 ? (
                 pairs.map((pair, index) => (
                   <tr key={index} className="transition-colors duration-200 hover:bg-slate-800/60">
-                    <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-white">
-                      {pair.junior.nickname}
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-white">
+                        {pair.junior.displayName}
+                      </div>
+                      <div className="text-xs text-slate-400">{pair.junior.nickname}</div>
                     </td>
-
-                    <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-white">
-                      {pair.junior.displayName}
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-white">
+                        {pair.senior.displayName}
+                      </div>
+                      <div className="text-xs text-slate-400">{pair.senior.nickname}</div>
                     </td>
-
-                    <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-white">
-                      {pair.senior.nickname}
-                    </td>
-
-                    <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-white">
-                      {pair.senior.displayName}
-                    </td>
-
-                    <td className="px-6 py-4 text-sm whitespace-nowrap text-slate-300">
-                      {new Date(pair.foundAt).toLocaleString()}
-                    </td>
+                    {filter !== 'not_found' && (
+                      <td className="px-6 py-4 text-sm whitespace-nowrap text-slate-300">
+                        {pair.foundAt ? new Date(pair.foundAt).toLocaleString() : 'N/A'}
+                      </td>
+                    )}
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} className="py-10 text-center text-slate-500">
-                    No pairs have been found yet.
+                  <td
+                    colSpan={filter !== 'not_found' ? 3 : 2}
+                    className="py-10 text-center text-slate-500"
+                  >
+                    {emptyMessages[filter]}
                   </td>
                 </tr>
               )}
@@ -142,11 +141,29 @@ const AdminDashboard: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className="min-h-screen w-full overflow-x-hidden">
-        <header className="mb-8 rounded-lg bg-slate-900/70 p-6 shadow-lg backdrop-blur-sm">
+      <div className="container mx-auto min-h-screen w-full overflow-x-hidden px-4 py-8 sm:px-6 lg:px-8">
+        <header className="mb-8">
           <h1 className="text-4xl font-bold tracking-tight text-white">Admin Dashboard</h1>
-          <p className="mt-2 text-lg text-slate-300">Overview of successfully matched pairs.</p>
+          <p className="mt-2 text-lg text-slate-300">Overview of mentor-mentee pairs.</p>
         </header>
+
+        {/* 4. Filter controls */}
+        <div className="mb-6 flex space-x-2">
+          {(['found', 'not_found', 'all'] as FilterStatus[]).map((status) => (
+            <button
+              key={status}
+              onClick={() => setFilter(status)}
+              className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                filter === status
+                  ? 'bg-purple-600 text-white shadow-lg'
+                  : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+              }`}
+            >
+              {status.replace('_', ' ').charAt(0).toUpperCase() + status.slice(1).replace('_', ' ')}
+            </button>
+          ))}
+        </div>
+
         <div>{renderContent()}</div>
       </div>
     </MainLayout>
