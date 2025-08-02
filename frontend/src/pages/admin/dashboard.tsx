@@ -79,20 +79,20 @@ const AdminDashboard: React.FC = () => {
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-4 text-left text-xs font-semibold tracking-wider text-slate-400 uppercase"
+                  className="px-3 py-4 text-left text-xs font-semibold tracking-wider text-slate-400 uppercase md:px-4 xl:px-6"
                 >
                   Junior
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-4 text-left text-xs font-semibold tracking-wider text-slate-400 uppercase"
+                  className="px-3 py-4 text-left text-xs font-semibold tracking-wider text-slate-400 uppercase md:px-4 xl:px-6"
                 >
                   Senior
                 </th>
                 {filter !== 'not_found' && (
                   <th
                     scope="col"
-                    className="px-6 py-4 text-left text-xs font-semibold tracking-wider text-slate-400 uppercase"
+                    className="px-3 py-4 text-left text-xs font-semibold tracking-wider text-slate-400 uppercase md:px-4 xl:px-6"
                   >
                     Date Found
                   </th>
@@ -103,20 +103,20 @@ const AdminDashboard: React.FC = () => {
               {pairs && pairs.length > 0 ? (
                 pairs.map((pair, index) => (
                   <tr key={index} className="transition-colors duration-200 hover:bg-slate-800/60">
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 py-4 whitespace-nowrap md:px-4 xl:px-6">
                       <div className="text-sm font-medium text-white">
                         {pair.junior.displayName}
                       </div>
                       <div className="text-xs text-slate-400">{pair.junior.nickname}</div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 py-4 whitespace-nowrap md:px-4 xl:px-6">
                       <div className="text-sm font-medium text-white">
                         {pair.senior.displayName}
                       </div>
                       <div className="text-xs text-slate-400">{pair.senior.nickname}</div>
                     </td>
                     {filter !== 'not_found' && (
-                      <td className="px-6 py-4 text-sm whitespace-nowrap text-slate-300">
+                      <td className="px-3 py-4 text-sm whitespace-nowrap text-slate-300 md:px-4 xl:px-6">
                         {pair.foundAt ? new Date(pair.foundAt).toLocaleString() : 'N/A'}
                       </td>
                     )}
@@ -141,7 +141,7 @@ const AdminDashboard: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className="container mx-auto min-h-screen w-full overflow-x-hidden px-4 py-8 sm:px-6 lg:px-8">
+      <div className="container mx-auto min-h-screen w-full overflow-x-hidden px-4 py-8 sm:px-6 xl:px-8">
         <header className="mb-8">
           <h1 className="text-4xl font-bold tracking-tight text-white">Admin Dashboard</h1>
           <p className="mt-2 text-lg text-slate-300">Overview of mentor-mentee pairs.</p>
