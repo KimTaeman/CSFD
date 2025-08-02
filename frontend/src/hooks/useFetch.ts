@@ -19,10 +19,12 @@ export const useFetch = () => {
     }
   };
 
-  const fetchFoundPairs = async () => {
-    const { data } = await api.get('/students/admin/found');
+  type FilterStatus = 'found' | 'not_found' | 'all';
+
+  const fetchMentorPairs = async (status: FilterStatus) => {
+    const { data } = await api.get(`/students/admin/pairs?status=${status}`);
     return data;
   };
 
-  return { fetchUserData, fetchStudents, fetchFoundPairs };
+  return { fetchUserData, fetchStudents, fetchMentorPairs };
 };
