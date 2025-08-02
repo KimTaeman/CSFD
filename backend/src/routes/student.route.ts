@@ -10,9 +10,9 @@ const router = Router();
 router.get('/', Controller.getAllStudents);
 router.get('/juniors', Controller.getAllJuniors);
 router.get('/seniors', Controller.getAllSeniors);
+router.get('/admin/pairs', Controller.getMentorPairs);
 router.get('/:id', Controller.getStudentById);
 router.get('/:id/isCorrect', Controller.guessCorrect);
-router.get('/admin/found', Controller.getFoundPairs);
 
 // PUT
 router.put('/:id/guess', Controller.guessMentor);
