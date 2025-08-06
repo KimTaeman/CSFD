@@ -1,5 +1,6 @@
 import prisma from '@/config/prismaClient';
 import { UpdateStudent } from '@/types/student.type';
+import { sendDiscordNotification } from '@/utils/sendNoti';
 
 const getStudentById = async (id: number) => {
   return prisma.student.findUnique({
@@ -63,7 +64,7 @@ const guessMentor = async (id: number, guess: string) => {
   }
 
   if (senior.studentId.slice(-3) === guess) {
-    await prisma.mentor.update({
+    const updatedMentorPair = await prisma.mentor.update({
       where: {
         juniorId: id,
       },
@@ -71,7 +72,14 @@ const guessMentor = async (id: number, guess: string) => {
         isFound: true,
         foundAt: new Date(),
       },
+      include: {
+        senior: true,
+        junior: true,
+      },
     });
+
+    await sendDiscordNotification(updatedMentorPair);
+
     return { isCorrect: true };
   }
 
