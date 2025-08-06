@@ -23,11 +23,14 @@ async function sendDiscordNotification(mentorPair: any) {
   };
 
   try {
-    await fetch(webhookUrl, {
+    const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ embeds: [embed] }),
     });
+    if (!response.ok) {
+      throw new Error(`Discord notification failed with status ${response.status}: ${response.statusText}`);
+    }
   } catch (error) {
     console.error('Failed to send Discord notification:', error);
   }
