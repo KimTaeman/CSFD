@@ -29,7 +29,9 @@ async function sendDiscordNotification(mentorPair: any) {
       body: JSON.stringify({ embeds: [embed] }),
     });
     if (!response.ok) {
-      throw new Error(`Discord notification failed with status ${response.status}: ${response.statusText}`);
+      throw new Error(
+        `Discord notification failed with status ${response.status}: ${response.statusText}`,
+      );
     }
   } catch (error) {
     console.error('Failed to send Discord notification:', error);
