@@ -18,6 +18,7 @@ interface GuessProps {
   onLuckyDraw?: () => void;
   luckyDrawDisabled?: boolean;
   luckyDrawLabel?: string;
+  isGuessingAllowed?: boolean;
 }
 
 function Guess({
@@ -36,6 +37,7 @@ function Guess({
   onLuckyDraw = () => {},
   luckyDrawDisabled,
   luckyDrawLabel,
+  isGuessingAllowed = true,
 }: GuessProps) {
   const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = () => {
@@ -119,13 +121,13 @@ function Guess({
                 value={inputHint}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
-                disabled={guessState !== 'n/a' || attempts >= maxAttempts}
+                disabled={guessState !== 'n/a' || attempts >= maxAttempts || !isGuessingAllowed}
                 className={`font-poppins h-10 w-full rounded-xl border-none px-2 py-2 text-base transition-colors outline-none not-disabled:border not-disabled:border-white/10 not-disabled:bg-gray-900/50 disabled:cursor-not-allowed disabled:bg-gray-900/50 disabled:text-gray-300 lg:h-12 lg:px-6 lg:text-lg`}
               />
               <div className="flex w-full flex-col justify-end gap-3 lg:flex-row lg:gap-4">
                 <button
                   onClick={handleSubmit}
-                  disabled={guessState !== 'n/a' || attempts >= maxAttempts}
+                  disabled={guessState !== 'n/a' || attempts >= maxAttempts || !isGuessingAllowed}
                   className="font-poppins w-full flex-1 rounded-xl border border-white/10 bg-purple-900/60 px-8 py-2 text-sm text-white transition-colors not-disabled:hover:bg-purple-900/80 focus:ring-2 focus:ring-white/50 focus:outline-none disabled:text-gray-400/80 lg:px-8 lg:text-base"
                 >
                   Confirm Guess
@@ -133,7 +135,12 @@ function Guess({
                 {onLuckyDraw && (
                   <button
                     type="button"
-                    disabled={luckyDrawDisabled || guessState !== 'n/a' || attempts >= maxAttempts}
+                    disabled={
+                      luckyDrawDisabled ||
+                      guessState !== 'n/a' ||
+                      attempts >= maxAttempts ||
+                      !isGuessingAllowed
+                    }
                     className="font-poppins w-full flex-1 rounded-xl border border-white/10 bg-orange-900/60 px-8 py-2 text-sm text-white transition-colors not-disabled:hover:bg-orange-900/80 focus:ring-2 focus:ring-white/50 focus:outline-none disabled:text-gray-400/80 lg:px-8 lg:text-base"
                     onClick={onLuckyDraw}
                   >
