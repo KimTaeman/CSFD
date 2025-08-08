@@ -31,6 +31,13 @@ function Page() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<StudentInfo | null>(null);
 
+  const [isGuessingAllowed, setIsGuessingAllowed] = useState(true);
+
+  const guessingDeadline = useMemo(
+    () => toZonedTime(new Date(2025, 7, 9, 14, 30, 0), 'Asia/Bangkok'),
+    [],
+  );
+
   const handleOpenModal = (user: StudentInfo): void => {
     setSelectedUser(user);
     setIsModalOpen(true);
@@ -82,6 +89,8 @@ function Page() {
   const updateCountdown = useCallback(() => {
     const now = new Date();
 
+    setIsGuessingAllowed(now < guessingDeadline);
+
     const newCountdown = hintReleaseDates.map((date) => {
       if (now < date) {
         const totalSeconds = Math.floor((date.getTime() - now.getTime()) / 1000);
@@ -102,7 +111,7 @@ function Page() {
     });
 
     setCountdown(newCountdown);
-  }, [hintReleaseDates]);
+  }, [hintReleaseDates, guessingDeadline]);
 
   useEffect(() => {
     updateCountdown();
@@ -121,7 +130,7 @@ function Page() {
 
   const { mutate: submitGuess } = useMutation({
     mutationFn: async (guess: string) => {
-      if (!user || user.isSenior || revealedCount >= 3) return;
+      if (!user || user.isSenior || revealedCount >= 3 || !isGuessingAllowed) return;
 
       const { data } = await api.put(`/students/${user.id}/guess`, { guess: guess });
       const isCorrect = data.info.isCorrect;
@@ -346,6 +355,16 @@ function Page() {
                     </p>
                   </div>
                 </div>
+                <div className="mt-4 rounded-lg border border-yellow-500/30 bg-yellow-900/20 p-4">
+                  <div className="text-center text-yellow-300">
+                    ⏰ <strong>Guessing Deadline:</strong> August 9th, 2:30 PM Bangkok Time
+                    {!isGuessingAllowed && (
+                      <div className="mt-2 font-semibold text-red-400">
+                        🚫 Guessing period has ended!
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             )}
             <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-16 lg:[&:has(:nth-child(odd):last-child)>:first-child]:col-span-2">
@@ -388,8 +407,11 @@ function Page() {
                   inputHint={guessInput}
                   setInputHint={setGuessInput}
                   onLuckyDraw={handleLuckyDraw}
-                  luckyDrawDisabled={user.guessCheck?.isFound || (user.lives ?? 3) <= 0}
+                  luckyDrawDisabled={
+                    user.guessCheck?.isFound || (user.lives ?? 3) <= 0 || !isGuessingAllowed
+                  }
                   luckyDrawLabel="🕯️ Invoke the Prophecy"
+                  isGuessingAllowed={isGuessingAllowed}
                 />
               </div>
             )}

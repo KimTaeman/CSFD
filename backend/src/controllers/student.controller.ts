@@ -76,6 +76,15 @@ export const guessMentor = async (req: Request, res: Response, next: NextFunctio
   const { guess } = req.body;
 
   try {
+    const guessingDeadline = new Date('2025-08-09T07:30:00.000Z'); // 14:30 Bangkok = 07:30 UTC
+    const now = new Date();
+
+    if (now > guessingDeadline) {
+      return res.status(400).json({
+        success: false,
+        message: 'Guessing period has ended',
+      });
+    }
     const result = await Models.guessMentor(Number(id), guess);
 
     if (!result) {
