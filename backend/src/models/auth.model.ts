@@ -50,8 +50,11 @@ export const updateStudentProfile = (microsoftId: string, account: AccountInfo) 
   });
 };
 
-export const getStudentInfo = (userId: number): Promise<StudentInfo | null> => {
-  const now = new Date();
+export const getStudentInfo = async (userId: number): Promise<StudentInfo | null> => {
+  const [{ now }] = await prisma.$queryRaw<{ now: Date }[]>`
+  SELECT NOW() as now
+`;
+
   return prisma.student.findUnique({
     where: { id: userId },
     include: {
