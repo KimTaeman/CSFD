@@ -8,7 +8,6 @@ import HintCard from '@/components/hint/hint-card';
 import Guess from '@/components/hint/guess';
 import RevealResult from '@/components/hint/RevealResult';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { formatDistanceToNowStrict } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 
 function Page() {
@@ -27,13 +26,24 @@ function Page() {
       toZonedTime(new Date(2025, 7, 3, 0, 0, 0), 'Asia/Bangkok'),
     ];
 
+    const now = new Date();
+
     const newCountdown = hintReleaseDates.map((date) => {
-      const now = new Date();
       if (now < date) {
-        return formatDistanceToNowStrict(date, { addSuffix: true });
+        const totalSeconds = Math.floor((date.getTime() - now.getTime()) / 1000);
+        const days = Math.floor(totalSeconds / (24 * 3600));
+        const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        // Pad values to 2 digits
+        const pad = (n: number) => n.toString().padStart(2, '0');
+
+        return ` ${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
       }
       return '';
     });
+
     setCountdown(newCountdown);
   }, []);
 
@@ -64,9 +74,16 @@ function Page() {
       if (!isCorrect) setRevealedCount((prev) => prev + 1);
       return data;
     },
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries({ queryKey: ['authUser'] });
-    // },
+    onSuccess: (data) => {
+      if (!user) return;
+
+      const updatedLives = user.lives !== null ? user.lives - 1 : 2; // from 3 to 2/1/0
+      queryClient.setQueryData(['authUser'], {
+        ...user,
+        lives: data.info.isCorrect ? user.lives : updatedLives,
+        isFound: data.info.isCorrect ? true : user.isFound,
+      });
+    },
   });
 
   useEffect(() => {
@@ -105,7 +122,7 @@ function Page() {
     setDraftHints((prev) => prev.map((hint) => (hint.id === id ? { ...hint, content } : hint)));
   }, []);
 
-  if (!user) return <LoadingLayout />;
+  if (!user || user.isFound === undefined) return <LoadingLayout />;
 
   const isSenior = user.isSenior;
 
@@ -188,9 +205,18 @@ function Page() {
               {[...Array(3)].map((_, i) => {
                 const hint = user.hints[i];
                 const displayTitle = '';
+                const hintCountdown = countdown[i];
                 const description =
                   user.hints[i]?.content ||
-                  (countdown[i] ? `Hint available ${countdown[i]}` : 'Hint not yet available');
+                  (hintCountdown ? (
+                    <>
+                      <div className="text-lg">Hint available in</div>
+                      <div className="font-mono text-2xl font-semibold">{hintCountdown}</div>
+                    </>
+                  ) : (
+                    'Nuh Uh'
+                  ));
+
                 return (
                   <HintCard
                     key={hint?.id || `placeholder-${i}`}
