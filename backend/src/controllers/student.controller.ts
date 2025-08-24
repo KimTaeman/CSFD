@@ -120,6 +120,9 @@ export const updateStudentById = async (
       throw new NotFoundError();
     }
 
+    delete data.displayName;
+    delete data.studentId;
+
     const { profilePic: dataUri } = data;
 
     if (dataUri) {

@@ -55,7 +55,7 @@ const Page = () => {
   };
 
   // Show welcome page
-  if (false) {
+  if (showWelcome) {
     return (
       <div className="bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-position-[50%_0] bg-no-repeat md:min-h-svh lg:bg-contain">
         <div className="light-particle-colored">
@@ -79,7 +79,7 @@ const Page = () => {
   return (
     <div className="min-h-svh bg-[#15022f] bg-[url('/assets/bg-magic.png')] bg-cover bg-center bg-no-repeat">
       {/* Login Success Notification */}
-      {true && (
+      {showLoginSuccess && (
         <div className="fixed top-8 left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300 ease-in-out">
           <LoginSuccess />
         </div>

@@ -81,13 +81,13 @@ function ProfileForm({
     setFormData((prev) => ({ ...prev, [key]: value }));
   }, []);
 
-  const inputClassName = useMemo(
-    () => (editing: boolean) =>
-      `w-full px-2 lg:px-6 py-2 lg:py-2 text-base lg:text-lg rounded-xl border-none outline-none h-10 lg:h-12 font-[Poppins] transition-colors ${
-        editing ? 'bg-white text-black' : 'bg-gray-300 text-gray-700 cursor-not-allowed'
-      }`,
-    [],
-  );
+  // const inputClassName = useMemo(
+  //   () => (editing: boolean) =>
+  //     `w-full px-2 lg:px-6 py-2 lg:py-2 text-base lg:text-lg rounded-xl border-none outline-none h-10 lg:h-12 font-[Poppins] transition-colors ${
+  //       editing ? 'bg-white text-black' : 'bg-gray-300 text-gray-700 cursor-not-allowed'
+  //     }`,
+  //   [],
+  // );
 
   return (
     <div className="w-full max-w-xl space-y-2 px-6 lg:col-span-8 lg:space-y-5 lg:px-0">
@@ -103,8 +103,12 @@ function ProfileForm({
             value={formData[field.key] || ''}
             onChange={(e) => handleInputChange(field.key, e.target.value)}
             onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
-            disabled={!isEditing}
-            className={inputClassName(isEditing)}
+            disabled={!isEditing || field.key === 'studentId' || field.key === 'displayName'}
+            className={`h-10 w-full rounded-xl border-none px-2 py-2 font-[Poppins] text-base transition-colors outline-none lg:h-12 lg:px-6 lg:text-lg ${
+              !isEditing || field.key === 'studentId' || field.key === 'displayName'
+                ? 'cursor-not-allowed bg-gray-300 text-gray-700'
+                : 'bg-white text-black'
+            }`}
           />
         </div>
       ))}
@@ -126,7 +130,11 @@ function ProfileForm({
                 onChange={(e) => handleInputChange(field.key, e.target.value)}
                 onKeyDown={(e) => isEditing && handleKeyDown(e, field.key, onConfirm)}
                 disabled={!isEditing}
-                className={`h-12 w-full rounded-xl border-none py-2 pr-2 pl-10 font-[Poppins] text-base outline-none lg:h-12 lg:py-4 lg:pl-20 lg:text-lg ${inputClassName(isEditing)}`}
+                className={`h-12 w-full rounded-xl border-none py-2 pr-2 pl-10 font-[Poppins] text-base transition-colors outline-none lg:h-12 lg:py-4 lg:pl-20 lg:text-lg ${
+                  !isEditing
+                    ? 'cursor-not-allowed bg-gray-300 text-gray-700'
+                    : 'bg-white text-black'
+                }`}
                 placeholder={field.label}
               />
             </div>
